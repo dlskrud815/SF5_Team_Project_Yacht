@@ -28,6 +28,7 @@
 #define IDC_TEST_BTN                    201
 #define IDC_EDIT_NAME                   202
 #define IDC_BUTTON3                     203
+#define IDC_TUTORIAL_BTN                204
 #define IDC_NAME_STATIC                 1001
 #define IDC_p1_1                        1002
 #define IDC_p1_2                        1003
@@ -76,7 +77,7 @@
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_NEXT_RESOURCE_VALUE        150
 #define _APS_NEXT_COMMAND_VALUE         32771
-#define _APS_NEXT_CONTROL_VALUE         1006
+#define _APS_NEXT_CONTROL_VALUE         1044
 #define _APS_NEXT_SYMED_VALUE           109
 #endif
 #endif

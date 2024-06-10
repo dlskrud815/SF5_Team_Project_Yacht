@@ -114,7 +114,7 @@ BOOL CYachtDicePrototype2Dlg::OnInitDialog()
 	SetIcon(m_hIcon, TRUE);			// Set big icon
 	SetIcon(m_hIcon, FALSE);		// Set small icon
 
-	main.Load(_T("main_noBT.png"));//이미지 로드
+	main.Load(_T("main_noBT.bmp"));//이미지 로드
 
 	m_start_bmp.LoadBitmaps(IDB_BITMAP4, NULL, NULL, NULL); // 첫 번째 인자에는 추가한 비트맵 ID명
 	m_start_bmp.SizeToContent(); // 이미지 크기에 버튼 크기를 맞춰주는 작업

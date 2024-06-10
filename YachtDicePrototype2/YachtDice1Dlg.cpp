@@ -7,6 +7,7 @@
 #include "afxdialogex.h"
 #include "YachtDice1Dlg.h"
 #include "resource.h" 
+#include "CTutorial.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -30,6 +31,7 @@ CYachtDice1Dlg::~CYachtDice1Dlg()
 void CYachtDice1Dlg::DoDataExchange(CDataExchange* pDX)
 {
 	CDialogEx::DoDataExchange(pDX);
+    DDX_Control(pDX, IDC_TUTORIAL_BTN, m_bitmapBtn);
 }
 
 
@@ -39,6 +41,7 @@ BEGIN_MESSAGE_MAP(CYachtDice1Dlg, CDialogEx)
     ON_WM_QUERYDRAGICON()
     ON_BN_CLICKED(IDC_Roll, &CYachtDice1Dlg::OnBnClickedRoll)
     ON_WM_PAINT()
+    ON_BN_CLICKED(IDC_TUTORIAL_BTN, &CYachtDice1Dlg::OnBnClickedTutorialBtn)
 END_MESSAGE_MAP()
 
 
@@ -55,8 +58,8 @@ BOOL CYachtDice1Dlg::OnInitDialog()
 
     // TODO: Add extra initialization here
     
-    back.Load(_T("GameBoard_Background.png"));
-     
+    back.Load(_T("GameBoard_Background.bmp"));
+
     // 모든 버튼에 owner draw 스타일 적용
     for (int i = IDC_p1_1; i <= IDC_p1_12; i++)
     {
@@ -225,4 +228,11 @@ void CYachtDice1Dlg::OnPaint()
     //dc = m_picture_control.GetDC(); //픽쳐 컨트롤의 DC를 얻는다.
 
     back.StretchBlt(dc.m_hDC, 0, 0, rect.Width(), rect.Height(), SRCCOPY);//이미지를 픽쳐 컨트롤 크기로 조정
+}
+
+void CYachtDice1Dlg::OnBnClickedTutorialBtn()
+{
+    // TODO: Add your control notification handler code here
+    CTutorial dlgT;
+    dlgT.DoModal();
 }
