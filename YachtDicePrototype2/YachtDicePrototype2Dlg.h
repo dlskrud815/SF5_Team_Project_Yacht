@@ -31,6 +31,7 @@ protected:
 	afx_msg void OnPaint();
 	afx_msg HCURSOR OnQueryDragIcon();
 	DECLARE_MESSAGE_MAP()
+
 public:
 	CImage main;
 
@@ -39,4 +40,5 @@ public:
 	afx_msg void OnBnClickedButton1();
 
 	CBitmapButton m_start_bmp;
+	afx_msg void OnBnClickedTestBtn();
 };

@@ -6,8 +6,11 @@
 #include "framework.h"
 #include "YachtDicePrototype2.h"
 #include "YachtDicePrototype2Dlg.h"
+
 #include "CNameSetting.h"
 #include "CTutorial.h"
+#include "YachtDice1Dlg.h"
+
 #include "afxdialogex.h"
 
 #ifdef _DEBUG
@@ -71,6 +74,7 @@ BEGIN_MESSAGE_MAP(CYachtDicePrototype2Dlg, CDialogEx)
 	ON_WM_QUERYDRAGICON()
 	ON_BN_CLICKED(IDC_BUTTON3, &CYachtDicePrototype2Dlg::OnBnClickedButton3)
 	ON_BN_CLICKED(IDC_BUTTON1, &CYachtDicePrototype2Dlg::OnBnClickedButton1)
+	ON_BN_CLICKED(IDC_TEST_BTN, &CYachtDicePrototype2Dlg::OnBnClickedTestBtn)
 END_MESSAGE_MAP()
 
 
@@ -110,7 +114,7 @@ BOOL CYachtDicePrototype2Dlg::OnInitDialog()
 	SetIcon(m_hIcon, TRUE);			// Set big icon
 	SetIcon(m_hIcon, FALSE);		// Set small icon
 
-	main.Load(_T("main_noBT.png"));//이미지 로드
+	main.Load(_T("main_noBT.bmp"));//이미지 로드
 
 	m_start_bmp.LoadBitmaps(IDB_BITMAP4, NULL, NULL, NULL); // 첫 번째 인자에는 추가한 비트맵 ID명
 	m_start_bmp.SizeToContent(); // 이미지 크기에 버튼 크기를 맞춰주는 작업
@@ -196,5 +200,13 @@ void CYachtDicePrototype2Dlg::OnBnClickedButton1()
 {
 	CNameSetting dlgN1;
 	dlgN1.DoModal();
+	// TODO: Add your control notification handler code here
+}
+
+
+void CYachtDicePrototype2Dlg::OnBnClickedTestBtn()
+{
+	CYachtDice1Dlg dlgGame;
+	dlgGame.DoModal();
 	// TODO: Add your control notification handler code here
 }
