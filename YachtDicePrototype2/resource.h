@@ -24,6 +24,7 @@
 #define IDB_Reroll                      147
 #define IDB_Roll                        148
 #define IDB_ChooseCategory              149
+#define IDB_ENTER_USERNAME              150
 #define IDC_BUTTON1                     200
 #define IDC_TEST_BTN                    201
 #define IDC_EDIT_NAME                   202
@@ -70,14 +71,16 @@
 #define IDC_roll_num                    1040
 #define IDC_Reroll                      1041
 #define IDC_ChooseCategory              1042
+#define IDC_STATIC_USERNAME             1044
+#define IDC_STATIC_NAME                 1046
 
 // Next default values for new objects
 // 
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
-#define _APS_NEXT_RESOURCE_VALUE        150
+#define _APS_NEXT_RESOURCE_VALUE        151
 #define _APS_NEXT_COMMAND_VALUE         32771
-#define _APS_NEXT_CONTROL_VALUE         1044
+#define _APS_NEXT_CONTROL_VALUE         1047
 #define _APS_NEXT_SYMED_VALUE           109
 #endif
 #endif

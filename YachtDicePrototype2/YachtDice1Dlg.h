@@ -46,9 +46,13 @@ private:
 	void ShowDiceImage(int diceIndex, int imageIndex);
 	void ArrangeDicePics(); // Picture Control 정렬 함수
 
+	CString m_strData;
+
 public:
 	CBitmapButton m_bitmapBtn;
 
 	afx_msg void OnPaint();
 	afx_msg void OnBnClickedTutorialBtn();
+
+	void SetData(const CString& str);
 };

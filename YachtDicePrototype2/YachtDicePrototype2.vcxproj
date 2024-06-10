@@ -224,6 +224,7 @@
     <Image Include="..\..\..\..\..\Downloads\YachtDice1-main (1)\YachtDice1-main\YachtDice1\res\Reroll.bmp" />
     <Image Include="..\..\..\..\..\Downloads\YachtDice1-main (1)\YachtDice1-main\YachtDice1\res\ROLL.bmp" />
     <Image Include="DUAL.bmp" />
+    <Image Include="Enter your username.bmp" />
     <Image Include="qMark.bmp" />
     <Image Include="res\bitmap5.bmp" />
     <Image Include="res\YachtDicePrototype2.ico" />

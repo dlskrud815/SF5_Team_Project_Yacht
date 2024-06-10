@@ -60,6 +60,9 @@ BOOL CYachtDice1Dlg::OnInitDialog()
     
     back.Load(_T("GameBoard_Background.bmp"));
 
+    // 닉네임
+    SetDlgItemText(IDC_STATIC_NAME, m_strData);
+
     // 모든 버튼에 owner draw 스타일 적용
     for (int i = IDC_p1_1; i <= IDC_p1_12; i++)
     {
@@ -235,4 +238,9 @@ void CYachtDice1Dlg::OnBnClickedTutorialBtn()
     // TODO: Add your control notification handler code here
     CTutorial dlgT;
     dlgT.DoModal();
+}
+
+void CYachtDice1Dlg::SetData(const CString& strData)
+{
+    m_strData = strData;
 }
