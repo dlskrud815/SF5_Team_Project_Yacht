@@ -59,8 +59,11 @@ BOOL CYachtDice1Dlg::OnInitDialog()
     // TODO: Add extra initialization here
     
     back.Load(_T("GameBoard_Background.bmp"));
-
+    
     // 닉네임
+    m_font.CreatePointFont(130, _T("Ravie"));
+    GetDlgItem(IDC_STATIC_NAME)->SetFont(&m_font);
+    GetDlgItem(IDC_STATIC_NAME2)->SetFont(&m_font);
     SetDlgItemText(IDC_STATIC_NAME, m_strData);
 
     // 모든 버튼에 owner draw 스타일 적용

@@ -73,6 +73,7 @@
 #define IDC_ChooseCategory              1042
 #define IDC_STATIC_USERNAME             1044
 #define IDC_STATIC_NAME                 1046
+#define IDC_STATIC_NAME2                1047
 
 // Next default values for new objects
 // 

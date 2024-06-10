@@ -55,4 +55,5 @@ public:
 	afx_msg void OnBnClickedTutorialBtn();
 
 	void SetData(const CString& str);
+	CFont m_font;
 };
