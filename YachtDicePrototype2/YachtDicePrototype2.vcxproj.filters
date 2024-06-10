@@ -39,6 +39,9 @@
     <ClInclude Include="CNameSetting.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="YachtDice1Dlg.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="YachtDicePrototype2.cpp">
@@ -54,6 +57,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="CNameSetting.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="YachtDice1Dlg.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -81,6 +87,39 @@
       <Filter>Resource Files</Filter>
     </Image>
     <Image Include="START.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="..\..\..\..\..\Downloads\YachtDice1-main (1)\YachtDice1-main\YachtDice1\res\dice_1.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="..\..\..\..\..\Downloads\YachtDice1-main (1)\YachtDice1-main\YachtDice1\res\dice_2.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="..\..\..\..\..\Downloads\YachtDice1-main (1)\YachtDice1-main\YachtDice1\res\dice_3.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="..\..\..\..\..\Downloads\YachtDice1-main (1)\YachtDice1-main\YachtDice1\res\dice_4.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="..\..\..\..\..\Downloads\YachtDice1-main (1)\YachtDice1-main\YachtDice1\res\dice_5.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="..\..\..\..\..\Downloads\YachtDice1-main (1)\YachtDice1-main\YachtDice1\res\dice_6.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="..\..\..\..\..\Downloads\YachtDice1-main (1)\YachtDice1-main\YachtDice1\res\playBackground.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="..\..\..\..\..\Downloads\YachtDice1-main (1)\YachtDice1-main\YachtDice1\res\Reroll.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="..\..\..\..\..\Downloads\YachtDice1-main (1)\YachtDice1-main\YachtDice1\res\ROLL.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="..\..\..\..\..\Downloads\YachtDice1-main (1)\YachtDice1-main\YachtDice1\res\ChooseCategory.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\bitmap5.bmp">
       <Filter>Resource Files</Filter>
     </Image>
   </ItemGroup>
