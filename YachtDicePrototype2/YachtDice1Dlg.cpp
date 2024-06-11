@@ -95,6 +95,7 @@ BOOL CYachtDice1Dlg::OnInitDialog()
     SetIcon(m_hIcon, FALSE);		// Set small icon
 
     // TODO: Add extra initialization here
+
     pButton2 = (CButton*)GetDlgItem(IDC_DICE_BUTTON2);
     pButton3 = (CButton*)GetDlgItem(IDC_DICE_BUTTON3);
     pButton4 = (CButton*)GetDlgItem(IDC_DICE_BUTTON4);
@@ -107,11 +108,23 @@ BOOL CYachtDice1Dlg::OnInitDialog()
     pButton11 = (CButton*)GetDlgItem(IDC_DICE_BUTTON11);
 
 
+    /*
     pButton7->EnableWindow(FALSE);
     pButton8->EnableWindow(FALSE);
     pButton9->EnableWindow(FALSE);
     pButton10->EnableWindow(FALSE);
     pButton11->EnableWindow(FALSE);
+    */
+
+    v_showDice = { true, true, true, true, true };
+
+    pButton7->ShowWindow(SW_HIDE);
+    pButton8->ShowWindow(SW_HIDE);
+    pButton9->ShowWindow(SW_HIDE);
+    pButton10->ShowWindow(SW_HIDE);
+    pButton11->ShowWindow(SW_HIDE);
+    
+
 
     back.Load(_T("GameBoard_Background.png"));
     
@@ -272,6 +285,7 @@ HBITMAP LoadBitmapFromResource(HINSTANCE hInstance, int resourceID) {
 
 }
 
+/*
 vector<int> RemoveArr(int idx) {
     vector<int> vec = { 0,1,2,3,4 };
 
@@ -279,6 +293,8 @@ vector<int> RemoveArr(int idx) {
 
     return vec;
 }
+*/
+
 
 void CYachtDice1Dlg::OnBnClickedRoll()
 {
@@ -320,24 +336,69 @@ void CYachtDice1Dlg::OnBnClickedRoll()
         }
 
     }
-    CString str =
-    m_roll_try.SetWindowTextW(str);
-    pButton2->ShowWindow(SW_SHOW);
-    pButton3->ShowWindow(SW_SHOW);
-    pButton4->ShowWindow(SW_SHOW);
-    pButton5->ShowWindow(SW_SHOW);
-    pButton6->ShowWindow(SW_SHOW);
+
+
+    for (int i = 0; i < 5; i++)
+    {
+        if (!v_showDice[i])
+        {
+            switch (i)
+            {
+            case 0:
+                pButton2->ShowWindow(SW_HIDE);
+                break;
+            case 1:
+                pButton3->ShowWindow(SW_HIDE);
+                break;
+            case 2:
+                pButton4->ShowWindow(SW_HIDE);
+                break;
+            case 3:
+                pButton5->ShowWindow(SW_HIDE);
+                break;
+            case 4:
+                pButton6->ShowWindow(SW_HIDE);
+                break;
+            }
+        }
+        else
+        {
+            switch (i)
+            {
+            case 0:
+                pButton2->ShowWindow(SW_SHOW);
+                break;
+            case 1:
+                pButton3->ShowWindow(SW_SHOW);
+                break;
+            case 2:
+                pButton4->ShowWindow(SW_SHOW);
+                break;
+            case 3:
+                pButton5->ShowWindow(SW_SHOW);
+                break;
+            case 4:
+                pButton6->ShowWindow(SW_SHOW);
+                break;
+            }
+            //v_showDice[i] = true;
+        }
+    }
+
 
 
     // 이하 현정님 파트
     // 
     // 
     // 랜덤 주사위 이미지를 생성하고 갱신합니다.
+
+    /*
     for (int i = 0; i < 5; i++)
     {
         int randomIndex = rand() % 6; // 0부터 5 사이의 랜덤 숫자 생성
         ShowDiceImage(i, randomIndex); // 주사위 이미지 갱신
     }
+    */
 }
 
 void AdjustButtonToBitmap(CButton& button, HBITMAP hBitmap)
@@ -419,6 +480,8 @@ void CYachtDice1Dlg::SetData(const CString& strData)
 void CYachtDice1Dlg::OnBnClickedDiceButton2()
 {
     // TODO: Add your control notification handler code here
+    pButton7->ShowWindow(SW_SHOW);
+
     // 버튼 2에서 이미지를 추출합니다.
     HBITMAP hBitmap = (HBITMAP)pButton2->SendMessage(BM_GETIMAGE, IMAGE_BITMAP, 0);
 
@@ -431,12 +494,17 @@ void CYachtDice1Dlg::OnBnClickedDiceButton2()
 
     pButton2->EnableWindow(FALSE);
     pButton7->EnableWindow(TRUE);
+
+    pButton2->ShowWindow(SW_HIDE);
+    v_showDice[0] = false;
 }
 
 
 void CYachtDice1Dlg::OnBnClickedDiceButton3()
 {
     // TODO: Add your control notification handler code here
+    pButton8->ShowWindow(SW_SHOW);
+     
      // 버튼 3에서 이미지를 추출합니다.
     HBITMAP hBitmap = (HBITMAP)pButton3->SendMessage(BM_GETIMAGE, IMAGE_BITMAP, 0);
 
@@ -449,12 +517,16 @@ void CYachtDice1Dlg::OnBnClickedDiceButton3()
 
     pButton3->EnableWindow(FALSE);
     pButton8->EnableWindow(TRUE);
+
+    pButton3->ShowWindow(SW_HIDE);
+    v_showDice[1] = false;
 }
 
 
 void CYachtDice1Dlg::OnBnClickedDiceButton4()
 {
     // TODO: Add your control notification handler code here
+    pButton9->ShowWindow(SW_SHOW);
     // 버튼 4에서 이미지를 추출합니다.
     HBITMAP hBitmap = (HBITMAP)pButton4->SendMessage(BM_GETIMAGE, IMAGE_BITMAP, 0);
 
@@ -467,12 +539,16 @@ void CYachtDice1Dlg::OnBnClickedDiceButton4()
 
     pButton4->EnableWindow(FALSE);
     pButton9->EnableWindow(TRUE);
+
+    pButton4->ShowWindow(SW_HIDE);
+    v_showDice[2] = false;
 }
 
 
 void CYachtDice1Dlg::OnBnClickedDiceButton5()
 {
     // TODO: Add your control notification handler code here
+    pButton10->ShowWindow(SW_SHOW);
     // 버튼 5에서 이미지를 추출합니다.
     HBITMAP hBitmap = (HBITMAP)pButton5->SendMessage(BM_GETIMAGE, IMAGE_BITMAP, 0);
 
@@ -485,12 +561,16 @@ void CYachtDice1Dlg::OnBnClickedDiceButton5()
 
     pButton5->EnableWindow(FALSE);
     pButton10->EnableWindow(TRUE);
+
+    pButton5->ShowWindow(SW_HIDE);
+    v_showDice[3] = false;
 }
 
 
 void CYachtDice1Dlg::OnBnClickedDiceButton6()
 {
     // TODO: Add your control notification handler code here
+    pButton11->ShowWindow(SW_SHOW);
     // 버튼 6에서 이미지를 추출합니다.
     HBITMAP hBitmap = (HBITMAP)pButton6->SendMessage(BM_GETIMAGE, IMAGE_BITMAP, 0);
 
@@ -503,11 +583,16 @@ void CYachtDice1Dlg::OnBnClickedDiceButton6()
 
     pButton6->EnableWindow(FALSE);
     pButton11->EnableWindow(TRUE);
+
+    pButton6->ShowWindow(SW_HIDE);
+    v_showDice[4] = false;
 }
 
 
 void CYachtDice1Dlg::OnBnClickedDiceButton7()
 {
+    v_showDice[0] = true;
+    pButton2->ShowWindow(SW_SHOW);
     pButton2->EnableWindow(TRUE);
 
     // TODO: Add your control notification handler code here
@@ -531,11 +616,14 @@ void CYachtDice1Dlg::OnBnClickedDiceButton7()
     //m_showScore.SetWindowText(str);
 
     pButton7->EnableWindow(FALSE);
+    pButton7->ShowWindow(SW_HIDE);
 }
 
 
 void CYachtDice1Dlg::OnBnClickedDiceButton8()
 {
+    v_showDice[1] = true;
+    pButton3->ShowWindow(SW_SHOW);
     pButton3->EnableWindow(TRUE);
 
     // TODO: Add your control notification handler code here
@@ -559,11 +647,14 @@ void CYachtDice1Dlg::OnBnClickedDiceButton8()
     //m_showScore.SetWindowText(str);
 
     pButton8->EnableWindow(FALSE);
+    pButton8->ShowWindow(SW_HIDE);
 }
 
 
 void CYachtDice1Dlg::OnBnClickedDiceButton9()
 {
+    v_showDice[2] = true;
+    pButton4->ShowWindow(SW_SHOW);
     pButton4->EnableWindow(TRUE);
 
     // TODO: Add your control notification handler code here
@@ -587,11 +678,14 @@ void CYachtDice1Dlg::OnBnClickedDiceButton9()
     //m_showScore.SetWindowText(str);
 
     pButton9->EnableWindow(FALSE);
+    pButton9->ShowWindow(SW_HIDE);
 }
 
 
 void CYachtDice1Dlg::OnBnClickedDiceButton10()
 {
+    v_showDice[3] = true;
+    pButton5->ShowWindow(SW_SHOW);
     pButton5->EnableWindow(TRUE);
 
     // TODO: Add your control notification handler code here
@@ -615,11 +709,14 @@ void CYachtDice1Dlg::OnBnClickedDiceButton10()
     //m_showScore.SetWindowText(str);}
 
     pButton10->EnableWindow(FALSE);
+    pButton10->ShowWindow(SW_HIDE);
 }
 
 
 void CYachtDice1Dlg::OnBnClickedDiceButton11()
 {
+    v_showDice[5] = true;
+    pButton6->ShowWindow(SW_SHOW);
     pButton6->EnableWindow(TRUE);
 
     // TODO: Add your control notification handler code here
@@ -643,6 +740,7 @@ void CYachtDice1Dlg::OnBnClickedDiceButton11()
     //m_showScore.SetWindowText(str);}
 
     pButton11->EnableWindow(FALSE);
+    pButton11->ShowWindow(SW_HIDE);
 }
 
 
