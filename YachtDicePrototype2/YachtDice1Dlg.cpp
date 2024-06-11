@@ -58,7 +58,7 @@ BOOL CYachtDice1Dlg::OnInitDialog()
 
     // TODO: Add extra initialization here
     
-    back.Load(_T("GameBoard_Background.bmp"));
+    back.Load(_T("GameBoard_Background.png"));
     
     // 닉네임
     m_font.CreatePointFont(130, _T("Ravie"));
