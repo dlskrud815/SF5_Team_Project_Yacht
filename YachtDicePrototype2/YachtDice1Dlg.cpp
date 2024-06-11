@@ -9,12 +9,14 @@
 #include "resource.h" 
 #include "CTutorial.h"
 
+
 #include <Windows.h>
 #include <iostream>
 #include <string>
 #include <array>
 #include <vector>
 #include <algorithm>
+
 
 using namespace std;
 
@@ -455,6 +457,7 @@ void AdjustButtonToBitmap(CButton& button, HBITMAP hBitmap)
     BITMAP bm;
     GetObject(hBitmap, sizeof(BITMAP), &bm);
     button.SetBitmap(hBitmap);
+    button.SetWindowPos(nullptr, 0, 0, bm.bmWidth, bm.bmHeight, SWP_NOMOVE | SWP_NOZORDER);
     //button.SetWindowPos(nullptr, 0, 0, 200, 200, SWP_NOMOVE | SWP_NOZORDER);
 }
 
@@ -526,6 +529,27 @@ void CYachtDice1Dlg::SetData(const CString& strData)
     m_strData = strData;
 }
 
+void ResizeBitmap(HBITMAP hSrcBitmap, HBITMAP& hDestBitmap, int newWidth, int newHeight)
+{
+    HDC hdcScreen = GetDC(nullptr);
+    HDC hdcSrc = CreateCompatibleDC(hdcScreen);
+    HDC hdcDest = CreateCompatibleDC(hdcScreen);
+
+    hDestBitmap = CreateCompatibleBitmap(hdcScreen, newWidth, newHeight);
+    HBITMAP hOldSrcBitmap = (HBITMAP)SelectObject(hdcSrc, hSrcBitmap);
+    HBITMAP hOldDestBitmap = (HBITMAP)SelectObject(hdcDest, hDestBitmap);
+
+    StretchBlt(hdcDest, 0, 0, newWidth, newHeight, hdcSrc, 0, 0, newWidth, newHeight, SRCCOPY);
+
+    SelectObject(hdcSrc, hOldSrcBitmap);
+    SelectObject(hdcDest, hOldDestBitmap);
+
+    DeleteDC(hdcSrc);
+    DeleteDC(hdcDest);
+    ReleaseDC(nullptr, hdcScreen);
+
+}
+
 void CYachtDice1Dlg::OnBnClickedDiceButton2()
 {
     // TODO: Add your control notification handler code here
@@ -533,10 +557,15 @@ void CYachtDice1Dlg::OnBnClickedDiceButton2()
 
     // 버튼 2에서 이미지를 추출합니다.
     HBITMAP hBitmap = (HBITMAP)pButton2->SendMessage(BM_GETIMAGE, IMAGE_BITMAP, 0);
+    BITMAP bm;
+
+    GetObject(hBitmap, sizeof(BITMAP), &bm);
 
     // 버튼 7에 이미지를 설정합니다.
     pButton7->SetBitmap(hBitmap);
+    pButton7->SetWindowPos(nullptr, 0, 0, bm.bmWidth, bm.bmHeight, SWP_NOMOVE | SWP_NOZORDER);
 
+    
     // 버튼 2에 있는 이미지를 삭제합니다.
     pButton2->SetBitmap(nullptr);
     pickDice[0] = false;

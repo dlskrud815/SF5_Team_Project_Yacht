@@ -74,11 +74,11 @@ public:
 	CBitmapButton m_dice5;
 
 	CButton m_showScore;
-	CButton m_score1;
-	CButton m_score2;
-	CButton m_score3;
-	CButton m_score4;
-	CButton m_score5;
+	CBitmapButton m_score1;
+	CBitmapButton m_score2;
+	CBitmapButton m_score3;
+	CBitmapButton m_score4;
+	CBitmapButton m_score5;
 
 	afx_msg void OnBnClickedDiceButton2();
 	afx_msg void OnBnClickedDiceButton3();
