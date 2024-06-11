@@ -9,12 +9,14 @@
 #include "resource.h" 
 #include "CTutorial.h"
 
+
 #include <Windows.h>
 #include <iostream>
 #include <string>
 #include <array>
 #include <vector>
 #include <algorithm>
+
 
 using namespace std;
 
@@ -147,6 +149,13 @@ BOOL CYachtDice1Dlg::OnInitDialog()
     // 주사위 돌린 횟수 체크할 변수 초기화
     r = 0;
 
+    // 툴팁컨트롤을 생성한다.
+    m_tip_ctrl.Create(this);
+    m_tip_ctrl.AddTool(GetDlgItem(IDC_DICE_BUTTON2), _T("주사위 1 선택"));
+    m_tip_ctrl.SetMaxTipWidth(300);
+    m_tip_ctrl.SetDelayTime(TTDT_AUTOPOP, 2000);
+
+
     // roll 직후, 주사위 상태(선택 여부)를 확인하는 벡터
     for (int i = 0; i < 5; i++) {
 
@@ -159,6 +168,7 @@ BOOL CYachtDice1Dlg::OnInitDialog()
         m_btnPlayers[i - IDC_p1_1].SubclassDlgItem(i, this);
         m_btnPlayers[i - IDC_p1_1].ModifyStyle(0, BS_OWNERDRAW);
     }
+
 
     /*
     // Picture Controls 초기화
@@ -303,17 +313,6 @@ HBITMAP LoadBitmapFromResource(HINSTANCE hInstance, int resourceID) {
 
 }
 
-/*
-vector<int> RemoveArr(int idx) {
-    vector<int> vec = { 0,1,2,3,4 };
-
-    vec.erase(vec.begin() + idx);
-
-    return vec;
-}
-*/
-
-
 void CYachtDice1Dlg::OnBnClickedRoll()
 {
     vector<int> indices = { IDB_dice_1, IDB_dice_2, IDB_dice_3, IDB_dice_4, IDB_dice_5, IDB_dice_6 };
@@ -455,6 +454,7 @@ void AdjustButtonToBitmap(CButton& button, HBITMAP hBitmap)
     BITMAP bm;
     GetObject(hBitmap, sizeof(BITMAP), &bm);
     button.SetBitmap(hBitmap);
+    button.SetWindowPos(nullptr, 0, 0, bm.bmWidth, bm.bmHeight, SWP_NOMOVE | SWP_NOZORDER);
     //button.SetWindowPos(nullptr, 0, 0, 200, 200, SWP_NOMOVE | SWP_NOZORDER);
 }
 
@@ -533,10 +533,14 @@ void CYachtDice1Dlg::OnBnClickedDiceButton2()
 
     // 버튼 2에서 이미지를 추출합니다.
     HBITMAP hBitmap = (HBITMAP)pButton2->SendMessage(BM_GETIMAGE, IMAGE_BITMAP, 0);
+    BITMAP bm;
+    GetObject(hBitmap, sizeof(BITMAP), &bm);
 
     // 버튼 7에 이미지를 설정합니다.
     pButton7->SetBitmap(hBitmap);
+    pButton7->SetWindowPos(nullptr, 0, 0, bm.bmWidth, bm.bmHeight, SWP_NOMOVE | SWP_NOZORDER);
 
+    
     // 버튼 2에 있는 이미지를 삭제합니다.
     pButton2->SetBitmap(nullptr);
     pickDice[0] = false;
@@ -556,9 +560,13 @@ void CYachtDice1Dlg::OnBnClickedDiceButton3()
      
      // 버튼 3에서 이미지를 추출합니다.
     HBITMAP hBitmap = (HBITMAP)pButton3->SendMessage(BM_GETIMAGE, IMAGE_BITMAP, 0);
+    BITMAP bm;
+
+    GetObject(hBitmap, sizeof(BITMAP), &bm);
 
     // 버튼 8에 이미지를 설정합니다.
     pButton8->SetBitmap(hBitmap);
+    pButton8->SetWindowPos(nullptr, 0, 0, bm.bmWidth, bm.bmHeight, SWP_NOMOVE | SWP_NOZORDER);
 
     // 버튼 3에 있는 이미지를 삭제합니다.
     pButton3->SetBitmap(nullptr);
@@ -578,9 +586,13 @@ void CYachtDice1Dlg::OnBnClickedDiceButton4()
     pButton9->ShowWindow(SW_SHOW);
     // 버튼 4에서 이미지를 추출합니다.
     HBITMAP hBitmap = (HBITMAP)pButton4->SendMessage(BM_GETIMAGE, IMAGE_BITMAP, 0);
+    BITMAP bm;
+
+    GetObject(hBitmap, sizeof(BITMAP), &bm);
 
     // 버튼 9에 이미지를 설정합니다.
     pButton9->SetBitmap(hBitmap);
+    pButton9->SetWindowPos(nullptr, 0, 0, bm.bmWidth, bm.bmHeight, SWP_NOMOVE | SWP_NOZORDER);
 
     // 버튼 4에 있는 이미지를 삭제합니다.
     pButton4->SetBitmap(nullptr);
@@ -600,9 +612,13 @@ void CYachtDice1Dlg::OnBnClickedDiceButton5()
     pButton10->ShowWindow(SW_SHOW);
     // 버튼 5에서 이미지를 추출합니다.
     HBITMAP hBitmap = (HBITMAP)pButton5->SendMessage(BM_GETIMAGE, IMAGE_BITMAP, 0);
+    BITMAP bm;
+
+    GetObject(hBitmap, sizeof(BITMAP), &bm);
 
     // 버튼 10에 이미지를 설정합니다.
     pButton10->SetBitmap(hBitmap);
+    pButton10->SetWindowPos(nullptr, 0, 0, bm.bmWidth, bm.bmHeight, SWP_NOMOVE | SWP_NOZORDER);
 
     // 버튼 5에 있는 이미지를 삭제합니다.
     pButton5->SetBitmap(nullptr);
@@ -622,9 +638,13 @@ void CYachtDice1Dlg::OnBnClickedDiceButton6()
     pButton11->ShowWindow(SW_SHOW);
     // 버튼 6에서 이미지를 추출합니다.
     HBITMAP hBitmap = (HBITMAP)pButton6->SendMessage(BM_GETIMAGE, IMAGE_BITMAP, 0);
+    BITMAP bm;
+
+    GetObject(hBitmap, sizeof(BITMAP), &bm);
 
     // 버튼 11에 이미지를 설정합니다.
     pButton11->SetBitmap(hBitmap);
+    pButton11->SetWindowPos(nullptr, 0, 0, bm.bmWidth, bm.bmHeight, SWP_NOMOVE | SWP_NOZORDER);
 
     // 버튼 6에 있는 이미지를 삭제합니다.
     pButton6->SetBitmap(nullptr);
@@ -834,4 +854,13 @@ void CYachtDice1Dlg::OnBnClickedChoosecategory()
     pButton9->EnableWindow(FALSE);
     pButton10->EnableWindow(FALSE);
     pButton11->EnableWindow(FALSE);
+}
+
+
+BOOL CYachtDice1Dlg::PreTranslateMessage(MSG* pMsg)
+{
+    // TODO: Add your specialized code here and/or call the base class
+    m_tip_ctrl.RelayEvent(pMsg);
+
+    return CDialogEx::PreTranslateMessage(pMsg);
 }

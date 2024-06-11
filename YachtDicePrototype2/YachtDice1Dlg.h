@@ -51,7 +51,7 @@ private:
 	void ArrangeDicePics(); // Picture Control 정렬 함수
 
 	CString m_strData;
-
+	CToolTipCtrl m_tip_ctrl;
 
 	CButton* pButton2, *pButton3, *pButton4, *pButton5, *pButton6;
 	CButton* pButton7, *pButton8, *pButton9, *pButton10, *pButton11;
@@ -74,11 +74,11 @@ public:
 	CBitmapButton m_dice5;
 
 	CButton m_showScore;
-	CButton m_score1;
-	CButton m_score2;
-	CButton m_score3;
-	CButton m_score4;
-	CButton m_score5;
+	CBitmapButton m_score1;
+	CBitmapButton m_score2;
+	CBitmapButton m_score3;
+	CBitmapButton m_score4;
+	CBitmapButton m_score5;
 
 	afx_msg void OnBnClickedDiceButton2();
 	afx_msg void OnBnClickedDiceButton3();
@@ -97,4 +97,5 @@ public:
 	CStatic m_roll_try;
 	int r;
 	vector<bool> pickDice;
+	virtual BOOL PreTranslateMessage(MSG* pMsg);
 };
