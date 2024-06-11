@@ -5,7 +5,7 @@
 #include "YachtDicePrototype2.h"
 #include "afxdialogex.h"
 #include "CNameSetting.h"
-
+#include "YachtDice1Dlg.h"
 
 // CNameSetting dialog
 
@@ -29,6 +29,7 @@ void CNameSetting::DoDataExchange(CDataExchange* pDX)
 
 BEGIN_MESSAGE_MAP(CNameSetting, CDialogEx)
 	ON_WM_PAINT()
+	ON_BN_CLICKED(IDOK, &CNameSetting::OnBnClickedOk)
 END_MESSAGE_MAP()
 
 
@@ -58,4 +59,24 @@ void CNameSetting::OnPaint()
 	GetClientRect(&rect);
 
 	backImage.StretchBlt(dc.m_hDC, 0, 0, rect.Width(), rect.Height(), SRCCOPY);//이미지를 픽쳐 컨트롤 크기로 조정
+}
+
+
+void CNameSetting::OnBnClickedOk()
+{
+	// TODO: Add your control notification handler code here
+	GetDlgItemText(IDC_EDIT_NAME, m_strInput);
+
+	if (m_strInput.IsEmpty())
+	{
+		AfxMessageBox(_T("닉네임을 입력해주세요."), MB_OK | MB_ICONWARNING);
+	}
+	else
+	{
+		CYachtDice1Dlg dlgGame;
+		dlgGame.SetData(m_strInput);
+		dlgGame.DoModal();
+
+		CDialogEx::OnOK();
+	}
 }

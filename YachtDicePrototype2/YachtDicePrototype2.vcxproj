@@ -223,10 +223,21 @@
     <Image Include="..\..\..\..\..\Downloads\YachtDice1-main (1)\YachtDice1-main\YachtDice1\res\playBackground.bmp" />
     <Image Include="..\..\..\..\..\Downloads\YachtDice1-main (1)\YachtDice1-main\YachtDice1\res\Reroll.bmp" />
     <Image Include="..\..\..\..\..\Downloads\YachtDice1-main (1)\YachtDice1-main\YachtDice1\res\ROLL.bmp" />
+    <Image Include="ChooseCategory.bmp" />
+    <Image Include="dice_1.bmp" />
+    <Image Include="dice_2.bmp" />
+    <Image Include="dice_3.bmp" />
+    <Image Include="dice_4.bmp" />
+    <Image Include="dice_5.bmp" />
+    <Image Include="dice_6.bmp" />
     <Image Include="DUAL.bmp" />
+    <Image Include="Enter your username.bmp" />
+    <Image Include="playBackground.bmp" />
     <Image Include="qMark.bmp" />
+    <Image Include="Reroll.bmp" />
     <Image Include="res\bitmap5.bmp" />
     <Image Include="res\YachtDicePrototype2.ico" />
+    <Image Include="ROLL.bmp" />
     <Image Include="SINGLE.bmp" />
     <Image Include="START.bmp" />
   </ItemGroup>

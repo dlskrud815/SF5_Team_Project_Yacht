@@ -74,7 +74,6 @@ BEGIN_MESSAGE_MAP(CYachtDicePrototype2Dlg, CDialogEx)
 	ON_WM_QUERYDRAGICON()
 	ON_BN_CLICKED(IDC_BUTTON3, &CYachtDicePrototype2Dlg::OnBnClickedButton3)
 	ON_BN_CLICKED(IDC_BUTTON1, &CYachtDicePrototype2Dlg::OnBnClickedButton1)
-	ON_BN_CLICKED(IDC_TEST_BTN, &CYachtDicePrototype2Dlg::OnBnClickedTestBtn)
 END_MESSAGE_MAP()
 
 
@@ -200,13 +199,5 @@ void CYachtDicePrototype2Dlg::OnBnClickedButton1()
 {
 	CNameSetting dlgN1;
 	dlgN1.DoModal();
-	// TODO: Add your control notification handler code here
-}
-
-
-void CYachtDicePrototype2Dlg::OnBnClickedTestBtn()
-{
-	CYachtDice1Dlg dlgGame;
-	dlgGame.DoModal();
 	// TODO: Add your control notification handler code here
 }

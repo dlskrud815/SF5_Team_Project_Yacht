@@ -122,5 +122,38 @@
     <Image Include="res\bitmap5.bmp">
       <Filter>Resource Files</Filter>
     </Image>
+    <Image Include="Enter your username.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="ChooseCategory.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="dice_1.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="dice_2.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="dice_3.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="dice_4.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="dice_5.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="dice_6.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="playBackground.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Reroll.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="ROLL.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
   </ItemGroup>
 </Project>

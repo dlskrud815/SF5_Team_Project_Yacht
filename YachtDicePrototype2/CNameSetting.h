@@ -25,4 +25,7 @@ public:
 	CImage backImage;
 	virtual BOOL OnInitDialog();
 	afx_msg void OnPaint();
+
+	CString m_strInput; //닉네임
+	afx_msg void OnBnClickedOk();
 };
