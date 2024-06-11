@@ -735,11 +735,38 @@ void CYachtDice1Dlg::OnBnClickedDiceButton11()
 void CYachtDice1Dlg::OnBnClickedChoosecategory()
 {
     // TODO: Add your control notification handler code here
+    for (int i = 0; i < 5; i++)
+    {
+        if (v_showDice[i]) // 선택이 안 된 주사위
+        {
+            switch (i)
+            {
+            case 0:
+                OnBnClickedDiceButton2();
+                break;
+            case 1:
+                OnBnClickedDiceButton3();
+                break;
+            case 2:
+                OnBnClickedDiceButton4();
+                break;
+            case 3:
+                OnBnClickedDiceButton5();
+                break;
+            case 4:
+                OnBnClickedDiceButton6();
+                break;
+            }
+        }
+    }
+    //GetDlgItem(IDC_Roll)->ShowWindow(SW_HIDE);
+
     pButton2->ShowWindow(SW_HIDE);
     pButton3->ShowWindow(SW_HIDE);
     pButton4->ShowWindow(SW_HIDE);
     pButton5->ShowWindow(SW_HIDE);
     pButton6->ShowWindow(SW_HIDE);
+
     pButton7->EnableWindow(FALSE);
     pButton8->EnableWindow(FALSE);
     pButton9->EnableWindow(FALSE);
