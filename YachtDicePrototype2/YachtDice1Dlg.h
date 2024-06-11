@@ -38,6 +38,7 @@ protected:
 	LRESULT OnUpdateDice(WPARAM wParam, LPARAM lParam);
 	DECLARE_MESSAGE_MAP()
 
+
 private:
 	CButton m_btnPlayers[12]; // 모든 버튼을 담을 배열
 	CBitmapButton* m_btnRoll;
@@ -66,7 +67,6 @@ public:
 	void SetData(const CString& str);
 	CFont m_font;
 
-
 	CBitmapButton m_dice1;
 	CBitmapButton m_dice2;
 	CBitmapButton m_dice3;
@@ -91,4 +91,9 @@ public:
 	afx_msg void OnBnClickedDiceButton10();
 	afx_msg void OnBnClickedDiceButton11();
 	afx_msg void OnBnClickedChoosecategory();
+	CStatic m_turn_user;
+	CStatic m_turn_cpu;
+	CStatic m_roll_try;
+	int r;
+	vector<bool> pickDice;
 };

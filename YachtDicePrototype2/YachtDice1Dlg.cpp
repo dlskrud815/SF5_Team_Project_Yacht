@@ -22,8 +22,6 @@ using namespace std;
 #define new DEBUG_NEW
 #endif
 
-bool arr[5] = { 1,1,1,1,1 };
-
 // CYachtDice1Dlg dialog
 
 IMPLEMENT_DYNAMIC(CYachtDice1Dlg, CDialogEx)
@@ -40,7 +38,7 @@ CYachtDice1Dlg::~CYachtDice1Dlg()
 
 void CYachtDice1Dlg::DoDataExchange(CDataExchange* pDX)
 {
-	CDialogEx::DoDataExchange(pDX);
+    CDialogEx::DoDataExchange(pDX);
     DDX_Control(pDX, IDC_TUTORIAL_BTN, m_bitmapBtn);
 
 
@@ -55,6 +53,9 @@ void CYachtDice1Dlg::DoDataExchange(CDataExchange* pDX)
     DDX_Control(pDX, IDC_DICE_BUTTON9, m_score3);
     DDX_Control(pDX, IDC_DICE_BUTTON10, m_score4);
     DDX_Control(pDX, IDC_DICE_BUTTON11, m_score5);
+    DDX_Control(pDX, IDC_STATIC_TURN1, m_turn_user);
+    DDX_Control(pDX, IDC_STATIC_TURN2, m_turn_cpu);
+    DDX_Control(pDX, IDC_roll_num, m_roll_try);
 }
 
 
@@ -132,6 +133,15 @@ BOOL CYachtDice1Dlg::OnInitDialog()
     GetDlgItem(IDC_STATIC_NAME)->SetFont(&m_font);
     GetDlgItem(IDC_STATIC_NAME2)->SetFont(&m_font);
     SetDlgItemText(IDC_STATIC_NAME, m_strData);
+
+    // 주사위 돌린 횟수 체크할 변수 초기화
+    r = 0;
+
+    // roll 직후, 주사위 상태(선택 여부)를 확인하는 벡터
+    for (int i = 0; i < 5; i++) {
+
+        pickDice.push_back(1);
+    }
 
     // 모든 버튼에 owner draw 스타일 적용
     for (int i = IDC_p1_1; i <= IDC_p1_12; i++)
@@ -327,6 +337,7 @@ void CYachtDice1Dlg::OnBnClickedRoll()
 
     }
 
+
     for (int i = 0; i < 5; i++)
     {
         if (!v_showDice[i])
@@ -373,6 +384,8 @@ void CYachtDice1Dlg::OnBnClickedRoll()
             //v_showDice[i] = true;
         }
     }
+
+
 
     // 이하 현정님 파트
     // 
