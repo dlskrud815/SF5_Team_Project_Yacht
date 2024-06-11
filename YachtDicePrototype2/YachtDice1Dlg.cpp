@@ -78,6 +78,7 @@ BEGIN_MESSAGE_MAP(CYachtDice1Dlg, CDialogEx)
     ON_BN_CLICKED(IDC_DICE_BUTTON9, &CYachtDice1Dlg::OnBnClickedDiceButton9)
     ON_BN_CLICKED(IDC_DICE_BUTTON10, &CYachtDice1Dlg::OnBnClickedDiceButton10)
     ON_BN_CLICKED(IDC_DICE_BUTTON11, &CYachtDice1Dlg::OnBnClickedDiceButton11)
+    ON_BN_CLICKED(IDC_ChooseCategory, &CYachtDice1Dlg::OnBnClickedChoosecategory)
 END_MESSAGE_MAP()
 
 
@@ -656,4 +657,20 @@ void CYachtDice1Dlg::OnBnClickedDiceButton11()
     //m_showScore.SetWindowText(str);}
 
     pButton11->EnableWindow(FALSE);
+}
+
+
+void CYachtDice1Dlg::OnBnClickedChoosecategory()
+{
+    // TODO: Add your control notification handler code here
+    GetDlgItem(IDC_DICE_BUTTON2)->ShowWindow(SW_HIDE);
+    GetDlgItem(IDC_DICE_BUTTON3)->ShowWindow(SW_HIDE);
+    GetDlgItem(IDC_DICE_BUTTON4)->ShowWindow(SW_HIDE);
+    GetDlgItem(IDC_DICE_BUTTON5)->ShowWindow(SW_HIDE);
+    GetDlgItem(IDC_DICE_BUTTON6)->ShowWindow(SW_HIDE);
+    GetDlgItem(IDC_DICE_BUTTON7)->EnableWindow(FALSE);
+    GetDlgItem(IDC_DICE_BUTTON8)->EnableWindow(FALSE);
+    GetDlgItem(IDC_DICE_BUTTON9)->EnableWindow(FALSE);
+    GetDlgItem(IDC_DICE_BUTTON10)->EnableWindow(FALSE);
+    GetDlgItem(IDC_DICE_BUTTON11)->EnableWindow(FALSE);
 }

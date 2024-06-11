@@ -83,4 +83,5 @@ public:
 	afx_msg void OnBnClickedDiceButton9();
 	afx_msg void OnBnClickedDiceButton10();
 	afx_msg void OnBnClickedDiceButton11();
+	afx_msg void OnBnClickedChoosecategory();
 };
