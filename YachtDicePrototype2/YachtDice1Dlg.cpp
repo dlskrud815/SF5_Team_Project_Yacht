@@ -149,6 +149,13 @@ BOOL CYachtDice1Dlg::OnInitDialog()
     // 주사위 돌린 횟수 체크할 변수 초기화
     r = 0;
 
+    // 툴팁컨트롤을 생성한다.
+    m_tip_ctrl.Create(this);
+    m_tip_ctrl.AddTool(GetDlgItem(IDC_DICE_BUTTON2), _T("주사위 1 선택"));
+    m_tip_ctrl.SetMaxTipWidth(300);
+    m_tip_ctrl.SetDelayTime(TTDT_AUTOPOP, 2000);
+
+
     // roll 직후, 주사위 상태(선택 여부)를 확인하는 벡터
     for (int i = 0; i < 5; i++) {
 
@@ -161,6 +168,7 @@ BOOL CYachtDice1Dlg::OnInitDialog()
         m_btnPlayers[i - IDC_p1_1].SubclassDlgItem(i, this);
         m_btnPlayers[i - IDC_p1_1].ModifyStyle(0, BS_OWNERDRAW);
     }
+
 
     /*
     // Picture Controls 초기화
@@ -304,17 +312,6 @@ HBITMAP LoadBitmapFromResource(HINSTANCE hInstance, int resourceID) {
     return LoadBitmap(hInstance, MAKEINTRESOURCE(resourceID));
 
 }
-
-/*
-vector<int> RemoveArr(int idx) {
-    vector<int> vec = { 0,1,2,3,4 };
-
-    vec.erase(vec.begin() + idx);
-
-    return vec;
-}
-*/
-
 
 void CYachtDice1Dlg::OnBnClickedRoll()
 {
@@ -857,4 +854,13 @@ void CYachtDice1Dlg::OnBnClickedChoosecategory()
     pButton9->EnableWindow(FALSE);
     pButton10->EnableWindow(FALSE);
     pButton11->EnableWindow(FALSE);
+}
+
+
+BOOL CYachtDice1Dlg::PreTranslateMessage(MSG* pMsg)
+{
+    // TODO: Add your specialized code here and/or call the base class
+    m_tip_ctrl.RelayEvent(pMsg);
+
+    return CDialogEx::PreTranslateMessage(pMsg);
 }

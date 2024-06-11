@@ -51,7 +51,7 @@ private:
 	void ArrangeDicePics(); // Picture Control 정렬 함수
 
 	CString m_strData;
-
+	CToolTipCtrl m_tip_ctrl;
 
 	CButton* pButton2, *pButton3, *pButton4, *pButton5, *pButton6;
 	CButton* pButton7, *pButton8, *pButton9, *pButton10, *pButton11;
@@ -97,4 +97,5 @@ public:
 	CStatic m_roll_try;
 	int r;
 	vector<bool> pickDice;
+	virtual BOOL PreTranslateMessage(MSG* pMsg);
 };
