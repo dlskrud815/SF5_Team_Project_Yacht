@@ -136,6 +136,8 @@ BOOL CYachtDice1Dlg::OnInitDialog()
 
     // 주사위 돌린 횟수 체크할 변수 초기화
     r = 0;
+    CString str(to_string(r).c_str());
+    m_roll_try.SetWindowTextW(str);
 
     // roll 직후, 주사위 상태(선택 여부)를 확인하는 벡터
     for (int i = 0; i < 5; i++) {
@@ -386,11 +388,20 @@ void CYachtDice1Dlg::OnBnClickedRoll()
             }
         }
 
-        r++;
+        CString cstr;
+        m_roll_try.GetWindowTextW(cstr);
 
-        CString str(to_string(r).c_str());
+        CT2CA pszConvertedAnsiString(cstr);
+        std::string str(pszConvertedAnsiString);
 
-        m_roll_try.SetWindowTextW(str);
+        CString emptyStr = _T(""); // 빈 문자열
+        m_roll_try.SetWindowTextW(emptyStr);
+
+        r = stoi(str) + 1;
+        
+        CString nstr(to_string(r).c_str());
+
+        m_roll_try.SetWindowTextW(nstr);
 
         // 이하 현정님 파트
         // 
