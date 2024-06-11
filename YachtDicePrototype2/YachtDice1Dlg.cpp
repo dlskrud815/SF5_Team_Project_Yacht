@@ -93,7 +93,17 @@ BOOL CYachtDice1Dlg::OnInitDialog()
     SetIcon(m_hIcon, FALSE);		// Set small icon
 
     // TODO: Add extra initialization here
-    
+    GetDlgItem(IDC_DICE_BUTTON2)->EnableWindow(FALSE);
+    GetDlgItem(IDC_DICE_BUTTON3)->EnableWindow(FALSE);
+    GetDlgItem(IDC_DICE_BUTTON4)->EnableWindow(FALSE);
+    GetDlgItem(IDC_DICE_BUTTON5)->EnableWindow(FALSE);
+    GetDlgItem(IDC_DICE_BUTTON6)->EnableWindow(FALSE);
+    GetDlgItem(IDC_DICE_BUTTON7)->EnableWindow(FALSE);
+    GetDlgItem(IDC_DICE_BUTTON8)->EnableWindow(FALSE);
+    GetDlgItem(IDC_DICE_BUTTON9)->EnableWindow(FALSE);
+    GetDlgItem(IDC_DICE_BUTTON10)->EnableWindow(FALSE);
+    GetDlgItem(IDC_DICE_BUTTON11)->EnableWindow(FALSE);
+
     back.Load(_T("GameBoard_Background.png"));
     
     // 닉네임
@@ -293,6 +303,18 @@ void CYachtDice1Dlg::OnBnClickedRoll()
 
     }
 
+    GetDlgItem(IDC_DICE_BUTTON2)->EnableWindow(TRUE);
+    GetDlgItem(IDC_DICE_BUTTON3)->EnableWindow(TRUE);
+    GetDlgItem(IDC_DICE_BUTTON4)->EnableWindow(TRUE);
+    GetDlgItem(IDC_DICE_BUTTON5)->EnableWindow(TRUE);
+    GetDlgItem(IDC_DICE_BUTTON6)->EnableWindow(TRUE);
+
+    GetDlgItem(IDC_DICE_BUTTON2)->ShowWindow(SW_SHOW);
+    GetDlgItem(IDC_DICE_BUTTON3)->ShowWindow(SW_SHOW);
+    GetDlgItem(IDC_DICE_BUTTON4)->ShowWindow(SW_SHOW);
+    GetDlgItem(IDC_DICE_BUTTON5)->ShowWindow(SW_SHOW);
+    GetDlgItem(IDC_DICE_BUTTON6)->ShowWindow(SW_SHOW);
+
 
     // 이하 현정님 파트
     // 
@@ -396,6 +418,8 @@ void CYachtDice1Dlg::OnBnClickedDiceButton2()
     pButton2->SetBitmap(nullptr);
     arr[0] = false;
 
+    pButton2->EnableWindow(FALSE);
+    GetDlgItem(IDC_DICE_BUTTON7)->EnableWindow(TRUE);
 }
 
 
@@ -413,6 +437,9 @@ void CYachtDice1Dlg::OnBnClickedDiceButton3()
     // 버튼 3에 있는 이미지를 삭제합니다.
     pButton3->SetBitmap(nullptr);
     arr[1] = false;
+
+    pButton3->EnableWindow(FALSE);
+    GetDlgItem(IDC_DICE_BUTTON8)->EnableWindow(TRUE);
 }
 
 
@@ -430,6 +457,9 @@ void CYachtDice1Dlg::OnBnClickedDiceButton4()
     // 버튼 4에 있는 이미지를 삭제합니다.
     pButton4->SetBitmap(nullptr);
     arr[2] = false;
+
+    pButton4->EnableWindow(FALSE);
+    GetDlgItem(IDC_DICE_BUTTON9)->EnableWindow(TRUE);
 }
 
 
@@ -447,6 +477,9 @@ void CYachtDice1Dlg::OnBnClickedDiceButton5()
     // 버튼 5에 있는 이미지를 삭제합니다.
     pButton5->SetBitmap(nullptr);
     arr[3] = false;
+
+    pButton5->EnableWindow(FALSE);
+    GetDlgItem(IDC_DICE_BUTTON10)->EnableWindow(TRUE);
 }
 
 
@@ -464,11 +497,16 @@ void CYachtDice1Dlg::OnBnClickedDiceButton6()
     // 버튼 6에 있는 이미지를 삭제합니다.
     pButton6->SetBitmap(nullptr);
     arr[4] = false;
+
+    pButton6->EnableWindow(FALSE);
+    GetDlgItem(IDC_DICE_BUTTON11)->EnableWindow(TRUE);
 }
 
 
 void CYachtDice1Dlg::OnBnClickedDiceButton7()
 {
+    GetDlgItem(IDC_DICE_BUTTON2)->EnableWindow(TRUE);
+
     // TODO: Add your control notification handler code here
     // 버튼 7에서 이미지를 추출합니다.
     CButton* pButton7 = (CButton*)GetDlgItem(IDC_DICE_BUTTON7);
@@ -490,11 +528,15 @@ void CYachtDice1Dlg::OnBnClickedDiceButton7()
     //CString str;
     //GetDlgItemText(IDC_BUTTON7, str);
     //m_showScore.SetWindowText(str);
+
+    pButton7->EnableWindow(FALSE);
 }
 
 
 void CYachtDice1Dlg::OnBnClickedDiceButton8()
 {
+    GetDlgItem(IDC_DICE_BUTTON3)->EnableWindow(TRUE);
+
     // TODO: Add your control notification handler code here
     // 버튼 8에서 이미지를 추출합니다.
     CButton* pButton8 = (CButton*)GetDlgItem(IDC_DICE_BUTTON8);
@@ -516,11 +558,15 @@ void CYachtDice1Dlg::OnBnClickedDiceButton8()
     //CString str;
     //GetDlgItemText(IDC_BUTTON7, str);
     //m_showScore.SetWindowText(str);
+
+    pButton8->EnableWindow(FALSE);
 }
 
 
 void CYachtDice1Dlg::OnBnClickedDiceButton9()
 {
+    GetDlgItem(IDC_DICE_BUTTON4)->EnableWindow(TRUE);
+
     // TODO: Add your control notification handler code here
     // 버튼 9에서 이미지를 추출합니다.
     CButton* pButton9 = (CButton*)GetDlgItem(IDC_DICE_BUTTON9);
@@ -542,11 +588,15 @@ void CYachtDice1Dlg::OnBnClickedDiceButton9()
     //CString str;
     //GetDlgItemText(IDC_BUTTON7, str);
     //m_showScore.SetWindowText(str);
+
+    pButton9->EnableWindow(FALSE);
 }
 
 
 void CYachtDice1Dlg::OnBnClickedDiceButton10()
 {
+    GetDlgItem(IDC_DICE_BUTTON5)->EnableWindow(TRUE);
+
     // TODO: Add your control notification handler code here
     // 버튼 10에서 이미지를 추출합니다.
     CButton* pButton10 = (CButton*)GetDlgItem(IDC_DICE_BUTTON10);
@@ -568,11 +618,15 @@ void CYachtDice1Dlg::OnBnClickedDiceButton10()
     //CString str;
     //GetDlgItemText(IDC_BUTTON7, str);
     //m_showScore.SetWindowText(str);}
+
+    pButton10->EnableWindow(FALSE);
 }
 
 
 void CYachtDice1Dlg::OnBnClickedDiceButton11()
 {
+    GetDlgItem(IDC_DICE_BUTTON6)->EnableWindow(TRUE);
+
     // TODO: Add your control notification handler code here
     // 버튼 11에서 이미지를 추출합니다.
     CButton* pButton11 = (CButton*)GetDlgItem(IDC_DICE_BUTTON11);
@@ -594,4 +648,6 @@ void CYachtDice1Dlg::OnBnClickedDiceButton11()
     //CString str;
     //GetDlgItemText(IDC_BUTTON7, str);
     //m_showScore.SetWindowText(str);}
+
+    pButton11->EnableWindow(FALSE);
 }
