@@ -93,11 +93,14 @@ BOOL CYachtDice1Dlg::OnInitDialog()
     SetIcon(m_hIcon, FALSE);		// Set small icon
 
     // TODO: Add extra initialization here
+    /*
     GetDlgItem(IDC_DICE_BUTTON2)->EnableWindow(FALSE);
     GetDlgItem(IDC_DICE_BUTTON3)->EnableWindow(FALSE);
     GetDlgItem(IDC_DICE_BUTTON4)->EnableWindow(FALSE);
     GetDlgItem(IDC_DICE_BUTTON5)->EnableWindow(FALSE);
     GetDlgItem(IDC_DICE_BUTTON6)->EnableWindow(FALSE);
+    */
+
     GetDlgItem(IDC_DICE_BUTTON7)->EnableWindow(FALSE);
     GetDlgItem(IDC_DICE_BUTTON8)->EnableWindow(FALSE);
     GetDlgItem(IDC_DICE_BUTTON9)->EnableWindow(FALSE);
@@ -303,11 +306,14 @@ void CYachtDice1Dlg::OnBnClickedRoll()
 
     }
 
+    /*
     GetDlgItem(IDC_DICE_BUTTON2)->EnableWindow(TRUE);
     GetDlgItem(IDC_DICE_BUTTON3)->EnableWindow(TRUE);
     GetDlgItem(IDC_DICE_BUTTON4)->EnableWindow(TRUE);
     GetDlgItem(IDC_DICE_BUTTON5)->EnableWindow(TRUE);
     GetDlgItem(IDC_DICE_BUTTON6)->EnableWindow(TRUE);
+    */
+
 
     GetDlgItem(IDC_DICE_BUTTON2)->ShowWindow(SW_SHOW);
     GetDlgItem(IDC_DICE_BUTTON3)->ShowWindow(SW_SHOW);
