@@ -30,6 +30,16 @@
 #define IDC_EDIT_NAME                   202
 #define IDC_BUTTON3                     203
 #define IDC_TUTORIAL_BTN                204
+#define IDC_DICE_BUTTON2                205
+#define IDC_DICE_BUTTON3                206
+#define IDC_DICE_BUTTON4                207
+#define IDC_DICE_BUTTON5                208
+#define IDC_DICE_BUTTON6                209
+#define IDC_DICE_BUTTON7                210
+#define IDC_DICE_BUTTON8                211
+#define IDC_DICE_BUTTON9                212
+#define IDC_DICE_BUTTON10               213
+#define IDC_DICE_BUTTON11               214
 #define IDC_NAME_STATIC                 1001
 #define IDC_p1_1                        1002
 #define IDC_p1_2                        1003
