@@ -385,11 +385,34 @@ void CYachtDice1Dlg::OnBnClickedRoll()
         }
     }
 
-    CString str(to_string(r).c_str());
+    /*
+    CString cstr;
+    m_roll_try.GetWindowTextW(cstr);
 
-    m_roll_try.SetWindowTextW(str);
+    CT2CA pszConvertedAnsiString(cstr);
+
+    string str(pszConvertedAnsiString);
+
+    CString emptyStr = _T(""); // 빈 문자열
+    m_roll_try.SetWindowTextW(emptyStr);
+    r = stoi(str) + 1;
+
+    CString nstr(to_string(r).c_str());
+    m_roll_try.SetWindowTextW(nstr);
+    */
 
     r++;
+
+    // 정수를 CString으로 변환
+    CString strRollNum;
+    strRollNum.Format(_T("%d"), r);
+
+    CRect rect;
+    GetDlgItem(IDC_roll_num)->GetWindowRect(&rect);
+    ScreenToClient(&rect);
+    InvalidateRect(rect);
+
+    GetDlgItem(IDC_roll_num)->SetWindowTextW(strRollNum);
 
     if (r >= 3) {
         OnBnClickedChoosecategory();
