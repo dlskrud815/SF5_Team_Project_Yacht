@@ -53,8 +53,8 @@ void CYachtDice1Dlg::DoDataExchange(CDataExchange* pDX)
     DDX_Control(pDX, IDC_DICE_BUTTON9, m_score3);
     DDX_Control(pDX, IDC_DICE_BUTTON10, m_score4);
     DDX_Control(pDX, IDC_DICE_BUTTON11, m_score5);
-    DDX_Control(pDX, IDC_STATIC_TURN1, m_turn_user);
-    DDX_Control(pDX, IDC_STATIC_TURN2, m_turn_cpu);
+    //DDX_Control(pDX, IDC_STATIC_TURN1, m_turn_user);
+    //DDX_Control(pDX, IDC_STATIC_TURN2, m_turn_cpu);
     DDX_Control(pDX, IDC_roll_num, m_roll_try);
 }
 
@@ -123,8 +123,7 @@ BOOL CYachtDice1Dlg::OnInitDialog()
     pButton9->ShowWindow(SW_HIDE);
     pButton10->ShowWindow(SW_HIDE);
     pButton11->ShowWindow(SW_HIDE);
-    
-
+   
 
     back.Load(_T("GameBoard_Background.png"));
     
@@ -152,6 +151,7 @@ BOOL CYachtDice1Dlg::OnInitDialog()
         m_btnPlayers[i - IDC_p1_1].ModifyStyle(0, BS_OWNERDRAW);
     }
 
+    /*
     // Picture Controls 초기화
     for (int i = 0; i < 5; i++)
     {
@@ -174,6 +174,7 @@ BOOL CYachtDice1Dlg::OnInitDialog()
 
     // 주사위를 정렬합니다.
     ArrangeDicePics();
+    */
 
     return TRUE;  // return TRUE  unless you set the focus to a control
 }
@@ -300,122 +301,125 @@ vector<int> RemoveArr(int idx) {
 
 void CYachtDice1Dlg::OnBnClickedRoll()
 {
-    if (r < 3) {
+    vector<int> indices = { IDB_dice_1, IDB_dice_2, IDB_dice_3, IDB_dice_4, IDB_dice_5, IDB_dice_6 };
 
-        vector<int> indices = { IDB_dice_1, IDB_dice_2, IDB_dice_3, IDB_dice_4, IDB_dice_5, IDB_dice_6 };
+    //random_shuffle(indices.begin(), indices.end());
 
-        //random_shuffle(indices.begin(), indices.end());
+    HINSTANCE hInstance = GetModuleHandle(nullptr);
 
-        HINSTANCE hInstance = GetModuleHandle(nullptr);
+    for (int j = 0; j < 5; ++j) {
+        int i = rand() % 6;
+        HBITMAP hBitmap = LoadBitmapFromResource(hInstance, indices[i]);
+        if (hBitmap == nullptr) {
+            AfxMessageBox(_T("Failed to load bitmap!"));
+            return;
+        }
+        if (pickDice[j] == 1) {
+            PostMessage(WM_USER + 1, j, reinterpret_cast<LPARAM>(hBitmap));
+            CString scoreStr;
+            scoreStr.Format(_T("%d"), indices[i]);
+            switch (j) {
+            case 0:
+                m_score1.SetWindowText(scoreStr);
 
-        for (int j = 0; j < 5; ++j) {
-            int i = rand() % 6;
-            HBITMAP hBitmap = LoadBitmapFromResource(hInstance, indices[i]);
-            if (hBitmap == nullptr) {
-                AfxMessageBox(_T("Failed to load bitmap!"));
-                return;
-            }
-            if (pickDice[j] == 1) {
-                PostMessage(WM_USER + 1, j, reinterpret_cast<LPARAM>(hBitmap));
-                CString scoreStr;
-                scoreStr.Format(_T("%d"), indices[i]);
-                switch (j) {
-                case 0:
-                    m_score1.SetWindowText(scoreStr);
+            case 1:
+                m_score2.SetWindowText(scoreStr);
 
-                case 1:
-                    m_score2.SetWindowText(scoreStr);
+            case 2:
+                m_score3.SetWindowText(scoreStr);
 
-                case 2:
-                    m_score3.SetWindowText(scoreStr);
+            case 3:
+                m_score4.SetWindowText(scoreStr);
 
-                case 3:
-                    m_score4.SetWindowText(scoreStr);
-
-                case 4:
-                    m_score5.SetWindowText(scoreStr);
-
-                }
+            case 4:
+                m_score5.SetWindowText(scoreStr);
 
             }
 
         }
 
-        for (int i = 0; i < 5; i++)
-        {
-            if (!v_showDice[i])
-            {
-                switch (i)
-                {
-                case 0:
-                    pButton2->ShowWindow(SW_HIDE);
-                    break;
-                case 1:
-                    pButton3->ShowWindow(SW_HIDE);
-                    break;
-                case 2:
-                    pButton4->ShowWindow(SW_HIDE);
-                    break;
-                case 3:
-                    pButton5->ShowWindow(SW_HIDE);
-                    break;
-                case 4:
-                    pButton6->ShowWindow(SW_HIDE);
-                    break;
-                }
-            }
-            else
-            {
-                switch (i)
-                {
-                case 0:
-                    pButton2->ShowWindow(SW_SHOW);
-                    break;
-                case 1:
-                    pButton3->ShowWindow(SW_SHOW);
-                    break;
-                case 2:
-                    pButton4->ShowWindow(SW_SHOW);
-                    break;
-                case 3:
-                    pButton5->ShowWindow(SW_SHOW);
-                    break;
-                case 4:
-                    pButton6->ShowWindow(SW_SHOW);
-                    break;
-                }
-                //v_showDice[i] = true;
-            }
-        }
-
-        CString cstr;
-        m_roll_try.GetWindowTextW(cstr);
-
-        CT2CA pszConvertedAnsiString(cstr);
-        std::string str(pszConvertedAnsiString);
-
-        CString emptyStr = _T(""); // 빈 문자열
-        m_roll_try.SetWindowTextW(emptyStr);
-
-        r = stoi(str) + 1;
-        
-        CString nstr(to_string(r).c_str());
-
-        m_roll_try.SetWindowTextW(nstr);
-
-        // 이하 현정님 파트
-        // 
-        // 
-        // 랜덤 주사위 이미지를 생성하고 갱신합니다.
-
-        /*
-        for (int i = 0; i < 5; i++)
-        {
-            int randomIndex = rand() % 6; // 0부터 5 사이의 랜덤 숫자 생성
-            ShowDiceImage(i, randomIndex); // 주사위 이미지 갱신
-        }
-        */
     }
+
+    for (int i = 0; i < 5; i++)
+    {
+        if (!v_showDice[i])
+        {
+            switch (i)
+            {
+            case 0:
+                pButton2->ShowWindow(SW_HIDE);
+                break;
+            case 1:
+                pButton3->ShowWindow(SW_HIDE);
+                break;
+            case 2:
+                pButton4->ShowWindow(SW_HIDE);
+                break;
+            case 3:
+                pButton5->ShowWindow(SW_HIDE);
+                break;
+            case 4:
+                pButton6->ShowWindow(SW_HIDE);
+                break;
+            }
+        }
+        else
+        {
+            switch (i)
+            {
+            case 0:
+                pButton2->ShowWindow(SW_SHOW);
+                break;
+            case 1:
+                pButton3->ShowWindow(SW_SHOW);
+                break;
+            case 2:
+                pButton4->ShowWindow(SW_SHOW);
+                break;
+            case 3:
+                pButton5->ShowWindow(SW_SHOW);
+                break;
+            case 4:
+                pButton6->ShowWindow(SW_SHOW);
+                break;
+            }
+            //v_showDice[i] = true;
+        }
+    }
+
+
+    CString cstr;
+    m_roll_try.GetWindowTextW(cstr);
+
+    CT2CA pszConvertedAnsiString(cstr);
+    std::string str(pszConvertedAnsiString);
+
+    CString emptyStr = _T(""); // 빈 문자열
+    m_roll_try.SetWindowTextW(emptyStr);
+
+    r = stoi(str) + 1;
+
+    CString nstr(to_string(r).c_str());
+
+    m_roll_try.SetWindowTextW(nstr);
+
+    if (r >= 3) {
+        OnBnClickedChoosecategory();
+    }
+
+
+    // 이하 현정님 파트
+    // 
+    // 
+    // 랜덤 주사위 이미지를 생성하고 갱신합니다.
+
+    /*
+    for (int i = 0; i < 5; i++)
+    {
+        int randomIndex = rand() % 6; // 0부터 5 사이의 랜덤 숫자 생성
+        ShowDiceImage(i, randomIndex); // 주사위 이미지 갱신
+    }
+    */
 }
 
 void AdjustButtonToBitmap(CButton& button, HBITMAP hBitmap)
@@ -764,11 +768,39 @@ void CYachtDice1Dlg::OnBnClickedDiceButton11()
 void CYachtDice1Dlg::OnBnClickedChoosecategory()
 {
     // TODO: Add your control notification handler code here
+    GetDlgItem(IDC_Roll)->ShowWindow(SW_HIDE);
+
+    for (int i = 0; i < 5; i++)
+    {
+        if (v_showDice[i]) // 선택이 안 된 주사위
+        {
+            switch (i)
+            {
+            case 0:
+                OnBnClickedDiceButton2();
+                break;
+            case 1:
+                OnBnClickedDiceButton3();
+                break;
+            case 2:
+                OnBnClickedDiceButton4();
+                break;
+            case 3:
+                OnBnClickedDiceButton5();
+                break;
+            case 4:
+                OnBnClickedDiceButton6();
+                break;
+            }
+        }
+    }
+
     pButton2->ShowWindow(SW_HIDE);
     pButton3->ShowWindow(SW_HIDE);
     pButton4->ShowWindow(SW_HIDE);
     pButton5->ShowWindow(SW_HIDE);
     pButton6->ShowWindow(SW_HIDE);
+
     pButton7->EnableWindow(FALSE);
     pButton8->EnableWindow(FALSE);
     pButton9->EnableWindow(FALSE);
