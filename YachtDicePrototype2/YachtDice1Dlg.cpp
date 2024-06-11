@@ -94,19 +94,23 @@ BOOL CYachtDice1Dlg::OnInitDialog()
     SetIcon(m_hIcon, FALSE);		// Set small icon
 
     // TODO: Add extra initialization here
-    /*
-    GetDlgItem(IDC_DICE_BUTTON2)->EnableWindow(FALSE);
-    GetDlgItem(IDC_DICE_BUTTON3)->EnableWindow(FALSE);
-    GetDlgItem(IDC_DICE_BUTTON4)->EnableWindow(FALSE);
-    GetDlgItem(IDC_DICE_BUTTON5)->EnableWindow(FALSE);
-    GetDlgItem(IDC_DICE_BUTTON6)->EnableWindow(FALSE);
-    */
+    pButton2 = (CButton*)GetDlgItem(IDC_DICE_BUTTON2);
+    pButton3 = (CButton*)GetDlgItem(IDC_DICE_BUTTON3);
+    pButton4 = (CButton*)GetDlgItem(IDC_DICE_BUTTON4);
+    pButton5 = (CButton*)GetDlgItem(IDC_DICE_BUTTON5);
+    pButton6 = (CButton*)GetDlgItem(IDC_DICE_BUTTON6);
+    pButton7 = (CButton*)GetDlgItem(IDC_DICE_BUTTON7);
+    pButton8 = (CButton*)GetDlgItem(IDC_DICE_BUTTON8);
+    pButton9 = (CButton*)GetDlgItem(IDC_DICE_BUTTON9);
+    pButton10 = (CButton*)GetDlgItem(IDC_DICE_BUTTON10);
+    pButton11 = (CButton*)GetDlgItem(IDC_DICE_BUTTON11);
 
-    GetDlgItem(IDC_DICE_BUTTON7)->EnableWindow(FALSE);
-    GetDlgItem(IDC_DICE_BUTTON8)->EnableWindow(FALSE);
-    GetDlgItem(IDC_DICE_BUTTON9)->EnableWindow(FALSE);
-    GetDlgItem(IDC_DICE_BUTTON10)->EnableWindow(FALSE);
-    GetDlgItem(IDC_DICE_BUTTON11)->EnableWindow(FALSE);
+
+    pButton7->EnableWindow(FALSE);
+    pButton8->EnableWindow(FALSE);
+    pButton9->EnableWindow(FALSE);
+    pButton10->EnableWindow(FALSE);
+    pButton11->EnableWindow(FALSE);
 
     back.Load(_T("GameBoard_Background.png"));
     
@@ -307,20 +311,11 @@ void CYachtDice1Dlg::OnBnClickedRoll()
 
     }
 
-    /*
-    GetDlgItem(IDC_DICE_BUTTON2)->EnableWindow(TRUE);
-    GetDlgItem(IDC_DICE_BUTTON3)->EnableWindow(TRUE);
-    GetDlgItem(IDC_DICE_BUTTON4)->EnableWindow(TRUE);
-    GetDlgItem(IDC_DICE_BUTTON5)->EnableWindow(TRUE);
-    GetDlgItem(IDC_DICE_BUTTON6)->EnableWindow(TRUE);
-    */
-
-
-    GetDlgItem(IDC_DICE_BUTTON2)->ShowWindow(SW_SHOW);
-    GetDlgItem(IDC_DICE_BUTTON3)->ShowWindow(SW_SHOW);
-    GetDlgItem(IDC_DICE_BUTTON4)->ShowWindow(SW_SHOW);
-    GetDlgItem(IDC_DICE_BUTTON5)->ShowWindow(SW_SHOW);
-    GetDlgItem(IDC_DICE_BUTTON6)->ShowWindow(SW_SHOW);
+    pButton2->ShowWindow(SW_SHOW);
+    pButton3->ShowWindow(SW_SHOW);
+    pButton4->ShowWindow(SW_SHOW);
+    pButton5->ShowWindow(SW_SHOW);
+    pButton6->ShowWindow(SW_SHOW);
 
 
     // 이하 현정님 파트
@@ -414,11 +409,9 @@ void CYachtDice1Dlg::OnBnClickedDiceButton2()
 {
     // TODO: Add your control notification handler code here
     // 버튼 2에서 이미지를 추출합니다.
-    CButton* pButton2 = (CButton*)GetDlgItem(IDC_DICE_BUTTON2);
     HBITMAP hBitmap = (HBITMAP)pButton2->SendMessage(BM_GETIMAGE, IMAGE_BITMAP, 0);
 
     // 버튼 7에 이미지를 설정합니다.
-    CButton* pButton7 = (CButton*)GetDlgItem(IDC_DICE_BUTTON7);
     pButton7->SetBitmap(hBitmap);
 
     // 버튼 2에 있는 이미지를 삭제합니다.
@@ -426,7 +419,7 @@ void CYachtDice1Dlg::OnBnClickedDiceButton2()
     arr[0] = false;
 
     pButton2->EnableWindow(FALSE);
-    GetDlgItem(IDC_DICE_BUTTON7)->EnableWindow(TRUE);
+    pButton7->EnableWindow(TRUE);
 }
 
 
@@ -434,11 +427,9 @@ void CYachtDice1Dlg::OnBnClickedDiceButton3()
 {
     // TODO: Add your control notification handler code here
      // 버튼 3에서 이미지를 추출합니다.
-    CButton* pButton3 = (CButton*)GetDlgItem(IDC_DICE_BUTTON3);
     HBITMAP hBitmap = (HBITMAP)pButton3->SendMessage(BM_GETIMAGE, IMAGE_BITMAP, 0);
 
     // 버튼 8에 이미지를 설정합니다.
-    CButton* pButton8 = (CButton*)GetDlgItem(IDC_DICE_BUTTON8);
     pButton8->SetBitmap(hBitmap);
 
     // 버튼 3에 있는 이미지를 삭제합니다.
@@ -446,7 +437,7 @@ void CYachtDice1Dlg::OnBnClickedDiceButton3()
     arr[1] = false;
 
     pButton3->EnableWindow(FALSE);
-    GetDlgItem(IDC_DICE_BUTTON8)->EnableWindow(TRUE);
+    pButton8->EnableWindow(TRUE);
 }
 
 
@@ -454,11 +445,9 @@ void CYachtDice1Dlg::OnBnClickedDiceButton4()
 {
     // TODO: Add your control notification handler code here
     // 버튼 4에서 이미지를 추출합니다.
-    CButton* pButton4 = (CButton*)GetDlgItem(IDC_DICE_BUTTON4);
     HBITMAP hBitmap = (HBITMAP)pButton4->SendMessage(BM_GETIMAGE, IMAGE_BITMAP, 0);
 
     // 버튼 9에 이미지를 설정합니다.
-    CButton* pButton9 = (CButton*)GetDlgItem(IDC_DICE_BUTTON9);
     pButton9->SetBitmap(hBitmap);
 
     // 버튼 4에 있는 이미지를 삭제합니다.
@@ -466,7 +455,7 @@ void CYachtDice1Dlg::OnBnClickedDiceButton4()
     arr[2] = false;
 
     pButton4->EnableWindow(FALSE);
-    GetDlgItem(IDC_DICE_BUTTON9)->EnableWindow(TRUE);
+    pButton9->EnableWindow(TRUE);
 }
 
 
@@ -474,11 +463,9 @@ void CYachtDice1Dlg::OnBnClickedDiceButton5()
 {
     // TODO: Add your control notification handler code here
     // 버튼 5에서 이미지를 추출합니다.
-    CButton* pButton5 = (CButton*)GetDlgItem(IDC_DICE_BUTTON5);
     HBITMAP hBitmap = (HBITMAP)pButton5->SendMessage(BM_GETIMAGE, IMAGE_BITMAP, 0);
 
     // 버튼 10에 이미지를 설정합니다.
-    CButton* pButton10 = (CButton*)GetDlgItem(IDC_DICE_BUTTON10);
     pButton10->SetBitmap(hBitmap);
 
     // 버튼 5에 있는 이미지를 삭제합니다.
@@ -486,7 +473,7 @@ void CYachtDice1Dlg::OnBnClickedDiceButton5()
     arr[3] = false;
 
     pButton5->EnableWindow(FALSE);
-    GetDlgItem(IDC_DICE_BUTTON10)->EnableWindow(TRUE);
+    pButton10->EnableWindow(TRUE);
 }
 
 
@@ -494,11 +481,9 @@ void CYachtDice1Dlg::OnBnClickedDiceButton6()
 {
     // TODO: Add your control notification handler code here
     // 버튼 6에서 이미지를 추출합니다.
-    CButton* pButton6 = (CButton*)GetDlgItem(IDC_DICE_BUTTON6);
     HBITMAP hBitmap = (HBITMAP)pButton6->SendMessage(BM_GETIMAGE, IMAGE_BITMAP, 0);
 
     // 버튼 11에 이미지를 설정합니다.
-    CButton* pButton11 = (CButton*)GetDlgItem(IDC_DICE_BUTTON11);
     pButton11->SetBitmap(hBitmap);
 
     // 버튼 6에 있는 이미지를 삭제합니다.
@@ -506,21 +491,19 @@ void CYachtDice1Dlg::OnBnClickedDiceButton6()
     arr[4] = false;
 
     pButton6->EnableWindow(FALSE);
-    GetDlgItem(IDC_DICE_BUTTON11)->EnableWindow(TRUE);
+    pButton11->EnableWindow(TRUE);
 }
 
 
 void CYachtDice1Dlg::OnBnClickedDiceButton7()
 {
-    GetDlgItem(IDC_DICE_BUTTON2)->EnableWindow(TRUE);
+    pButton2->EnableWindow(TRUE);
 
     // TODO: Add your control notification handler code here
     // 버튼 7에서 이미지를 추출합니다.
-    CButton* pButton7 = (CButton*)GetDlgItem(IDC_DICE_BUTTON7);
     HBITMAP hBitmap = (HBITMAP)pButton7->SendMessage(BM_GETIMAGE, IMAGE_BITMAP, 0);
 
     // 버튼 2에 이미지를 설정합니다.
-    CButton* pButton2 = (CButton*)GetDlgItem(IDC_DICE_BUTTON2);
     pButton2->SetBitmap(hBitmap);
 
     // 버튼 7에 있는 이미지를 삭제합니다.
@@ -542,15 +525,13 @@ void CYachtDice1Dlg::OnBnClickedDiceButton7()
 
 void CYachtDice1Dlg::OnBnClickedDiceButton8()
 {
-    GetDlgItem(IDC_DICE_BUTTON3)->EnableWindow(TRUE);
+    pButton3->EnableWindow(TRUE);
 
     // TODO: Add your control notification handler code here
     // 버튼 8에서 이미지를 추출합니다.
-    CButton* pButton8 = (CButton*)GetDlgItem(IDC_DICE_BUTTON8);
     HBITMAP hBitmap = (HBITMAP)pButton8->SendMessage(BM_GETIMAGE, IMAGE_BITMAP, 0);
 
     // 버튼 3에 이미지를 설정합니다.
-    CButton* pButton3 = (CButton*)GetDlgItem(IDC_DICE_BUTTON3);
     pButton3->SetBitmap(hBitmap);
 
     // 버튼 8에 있는 이미지를 삭제합니다.
@@ -572,15 +553,13 @@ void CYachtDice1Dlg::OnBnClickedDiceButton8()
 
 void CYachtDice1Dlg::OnBnClickedDiceButton9()
 {
-    GetDlgItem(IDC_DICE_BUTTON4)->EnableWindow(TRUE);
+    pButton4->EnableWindow(TRUE);
 
     // TODO: Add your control notification handler code here
     // 버튼 9에서 이미지를 추출합니다.
-    CButton* pButton9 = (CButton*)GetDlgItem(IDC_DICE_BUTTON9);
     HBITMAP hBitmap = (HBITMAP)pButton9->SendMessage(BM_GETIMAGE, IMAGE_BITMAP, 0);
 
     // 버튼 4에 이미지를 설정합니다.
-    CButton* pButton4 = (CButton*)GetDlgItem(IDC_DICE_BUTTON4);
     pButton4->SetBitmap(hBitmap);
 
     // 버튼 9에 있는 이미지를 삭제합니다.
@@ -602,15 +581,13 @@ void CYachtDice1Dlg::OnBnClickedDiceButton9()
 
 void CYachtDice1Dlg::OnBnClickedDiceButton10()
 {
-    GetDlgItem(IDC_DICE_BUTTON5)->EnableWindow(TRUE);
+    pButton5->EnableWindow(TRUE);
 
     // TODO: Add your control notification handler code here
     // 버튼 10에서 이미지를 추출합니다.
-    CButton* pButton10 = (CButton*)GetDlgItem(IDC_DICE_BUTTON10);
     HBITMAP hBitmap = (HBITMAP)pButton10->SendMessage(BM_GETIMAGE, IMAGE_BITMAP, 0);
 
     // 버튼 5에 이미지를 설정합니다.
-    CButton* pButton5 = (CButton*)GetDlgItem(IDC_DICE_BUTTON5);
     pButton5->SetBitmap(hBitmap);
 
     // 버튼 10에 있는 이미지를 삭제합니다.
@@ -632,15 +609,13 @@ void CYachtDice1Dlg::OnBnClickedDiceButton10()
 
 void CYachtDice1Dlg::OnBnClickedDiceButton11()
 {
-    GetDlgItem(IDC_DICE_BUTTON6)->EnableWindow(TRUE);
+    pButton6->EnableWindow(TRUE);
 
     // TODO: Add your control notification handler code here
     // 버튼 11에서 이미지를 추출합니다.
-    CButton* pButton11 = (CButton*)GetDlgItem(IDC_DICE_BUTTON11);
     HBITMAP hBitmap = (HBITMAP)pButton11->SendMessage(BM_GETIMAGE, IMAGE_BITMAP, 0);
 
     // 버튼 6에 이미지를 설정합니다.
-    CButton* pButton6 = (CButton*)GetDlgItem(IDC_DICE_BUTTON6);
     pButton6->SetBitmap(hBitmap);
 
     // 버튼 11에 있는 이미지를 삭제합니다.
@@ -663,14 +638,14 @@ void CYachtDice1Dlg::OnBnClickedDiceButton11()
 void CYachtDice1Dlg::OnBnClickedChoosecategory()
 {
     // TODO: Add your control notification handler code here
-    GetDlgItem(IDC_DICE_BUTTON2)->ShowWindow(SW_HIDE);
-    GetDlgItem(IDC_DICE_BUTTON3)->ShowWindow(SW_HIDE);
-    GetDlgItem(IDC_DICE_BUTTON4)->ShowWindow(SW_HIDE);
-    GetDlgItem(IDC_DICE_BUTTON5)->ShowWindow(SW_HIDE);
-    GetDlgItem(IDC_DICE_BUTTON6)->ShowWindow(SW_HIDE);
-    GetDlgItem(IDC_DICE_BUTTON7)->EnableWindow(FALSE);
-    GetDlgItem(IDC_DICE_BUTTON8)->EnableWindow(FALSE);
-    GetDlgItem(IDC_DICE_BUTTON9)->EnableWindow(FALSE);
-    GetDlgItem(IDC_DICE_BUTTON10)->EnableWindow(FALSE);
-    GetDlgItem(IDC_DICE_BUTTON11)->EnableWindow(FALSE);
+    pButton2->ShowWindow(SW_HIDE);
+    pButton3->ShowWindow(SW_HIDE);
+    pButton4->ShowWindow(SW_HIDE);
+    pButton5->ShowWindow(SW_HIDE);
+    pButton6->ShowWindow(SW_HIDE);
+    pButton7->EnableWindow(FALSE);
+    pButton8->EnableWindow(FALSE);
+    pButton9->EnableWindow(FALSE);
+    pButton10->EnableWindow(FALSE);
+    pButton11->EnableWindow(FALSE);
 }
