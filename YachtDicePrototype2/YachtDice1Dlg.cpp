@@ -529,27 +529,6 @@ void CYachtDice1Dlg::SetData(const CString& strData)
     m_strData = strData;
 }
 
-void ResizeBitmap(HBITMAP hSrcBitmap, HBITMAP& hDestBitmap, int newWidth, int newHeight)
-{
-    HDC hdcScreen = GetDC(nullptr);
-    HDC hdcSrc = CreateCompatibleDC(hdcScreen);
-    HDC hdcDest = CreateCompatibleDC(hdcScreen);
-
-    hDestBitmap = CreateCompatibleBitmap(hdcScreen, newWidth, newHeight);
-    HBITMAP hOldSrcBitmap = (HBITMAP)SelectObject(hdcSrc, hSrcBitmap);
-    HBITMAP hOldDestBitmap = (HBITMAP)SelectObject(hdcDest, hDestBitmap);
-
-    StretchBlt(hdcDest, 0, 0, newWidth, newHeight, hdcSrc, 0, 0, newWidth, newHeight, SRCCOPY);
-
-    SelectObject(hdcSrc, hOldSrcBitmap);
-    SelectObject(hdcDest, hOldDestBitmap);
-
-    DeleteDC(hdcSrc);
-    DeleteDC(hdcDest);
-    ReleaseDC(nullptr, hdcScreen);
-
-}
-
 void CYachtDice1Dlg::OnBnClickedDiceButton2()
 {
     // TODO: Add your control notification handler code here
@@ -558,7 +537,6 @@ void CYachtDice1Dlg::OnBnClickedDiceButton2()
     // 버튼 2에서 이미지를 추출합니다.
     HBITMAP hBitmap = (HBITMAP)pButton2->SendMessage(BM_GETIMAGE, IMAGE_BITMAP, 0);
     BITMAP bm;
-
     GetObject(hBitmap, sizeof(BITMAP), &bm);
 
     // 버튼 7에 이미지를 설정합니다.
@@ -585,9 +563,13 @@ void CYachtDice1Dlg::OnBnClickedDiceButton3()
      
      // 버튼 3에서 이미지를 추출합니다.
     HBITMAP hBitmap = (HBITMAP)pButton3->SendMessage(BM_GETIMAGE, IMAGE_BITMAP, 0);
+    BITMAP bm;
+
+    GetObject(hBitmap, sizeof(BITMAP), &bm);
 
     // 버튼 8에 이미지를 설정합니다.
     pButton8->SetBitmap(hBitmap);
+    pButton8->SetWindowPos(nullptr, 0, 0, bm.bmWidth, bm.bmHeight, SWP_NOMOVE | SWP_NOZORDER);
 
     // 버튼 3에 있는 이미지를 삭제합니다.
     pButton3->SetBitmap(nullptr);
@@ -607,9 +589,13 @@ void CYachtDice1Dlg::OnBnClickedDiceButton4()
     pButton9->ShowWindow(SW_SHOW);
     // 버튼 4에서 이미지를 추출합니다.
     HBITMAP hBitmap = (HBITMAP)pButton4->SendMessage(BM_GETIMAGE, IMAGE_BITMAP, 0);
+    BITMAP bm;
+
+    GetObject(hBitmap, sizeof(BITMAP), &bm);
 
     // 버튼 9에 이미지를 설정합니다.
     pButton9->SetBitmap(hBitmap);
+    pButton9->SetWindowPos(nullptr, 0, 0, bm.bmWidth, bm.bmHeight, SWP_NOMOVE | SWP_NOZORDER);
 
     // 버튼 4에 있는 이미지를 삭제합니다.
     pButton4->SetBitmap(nullptr);
@@ -629,9 +615,13 @@ void CYachtDice1Dlg::OnBnClickedDiceButton5()
     pButton10->ShowWindow(SW_SHOW);
     // 버튼 5에서 이미지를 추출합니다.
     HBITMAP hBitmap = (HBITMAP)pButton5->SendMessage(BM_GETIMAGE, IMAGE_BITMAP, 0);
+    BITMAP bm;
+
+    GetObject(hBitmap, sizeof(BITMAP), &bm);
 
     // 버튼 10에 이미지를 설정합니다.
     pButton10->SetBitmap(hBitmap);
+    pButton10->SetWindowPos(nullptr, 0, 0, bm.bmWidth, bm.bmHeight, SWP_NOMOVE | SWP_NOZORDER);
 
     // 버튼 5에 있는 이미지를 삭제합니다.
     pButton5->SetBitmap(nullptr);
@@ -651,9 +641,13 @@ void CYachtDice1Dlg::OnBnClickedDiceButton6()
     pButton11->ShowWindow(SW_SHOW);
     // 버튼 6에서 이미지를 추출합니다.
     HBITMAP hBitmap = (HBITMAP)pButton6->SendMessage(BM_GETIMAGE, IMAGE_BITMAP, 0);
+    BITMAP bm;
+
+    GetObject(hBitmap, sizeof(BITMAP), &bm);
 
     // 버튼 11에 이미지를 설정합니다.
     pButton11->SetBitmap(hBitmap);
+    pButton11->SetWindowPos(nullptr, 0, 0, bm.bmWidth, bm.bmHeight, SWP_NOMOVE | SWP_NOZORDER);
 
     // 버튼 6에 있는 이미지를 삭제합니다.
     pButton6->SetBitmap(nullptr);
