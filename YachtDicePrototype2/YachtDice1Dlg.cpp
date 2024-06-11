@@ -128,15 +128,24 @@ BOOL CYachtDice1Dlg::OnInitDialog()
     back.Load(_T("GameBoard_Background.png"));
     
     // 닉네임
-    m_font.CreatePointFont(130, _T("Ravie"));
-    GetDlgItem(IDC_STATIC_NAME)->SetFont(&m_font);
-    GetDlgItem(IDC_STATIC_NAME2)->SetFont(&m_font);
+    // Create a LOGFONT structure
+    LOGFONT lf;
+    memset(&lf, 0, sizeof(LOGFONT));
+    lf.lfHeight = 50; // Font height
+    lf.lfWeight = FW_BOLD; // Bold weight
+    _tcscpy_s(lf.lfFaceName, _T("Segoe Script")); // Font face name
+
+    // Create the bold font
+    m_boldFont.CreateFontIndirect(&lf);
+    GetDlgItem(IDC_STATIC_NAME)->SetFont(&m_boldFont);
+    GetDlgItem(IDC_STATIC_NAME2)->SetFont(&m_boldFont);
     SetDlgItemText(IDC_STATIC_NAME, m_strData);
+
+    m_rollFont.CreatePointFont(135, _T("Segoe Script"));
+    GetDlgItem(IDC_roll_num)->SetFont(&m_rollFont);
 
     // 주사위 돌린 횟수 체크할 변수 초기화
     r = 0;
-    CString str(to_string(r).c_str());
-    m_roll_try.SetWindowTextW(str);
 
     // roll 직후, 주사위 상태(선택 여부)를 확인하는 벡터
     for (int i = 0; i < 5; i++) {
@@ -207,6 +216,12 @@ HBRUSH CYachtDice1Dlg::OnCtlColor(CDC* pDC, CWnd* pWnd, UINT nCtlColor)
     if (nCtlColor == CTLCOLOR_STATIC)
     {
         // Static text의 배경색을 투명하게 설정
+
+        // IDC_roll_num 글자색 흰색
+        if (pWnd->GetDlgCtrlID() == IDC_roll_num)
+        {
+            pDC->SetTextColor(RGB(255, 255, 255));
+        }
         pDC->SetBkMode(TRANSPARENT);
         return (HBRUSH)GetStockObject(NULL_BRUSH);
     }
@@ -387,21 +402,34 @@ void CYachtDice1Dlg::OnBnClickedRoll()
         }
     }
 
-
+    /*
     CString cstr;
     m_roll_try.GetWindowTextW(cstr);
 
     CT2CA pszConvertedAnsiString(cstr);
-    std::string str(pszConvertedAnsiString);
+
+    string str(pszConvertedAnsiString);
 
     CString emptyStr = _T(""); // 빈 문자열
     m_roll_try.SetWindowTextW(emptyStr);
-
     r = stoi(str) + 1;
 
     CString nstr(to_string(r).c_str());
-
     m_roll_try.SetWindowTextW(nstr);
+    */
+
+    r++;
+
+    // 정수를 CString으로 변환
+    CString strRollNum;
+    strRollNum.Format(_T("%d/3"), r);
+
+    CRect rect;
+    GetDlgItem(IDC_roll_num)->GetWindowRect(&rect);
+    ScreenToClient(&rect);
+    InvalidateRect(rect);
+
+    GetDlgItem(IDC_roll_num)->SetWindowTextW(strRollNum);
 
     if (r >= 3) {
         OnBnClickedChoosecategory();

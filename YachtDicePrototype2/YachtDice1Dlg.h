@@ -65,7 +65,7 @@ public:
 	afx_msg void OnBnClickedTutorialBtn();
 
 	void SetData(const CString& str);
-	CFont m_font;
+	CFont m_rollFont, m_boldFont;
 
 	CBitmapButton m_dice1;
 	CBitmapButton m_dice2;
