@@ -94,6 +94,7 @@ BOOL CYachtDice1Dlg::OnInitDialog()
     SetIcon(m_hIcon, FALSE);		// Set small icon
 
     // TODO: Add extra initialization here
+
     pButton2 = (CButton*)GetDlgItem(IDC_DICE_BUTTON2);
     pButton3 = (CButton*)GetDlgItem(IDC_DICE_BUTTON3);
     pButton4 = (CButton*)GetDlgItem(IDC_DICE_BUTTON4);
@@ -114,12 +115,15 @@ BOOL CYachtDice1Dlg::OnInitDialog()
     pButton11->EnableWindow(FALSE);
     */
 
+    v_showDice = { true, true, true, true, true };
 
     pButton7->ShowWindow(SW_HIDE);
     pButton8->ShowWindow(SW_HIDE);
     pButton9->ShowWindow(SW_HIDE);
     pButton10->ShowWindow(SW_HIDE);
     pButton11->ShowWindow(SW_HIDE);
+    
+
 
     back.Load(_T("GameBoard_Background.png"));
     
@@ -323,12 +327,52 @@ void CYachtDice1Dlg::OnBnClickedRoll()
 
     }
 
-    pButton2->ShowWindow(SW_SHOW);
-    pButton3->ShowWindow(SW_SHOW);
-    pButton4->ShowWindow(SW_SHOW);
-    pButton5->ShowWindow(SW_SHOW);
-    pButton6->ShowWindow(SW_SHOW);
-
+    for (int i = 0; i < 5; i++)
+    {
+        if (!v_showDice[i])
+        {
+            switch (i)
+            {
+            case 0:
+                pButton2->ShowWindow(SW_HIDE);
+                break;
+            case 1:
+                pButton3->ShowWindow(SW_HIDE);
+                break;
+            case 2:
+                pButton4->ShowWindow(SW_HIDE);
+                break;
+            case 3:
+                pButton5->ShowWindow(SW_HIDE);
+                break;
+            case 4:
+                pButton6->ShowWindow(SW_HIDE);
+                break;
+            }
+        }
+        else
+        {
+            switch (i)
+            {
+            case 0:
+                pButton2->ShowWindow(SW_SHOW);
+                break;
+            case 1:
+                pButton3->ShowWindow(SW_SHOW);
+                break;
+            case 2:
+                pButton4->ShowWindow(SW_SHOW);
+                break;
+            case 3:
+                pButton5->ShowWindow(SW_SHOW);
+                break;
+            case 4:
+                pButton6->ShowWindow(SW_SHOW);
+                break;
+            }
+            //v_showDice[i] = true;
+        }
+    }
 
     // 이하 현정님 파트
     // 
@@ -439,6 +483,7 @@ void CYachtDice1Dlg::OnBnClickedDiceButton2()
     pButton7->EnableWindow(TRUE);
 
     pButton2->ShowWindow(SW_HIDE);
+    v_showDice[0] = false;
 }
 
 
@@ -461,6 +506,7 @@ void CYachtDice1Dlg::OnBnClickedDiceButton3()
     pButton8->EnableWindow(TRUE);
 
     pButton3->ShowWindow(SW_HIDE);
+    v_showDice[1] = false;
 }
 
 
@@ -482,6 +528,7 @@ void CYachtDice1Dlg::OnBnClickedDiceButton4()
     pButton9->EnableWindow(TRUE);
 
     pButton4->ShowWindow(SW_HIDE);
+    v_showDice[2] = false;
 }
 
 
@@ -503,6 +550,7 @@ void CYachtDice1Dlg::OnBnClickedDiceButton5()
     pButton10->EnableWindow(TRUE);
 
     pButton5->ShowWindow(SW_HIDE);
+    v_showDice[3] = false;
 }
 
 
@@ -524,11 +572,13 @@ void CYachtDice1Dlg::OnBnClickedDiceButton6()
     pButton11->EnableWindow(TRUE);
 
     pButton6->ShowWindow(SW_HIDE);
+    v_showDice[4] = false;
 }
 
 
 void CYachtDice1Dlg::OnBnClickedDiceButton7()
 {
+    v_showDice[0] = true;
     pButton2->ShowWindow(SW_SHOW);
     pButton2->EnableWindow(TRUE);
 
@@ -559,6 +609,7 @@ void CYachtDice1Dlg::OnBnClickedDiceButton7()
 
 void CYachtDice1Dlg::OnBnClickedDiceButton8()
 {
+    v_showDice[1] = true;
     pButton3->ShowWindow(SW_SHOW);
     pButton3->EnableWindow(TRUE);
 
@@ -589,6 +640,7 @@ void CYachtDice1Dlg::OnBnClickedDiceButton8()
 
 void CYachtDice1Dlg::OnBnClickedDiceButton9()
 {
+    v_showDice[2] = true;
     pButton4->ShowWindow(SW_SHOW);
     pButton4->EnableWindow(TRUE);
 
@@ -619,6 +671,7 @@ void CYachtDice1Dlg::OnBnClickedDiceButton9()
 
 void CYachtDice1Dlg::OnBnClickedDiceButton10()
 {
+    v_showDice[3] = true;
     pButton5->ShowWindow(SW_SHOW);
     pButton5->EnableWindow(TRUE);
 
@@ -649,6 +702,7 @@ void CYachtDice1Dlg::OnBnClickedDiceButton10()
 
 void CYachtDice1Dlg::OnBnClickedDiceButton11()
 {
+    v_showDice[5] = true;
     pButton6->ShowWindow(SW_SHOW);
     pButton6->EnableWindow(TRUE);
 

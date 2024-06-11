@@ -1,7 +1,8 @@
 ﻿#pragma once
 #include "afxdialogex.h"
+#include <vector>
 
-
+using namespace std;
 // CYachtDice1Dlg dialog
 
 class CYachtDice1Dlg : public CDialogEx
@@ -54,6 +55,7 @@ private:
 	CButton* pButton2, *pButton3, *pButton4, *pButton5, *pButton6;
 	CButton* pButton7, *pButton8, *pButton9, *pButton10, *pButton11;
 
+	vector<bool> v_showDice;
 
 public:
 	CBitmapButton m_bitmapBtn;
