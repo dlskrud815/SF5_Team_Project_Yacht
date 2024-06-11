@@ -299,107 +299,113 @@ vector<int> RemoveArr(int idx) {
 
 void CYachtDice1Dlg::OnBnClickedRoll()
 {
-    vector<int> indices = { IDB_dice_1, IDB_dice_2, IDB_dice_3, IDB_dice_4, IDB_dice_5, IDB_dice_6 };
+    if (r < 3) {
 
-    //random_shuffle(indices.begin(), indices.end());
+        vector<int> indices = { IDB_dice_1, IDB_dice_2, IDB_dice_3, IDB_dice_4, IDB_dice_5, IDB_dice_6 };
 
-    HINSTANCE hInstance = GetModuleHandle(nullptr);
+        //random_shuffle(indices.begin(), indices.end());
 
-    for (int j = 0; j < 5; ++j) {
-        int i = rand() % 6;
-        HBITMAP hBitmap = LoadBitmapFromResource(hInstance, indices[i]);
-        if (hBitmap == nullptr) {
-            AfxMessageBox(_T("Failed to load bitmap!"));
-            return;
-        }
-        if (arr[j] == 1) {
-            PostMessage(WM_USER + 1, j, reinterpret_cast<LPARAM>(hBitmap));
-            CString scoreStr;
-            scoreStr.Format(_T("%d"), indices[i]);
-            switch (j) {
-            case 0:
-                m_score1.SetWindowText(scoreStr);
+        HINSTANCE hInstance = GetModuleHandle(nullptr);
 
-            case 1:
-                m_score2.SetWindowText(scoreStr);
+        for (int j = 0; j < 5; ++j) {
+            int i = rand() % 6;
+            HBITMAP hBitmap = LoadBitmapFromResource(hInstance, indices[i]);
+            if (hBitmap == nullptr) {
+                AfxMessageBox(_T("Failed to load bitmap!"));
+                return;
+            }
+            if (pickDice[j] == 1) {
+                PostMessage(WM_USER + 1, j, reinterpret_cast<LPARAM>(hBitmap));
+                CString scoreStr;
+                scoreStr.Format(_T("%d"), indices[i]);
+                switch (j) {
+                case 0:
+                    m_score1.SetWindowText(scoreStr);
 
-            case 2:
-                m_score3.SetWindowText(scoreStr);
+                case 1:
+                    m_score2.SetWindowText(scoreStr);
 
-            case 3:
-                m_score4.SetWindowText(scoreStr);
+                case 2:
+                    m_score3.SetWindowText(scoreStr);
 
-            case 4:
-                m_score5.SetWindowText(scoreStr);
+                case 3:
+                    m_score4.SetWindowText(scoreStr);
+
+                case 4:
+                    m_score5.SetWindowText(scoreStr);
+
+                }
 
             }
 
         }
 
-    }
-
-
-    for (int i = 0; i < 5; i++)
-    {
-        if (!v_showDice[i])
+        for (int i = 0; i < 5; i++)
         {
-            switch (i)
+            if (!v_showDice[i])
             {
-            case 0:
-                pButton2->ShowWindow(SW_HIDE);
-                break;
-            case 1:
-                pButton3->ShowWindow(SW_HIDE);
-                break;
-            case 2:
-                pButton4->ShowWindow(SW_HIDE);
-                break;
-            case 3:
-                pButton5->ShowWindow(SW_HIDE);
-                break;
-            case 4:
-                pButton6->ShowWindow(SW_HIDE);
-                break;
+                switch (i)
+                {
+                case 0:
+                    pButton2->ShowWindow(SW_HIDE);
+                    break;
+                case 1:
+                    pButton3->ShowWindow(SW_HIDE);
+                    break;
+                case 2:
+                    pButton4->ShowWindow(SW_HIDE);
+                    break;
+                case 3:
+                    pButton5->ShowWindow(SW_HIDE);
+                    break;
+                case 4:
+                    pButton6->ShowWindow(SW_HIDE);
+                    break;
+                }
+            }
+            else
+            {
+                switch (i)
+                {
+                case 0:
+                    pButton2->ShowWindow(SW_SHOW);
+                    break;
+                case 1:
+                    pButton3->ShowWindow(SW_SHOW);
+                    break;
+                case 2:
+                    pButton4->ShowWindow(SW_SHOW);
+                    break;
+                case 3:
+                    pButton5->ShowWindow(SW_SHOW);
+                    break;
+                case 4:
+                    pButton6->ShowWindow(SW_SHOW);
+                    break;
+                }
+                //v_showDice[i] = true;
             }
         }
-        else
+
+        r++;
+
+        CString str(to_string(r).c_str());
+
+        m_roll_try.SetWindowTextW(str);
+
+        // 이하 현정님 파트
+        // 
+        // 
+        // 랜덤 주사위 이미지를 생성하고 갱신합니다.
+
+        /*
+        for (int i = 0; i < 5; i++)
         {
-            switch (i)
-            {
-            case 0:
-                pButton2->ShowWindow(SW_SHOW);
-                break;
-            case 1:
-                pButton3->ShowWindow(SW_SHOW);
-                break;
-            case 2:
-                pButton4->ShowWindow(SW_SHOW);
-                break;
-            case 3:
-                pButton5->ShowWindow(SW_SHOW);
-                break;
-            case 4:
-                pButton6->ShowWindow(SW_SHOW);
-                break;
-            }
-            //v_showDice[i] = true;
+            int randomIndex = rand() % 6; // 0부터 5 사이의 랜덤 숫자 생성
+            ShowDiceImage(i, randomIndex); // 주사위 이미지 갱신
         }
+        */
     }
-
-
-
-    // 이하 현정님 파트
-    // 
-    // 
-    // 랜덤 주사위 이미지를 생성하고 갱신합니다.
-
-    /*
-    for (int i = 0; i < 5; i++)
-    {
-        int randomIndex = rand() % 6; // 0부터 5 사이의 랜덤 숫자 생성
-        ShowDiceImage(i, randomIndex); // 주사위 이미지 갱신
-    }
-    */
 }
 
 void AdjustButtonToBitmap(CButton& button, HBITMAP hBitmap)
@@ -491,7 +497,7 @@ void CYachtDice1Dlg::OnBnClickedDiceButton2()
 
     // 버튼 2에 있는 이미지를 삭제합니다.
     pButton2->SetBitmap(nullptr);
-    arr[0] = false;
+    pickDice[0] = false;
 
     pButton2->EnableWindow(FALSE);
     pButton7->EnableWindow(TRUE);
@@ -514,7 +520,7 @@ void CYachtDice1Dlg::OnBnClickedDiceButton3()
 
     // 버튼 3에 있는 이미지를 삭제합니다.
     pButton3->SetBitmap(nullptr);
-    arr[1] = false;
+    pickDice[1] = false;
 
     pButton3->EnableWindow(FALSE);
     pButton8->EnableWindow(TRUE);
@@ -536,7 +542,7 @@ void CYachtDice1Dlg::OnBnClickedDiceButton4()
 
     // 버튼 4에 있는 이미지를 삭제합니다.
     pButton4->SetBitmap(nullptr);
-    arr[2] = false;
+    pickDice[2] = false;
 
     pButton4->EnableWindow(FALSE);
     pButton9->EnableWindow(TRUE);
@@ -558,7 +564,7 @@ void CYachtDice1Dlg::OnBnClickedDiceButton5()
 
     // 버튼 5에 있는 이미지를 삭제합니다.
     pButton5->SetBitmap(nullptr);
-    arr[3] = false;
+    pickDice[3] = false;
 
     pButton5->EnableWindow(FALSE);
     pButton10->EnableWindow(TRUE);
@@ -580,7 +586,7 @@ void CYachtDice1Dlg::OnBnClickedDiceButton6()
 
     // 버튼 6에 있는 이미지를 삭제합니다.
     pButton6->SetBitmap(nullptr);
-    arr[4] = false;
+    pickDice[4] = false;
 
     pButton6->EnableWindow(FALSE);
     pButton11->EnableWindow(TRUE);
@@ -605,7 +611,7 @@ void CYachtDice1Dlg::OnBnClickedDiceButton7()
 
     // 버튼 7에 있는 이미지를 삭제합니다.
     pButton7->SetBitmap(nullptr);
-    arr[0] = true;
+    pickDice[0] = true;
 
     CString str;
     pButton7->GetWindowText(str);
@@ -636,7 +642,7 @@ void CYachtDice1Dlg::OnBnClickedDiceButton8()
 
     // 버튼 8에 있는 이미지를 삭제합니다.
     pButton8->SetBitmap(nullptr);
-    arr[1] = true;
+    pickDice[1] = true;
 
     CString str;
     pButton8->GetWindowText(str);
@@ -667,7 +673,7 @@ void CYachtDice1Dlg::OnBnClickedDiceButton9()
 
     // 버튼 9에 있는 이미지를 삭제합니다.
     pButton9->SetBitmap(nullptr);
-    arr[2] = true;
+    pickDice[2] = true;
 
     CString str;
     pButton9->GetWindowText(str);
@@ -698,7 +704,7 @@ void CYachtDice1Dlg::OnBnClickedDiceButton10()
 
     // 버튼 10에 있는 이미지를 삭제합니다.
     pButton10->SetBitmap(nullptr);
-    arr[3] = true;
+    pickDice[3] = true;
 
     CString str;
     pButton10->GetWindowText(str);
@@ -729,7 +735,7 @@ void CYachtDice1Dlg::OnBnClickedDiceButton11()
 
     // 버튼 11에 있는 이미지를 삭제합니다.
     pButton11->SetBitmap(nullptr);
-    arr[4] = true;
+    pickDice[4] = true;
 
     CString str;
     pButton11->GetWindowText(str);
