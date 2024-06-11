@@ -122,8 +122,7 @@ BOOL CYachtDice1Dlg::OnInitDialog()
     pButton9->ShowWindow(SW_HIDE);
     pButton10->ShowWindow(SW_HIDE);
     pButton11->ShowWindow(SW_HIDE);
-    
-
+   
 
     back.Load(_T("GameBoard_Background.png"));
     
@@ -140,6 +139,7 @@ BOOL CYachtDice1Dlg::OnInitDialog()
         m_btnPlayers[i - IDC_p1_1].ModifyStyle(0, BS_OWNERDRAW);
     }
 
+    /*
     // Picture Controls 초기화
     for (int i = 0; i < 5; i++)
     {
@@ -162,6 +162,7 @@ BOOL CYachtDice1Dlg::OnInitDialog()
 
     // 주사위를 정렬합니다.
     ArrangeDicePics();
+    */
 
     return TRUE;  // return TRUE  unless you set the focus to a control
 }
@@ -702,7 +703,7 @@ void CYachtDice1Dlg::OnBnClickedDiceButton10()
 
 void CYachtDice1Dlg::OnBnClickedDiceButton11()
 {
-    v_showDice[5] = true;
+    v_showDice[4] = true;
     pButton6->ShowWindow(SW_SHOW);
     pButton6->EnableWindow(TRUE);
 
