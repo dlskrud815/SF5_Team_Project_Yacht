@@ -197,7 +197,7 @@ void CYachtDicePrototype2Dlg::OnBnClickedButton3()
 
 void CYachtDicePrototype2Dlg::OnBnClickedButton1()
 {
-	CNameSetting dlgN1;
-	dlgN1.DoModal();
+	CNameSetting dlgN;
+	dlgN.DoModal();
 	// TODO: Add your control notification handler code here
 }
