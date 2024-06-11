@@ -53,8 +53,8 @@ void CYachtDice1Dlg::DoDataExchange(CDataExchange* pDX)
     DDX_Control(pDX, IDC_DICE_BUTTON9, m_score3);
     DDX_Control(pDX, IDC_DICE_BUTTON10, m_score4);
     DDX_Control(pDX, IDC_DICE_BUTTON11, m_score5);
-    DDX_Control(pDX, IDC_STATIC_TURN1, m_turn_user);
-    DDX_Control(pDX, IDC_STATIC_TURN2, m_turn_cpu);
+    //DDX_Control(pDX, IDC_STATIC_TURN1, m_turn_user);
+    //DDX_Control(pDX, IDC_STATIC_TURN2, m_turn_cpu);
     DDX_Control(pDX, IDC_roll_num, m_roll_try);
 }
 

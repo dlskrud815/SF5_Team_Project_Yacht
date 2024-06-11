@@ -7,6 +7,8 @@
 #define IDS_ABOUTBOX                    101
 #define IDD_YACHTDICEPROTOTYPE2_DIALOG  102
 #define IDR_MAINFRAME                   128
+#define IDB_BITMAP1                     130
+#define IDB_BITMAP2                     131
 #define IDD_NAME_DIALOG                 132
 #define IDB_BITMAP3                     134
 #define IDD_TUTORIAL_DIALOG             135
@@ -82,8 +84,6 @@
 #define IDC_STATIC_USERNAME             1044
 #define IDC_STATIC_NAME                 1046
 #define IDC_STATIC_NAME2                1047
-#define IDC_STATIC_TURN1                1048
-#define IDC_STATIC_TURN2                1049
 
 // Next default values for new objects
 // 
@@ -91,7 +91,7 @@
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_NEXT_RESOURCE_VALUE        151
 #define _APS_NEXT_COMMAND_VALUE         32771
-#define _APS_NEXT_CONTROL_VALUE         1050
+#define _APS_NEXT_CONTROL_VALUE         1047
 #define _APS_NEXT_SYMED_VALUE           109
 #endif
 #endif

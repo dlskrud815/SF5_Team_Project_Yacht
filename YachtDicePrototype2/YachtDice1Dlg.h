@@ -91,8 +91,9 @@ public:
 	afx_msg void OnBnClickedDiceButton10();
 	afx_msg void OnBnClickedDiceButton11();
 	afx_msg void OnBnClickedChoosecategory();
-	CStatic m_turn_user;
-	CStatic m_turn_cpu;
+
+	//CStatic m_turn_user;
+	//CStatic m_turn_cpu;
 	CStatic m_roll_try;
 	int r;
 	vector<bool> pickDice;
