@@ -28,4 +28,7 @@ public:
 
 	CString m_strInput; //닉네임
 	afx_msg void OnBnClickedOk();
+	afx_msg void OnShowWindow(BOOL bShow, UINT nStatus);
+
+	CEdit m_editBox;
 };
