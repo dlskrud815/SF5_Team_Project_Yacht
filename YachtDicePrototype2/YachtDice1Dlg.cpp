@@ -16,7 +16,9 @@
 #include <array>
 #include <vector>
 #include <algorithm>
-
+#include <numeric>
+#include <random>
+#include <chrono>
 
 using namespace std;
 
@@ -55,8 +57,10 @@ void CYachtDice1Dlg::DoDataExchange(CDataExchange* pDX)
     DDX_Control(pDX, IDC_DICE_BUTTON9, m_score3);
     DDX_Control(pDX, IDC_DICE_BUTTON10, m_score4);
     DDX_Control(pDX, IDC_DICE_BUTTON11, m_score5);
-    //DDX_Control(pDX, IDC_STATIC_TURN1, m_turn_user);
-    //DDX_Control(pDX, IDC_STATIC_TURN2, m_turn_cpu);
+
+    DDX_Control(pDX, IDC_STATIC_TURN1, m_turn_user);
+    DDX_Control(pDX, IDC_STATIC_TURN2, m_turn_cpu);
+
     DDX_Control(pDX, IDC_roll_num, m_roll_try);
 }
 
@@ -82,6 +86,8 @@ BEGIN_MESSAGE_MAP(CYachtDice1Dlg, CDialogEx)
     ON_BN_CLICKED(IDC_DICE_BUTTON10, &CYachtDice1Dlg::OnBnClickedDiceButton10)
     ON_BN_CLICKED(IDC_DICE_BUTTON11, &CYachtDice1Dlg::OnBnClickedDiceButton11)
     ON_BN_CLICKED(IDC_ChooseCategory, &CYachtDice1Dlg::OnBnClickedChoosecategory)
+    ON_BN_CLICKED(IDC_p1_1, &CYachtDice1Dlg::OnBnClickedp11)
+    ON_BN_CLICKED(IDC_p1_2, &CYachtDice1Dlg::OnBnClickedp12)
 END_MESSAGE_MAP()
 
 
@@ -108,15 +114,6 @@ BOOL CYachtDice1Dlg::OnInitDialog()
     pButton9 = (CButton*)GetDlgItem(IDC_DICE_BUTTON9);
     pButton10 = (CButton*)GetDlgItem(IDC_DICE_BUTTON10);
     pButton11 = (CButton*)GetDlgItem(IDC_DICE_BUTTON11);
-
-
-    /*
-    pButton7->EnableWindow(FALSE);
-    pButton8->EnableWindow(FALSE);
-    pButton9->EnableWindow(FALSE);
-    pButton10->EnableWindow(FALSE);
-    pButton11->EnableWindow(FALSE);
-    */
 
     v_showDice = { true, true, true, true, true };
 
@@ -147,7 +144,7 @@ BOOL CYachtDice1Dlg::OnInitDialog()
     GetDlgItem(IDC_roll_num)->SetFont(&m_rollFont);
 
     // 주사위 돌린 횟수 체크할 변수 초기화
-    r = 0;
+    m_round = 0;
 
     // 툴팁컨트롤을 생성한다.
     m_tip_ctrl.Create(this);
@@ -169,31 +166,14 @@ BOOL CYachtDice1Dlg::OnInitDialog()
         m_btnPlayers[i - IDC_p1_1].ModifyStyle(0, BS_OWNERDRAW);
     }
 
+    srand(static_cast<unsigned int>(time(nullptr)));
 
-    /*
-    // Picture Controls 초기화
-    for (int i = 0; i < 5; i++)
-    {
-        m_dicePics[i].SubclassDlgItem(IDC_Dices_1 + i, this);
-    }
+    //턴 이미지
+    m_Pepe1.LoadBitmapW(IDB_PEPE1);
+    m_Pepe2.LoadBitmapW(IDB_PEPE2);
 
-
-    // Bitmap 이미지 로드
-    LoadDiceBitmaps();
-
-    srand(time(nullptr));
-
-    // 임의로 첫 번째 주사위를 각 Picture Control에 표시 (테스트용)
-    for (int i = 0; i < 5; i++)
-    {
-        // 랜덤한 이미지 인덱스 선택 (0부터 5까지)
-        int randomIndex = rand() % 6;
-        ShowDiceImage(i, 0);
-    }
-
-    // 주사위를 정렬합니다.
-    ArrangeDicePics();
-    */
+    m_turn_user.SetBitmap(m_Pepe1);
+    m_turn_cpu.SetBitmap(m_Pepe2);
 
     return TRUE;  // return TRUE  unless you set the focus to a control
 }
@@ -266,47 +246,6 @@ void CYachtDice1Dlg::OnDrawItem(int nIDCtl, LPDRAWITEMSTRUCT lpDrawItemStruct)
 
 }
 
-void CYachtDice1Dlg::LoadDiceBitmaps()
-{
-    // Bitmap 이미지 로드
-    m_diceBitmaps[0].LoadBitmap(IDB_dice_1);
-    m_diceBitmaps[1].LoadBitmap(IDB_dice_2);
-    m_diceBitmaps[2].LoadBitmap(IDB_dice_3);
-    m_diceBitmaps[3].LoadBitmap(IDB_dice_4);
-    m_diceBitmaps[4].LoadBitmap(IDB_dice_5);
-    m_diceBitmaps[5].LoadBitmap(IDB_dice_6);
-
-}
-
-void CYachtDice1Dlg::ShowDiceImage(int diceIndex, int imageIndex)
-{
-    // Picture Control에 Bitmap 이미지 설정
-    if (diceIndex < 0 || diceIndex >= 5 || imageIndex < 0 || imageIndex >= 6)
-        return;
-
-    m_dicePics[diceIndex].SetBitmap((HBITMAP)m_diceBitmaps[imageIndex].GetSafeHandle());
-}
-
-void CYachtDice1Dlg::ArrangeDicePics()
-{
-    // Picture Control 정렬
-    int spacing = 50; // 컨트롤 사이의 간격
-    int left = 735; // 첫 번째 컨트롤의 왼쪽 위치
-    int top = 350; // 첫 번째 컨트롤의 상단 위치
-    int width, height;
-
-    // 첫 번째 Picture Control의 크기를 가져옵니다.
-    CRect rect;
-    m_dicePics[0].GetWindowRect(&rect);
-    width = rect.Width();
-    height = rect.Height();
-
-    for (int i = 0; i < 5; i++)
-    {
-        m_dicePics[i].SetWindowPos(NULL, left + i * (width + spacing), top, width, height, SWP_NOZORDER);
-    }
-}
-
 // 비트맵 리소스를 로드하는 함수
 HBITMAP LoadBitmapFromResource(HINSTANCE hInstance, int resourceID) {
     return LoadBitmap(hInstance, MAKEINTRESOURCE(resourceID));
@@ -317,12 +256,19 @@ void CYachtDice1Dlg::OnBnClickedRoll()
 {
     vector<int> indices = { IDB_dice_1, IDB_dice_2, IDB_dice_3, IDB_dice_4, IDB_dice_5, IDB_dice_6 };
 
-    //random_shuffle(indices.begin(), indices.end());
+    random_shuffle(indices.begin(), indices.end());
 
     HINSTANCE hInstance = GetModuleHandle(nullptr);
+    int idx_dice = 0;
 
     for (int j = 0; j < 5; ++j) {
         int i = rand() % 6;
+
+        int diceValue = indices[i] - 139;
+        m_ready_dices[idx_dice] = diceValue;
+
+        idx_dice++;
+
         HBITMAP hBitmap = LoadBitmapFromResource(hInstance, indices[i]);
         if (hBitmap == nullptr) {
             AfxMessageBox(_T("Failed to load bitmap!"));
@@ -401,27 +347,11 @@ void CYachtDice1Dlg::OnBnClickedRoll()
         }
     }
 
-    /*
-    CString cstr;
-    m_roll_try.GetWindowTextW(cstr);
-
-    CT2CA pszConvertedAnsiString(cstr);
-
-    string str(pszConvertedAnsiString);
-
-    CString emptyStr = _T(""); // 빈 문자열
-    m_roll_try.SetWindowTextW(emptyStr);
-    r = stoi(str) + 1;
-
-    CString nstr(to_string(r).c_str());
-    m_roll_try.SetWindowTextW(nstr);
-    */
-
-    r++;
+    m_round++;
 
     // 정수를 CString으로 변환
     CString strRollNum;
-    strRollNum.Format(_T("%d/3"), r);
+    strRollNum.Format(_T("%d/3"), m_round);
 
     CRect rect;
     GetDlgItem(IDC_roll_num)->GetWindowRect(&rect);
@@ -430,23 +360,6 @@ void CYachtDice1Dlg::OnBnClickedRoll()
 
     GetDlgItem(IDC_roll_num)->SetWindowTextW(strRollNum);
 
-    if (r >= 3) {
-        OnBnClickedChoosecategory();
-    }
-
-
-    // 이하 현정님 파트
-    // 
-    // 
-    // 랜덤 주사위 이미지를 생성하고 갱신합니다.
-
-    /*
-    for (int i = 0; i < 5; i++)
-    {
-        int randomIndex = rand() % 6; // 0부터 5 사이의 랜덤 숫자 생성
-        ShowDiceImage(i, randomIndex); // 주사위 이미지 갱신
-    }
-    */
 }
 
 void AdjustButtonToBitmap(CButton& button, HBITMAP hBitmap)
@@ -512,6 +425,10 @@ void CYachtDice1Dlg::OnPaint()
     //dc = m_picture_control.GetDC(); //픽쳐 컨트롤의 DC를 얻는다.
 
     back.StretchBlt(dc.m_hDC, 0, 0, rect.Width(), rect.Height(), SRCCOPY);//이미지를 픽쳐 컨트롤 크기로 조정
+
+    if (m_round >= 3) {
+        OnBnClickedChoosecategory();
+    }
 }
 
 void CYachtDice1Dlg::OnBnClickedTutorialBtn()
@@ -550,6 +467,8 @@ void CYachtDice1Dlg::OnBnClickedDiceButton2()
 
     pButton2->ShowWindow(SW_HIDE);
     v_showDice[0] = false;
+
+    m_top_dices[0] = m_ready_dices[0];
 }
 
 
@@ -577,6 +496,8 @@ void CYachtDice1Dlg::OnBnClickedDiceButton3()
 
     pButton3->ShowWindow(SW_HIDE);
     v_showDice[1] = false;
+
+    m_top_dices[1] = m_ready_dices[1];
 }
 
 
@@ -603,6 +524,8 @@ void CYachtDice1Dlg::OnBnClickedDiceButton4()
 
     pButton4->ShowWindow(SW_HIDE);
     v_showDice[2] = false;
+
+    m_top_dices[2] = m_ready_dices[2];
 }
 
 
@@ -629,6 +552,8 @@ void CYachtDice1Dlg::OnBnClickedDiceButton5()
 
     pButton5->ShowWindow(SW_HIDE);
     v_showDice[3] = false;
+
+    m_top_dices[3] = m_ready_dices[3];
 }
 
 
@@ -655,6 +580,8 @@ void CYachtDice1Dlg::OnBnClickedDiceButton6()
 
     pButton6->ShowWindow(SW_HIDE);
     v_showDice[4] = false;
+
+    m_top_dices[4] = m_ready_dices[4];
 }
 
 
@@ -686,6 +613,8 @@ void CYachtDice1Dlg::OnBnClickedDiceButton7()
 
     pButton7->EnableWindow(FALSE);
     pButton7->ShowWindow(SW_HIDE);
+
+    m_top_dices[0] = 0;
 }
 
 
@@ -717,6 +646,8 @@ void CYachtDice1Dlg::OnBnClickedDiceButton8()
 
     pButton8->EnableWindow(FALSE);
     pButton8->ShowWindow(SW_HIDE);
+
+    m_top_dices[1] = 0;
 }
 
 
@@ -748,6 +679,8 @@ void CYachtDice1Dlg::OnBnClickedDiceButton9()
 
     pButton9->EnableWindow(FALSE);
     pButton9->ShowWindow(SW_HIDE);
+
+    m_top_dices[2] = 0;
 }
 
 
@@ -779,6 +712,8 @@ void CYachtDice1Dlg::OnBnClickedDiceButton10()
 
     pButton10->EnableWindow(FALSE);
     pButton10->ShowWindow(SW_HIDE);
+
+    m_top_dices[3] = 0;
 }
 
 
@@ -810,6 +745,8 @@ void CYachtDice1Dlg::OnBnClickedDiceButton11()
 
     pButton11->EnableWindow(FALSE);
     pButton11->ShowWindow(SW_HIDE);
+
+    m_top_dices[4] = 0;
 }
 
 
@@ -863,4 +800,20 @@ BOOL CYachtDice1Dlg::PreTranslateMessage(MSG* pMsg)
     m_tip_ctrl.RelayEvent(pMsg);
 
     return CDialogEx::PreTranslateMessage(pMsg);
+}
+
+
+void CYachtDice1Dlg::OnBnClickedp11()
+{
+    // TODO: Add your control notification handler code here
+    m_turn_user.SetBitmap(m_Pepe2);
+    m_turn_cpu.SetBitmap(m_Pepe1);
+}
+
+
+void CYachtDice1Dlg::OnBnClickedp12()
+{
+    // TODO: Add your control notification handler code here
+    m_turn_user.SetBitmap(m_Pepe1);
+    m_turn_cpu.SetBitmap(m_Pepe2);
 }
