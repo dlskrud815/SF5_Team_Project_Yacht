@@ -277,10 +277,9 @@ void CYachtDice1Dlg::OnBnClickedRoll()
     random_shuffle(indices.begin(), indices.end());
 
     HINSTANCE hInstance = GetModuleHandle(nullptr);
-    int idx_dice = 0;
 
     m_ready_dices.clear();
-    m_top_dices.clear();
+   // m_top_dices.clear();
 
 
     // 벡터의 크기를 미리 설정
@@ -291,9 +290,7 @@ void CYachtDice1Dlg::OnBnClickedRoll()
         int i = rand() % 6;
 
         int diceValue = indices[i] - 139;
-        m_ready_dices[idx_dice] = diceValue;
-
-        idx_dice++;
+        m_ready_dices[j] = diceValue;
 
         HBITMAP hBitmap = LoadBitmapFromResource(hInstance, indices[i]);
         if (hBitmap == nullptr) {
