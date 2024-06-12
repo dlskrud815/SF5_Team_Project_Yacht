@@ -52,7 +52,6 @@ private:
 	CButton* pButton2, *pButton3, *pButton4, *pButton5, *pButton6;
 	CButton* pButton7, *pButton8, *pButton9, *pButton10, *pButton11;
 
-	vector<bool> v_showDice;
 
 	CBitmap m_Pepe1;
 	CBitmap m_Pepe2;

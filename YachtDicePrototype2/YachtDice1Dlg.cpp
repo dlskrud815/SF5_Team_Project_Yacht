@@ -135,8 +135,6 @@ BOOL CYachtDice1Dlg::OnInitDialog()
     pButton10 = (CButton*)GetDlgItem(IDC_DICE_BUTTON10);
     pButton11 = (CButton*)GetDlgItem(IDC_DICE_BUTTON11);
 
-    v_showDice = { true, true, true, true, true };
-
     pButton7->ShowWindow(SW_HIDE);
     pButton8->ShowWindow(SW_HIDE);
     pButton9->ShowWindow(SW_HIDE);
@@ -176,7 +174,7 @@ BOOL CYachtDice1Dlg::OnInitDialog()
     // roll 직후, 주사위 상태(선택 여부)를 확인하는 벡터
     for (int i = 0; i < 5; i++) {
 
-        pickDice.push_back(1);
+        pickDice.push_back(0);
     }
 
     //// 모든 버튼에 owner draw 스타일 적용
@@ -302,7 +300,7 @@ void CYachtDice1Dlg::OnBnClickedRoll()
             AfxMessageBox(_T("Failed to load bitmap!"));
             return;
         }
-        if (pickDice[j] == 1) {
+        if (!pickDice[j]) {
             PostMessage(WM_USER + 1, j, reinterpret_cast<LPARAM>(hBitmap));
             CString scoreStr;
             scoreStr.Format(_T("%d"), indices[i]);
@@ -330,7 +328,7 @@ void CYachtDice1Dlg::OnBnClickedRoll()
 
     for (int i = 0; i < 5; i++)
     {
-        if (!v_showDice[i])
+        if (pickDice[i])
         {
             switch (i)
             {
@@ -371,7 +369,6 @@ void CYachtDice1Dlg::OnBnClickedRoll()
                 pButton6->ShowWindow(SW_SHOW);
                 break;
             }
-            //v_showDice[i] = true;
         }
     }
 
@@ -488,13 +485,12 @@ void CYachtDice1Dlg::OnBnClickedDiceButton2()
     
     // 버튼 2에 있는 이미지를 삭제합니다.
     pButton2->SetBitmap(nullptr);
-    pickDice[0] = false;
+    pickDice[0] = TRUE;
 
     pButton2->EnableWindow(FALSE);
     pButton7->EnableWindow(TRUE);
 
     pButton2->ShowWindow(SW_HIDE);
-    v_showDice[0] = false;
 
     m_top_dices[0] = m_ready_dices[0];
 }
@@ -517,13 +513,12 @@ void CYachtDice1Dlg::OnBnClickedDiceButton3()
 
     // 버튼 3에 있는 이미지를 삭제합니다.
     pButton3->SetBitmap(nullptr);
-    pickDice[1] = false;
+    pickDice[1] = TRUE;
 
     pButton3->EnableWindow(FALSE);
     pButton8->EnableWindow(TRUE);
 
     pButton3->ShowWindow(SW_HIDE);
-    v_showDice[1] = false;
 
     m_top_dices[1] = m_ready_dices[1];
 }
@@ -545,13 +540,12 @@ void CYachtDice1Dlg::OnBnClickedDiceButton4()
 
     // 버튼 4에 있는 이미지를 삭제합니다.
     pButton4->SetBitmap(nullptr);
-    pickDice[2] = false;
+    pickDice[2] = TRUE;
 
     pButton4->EnableWindow(FALSE);
     pButton9->EnableWindow(TRUE);
 
     pButton4->ShowWindow(SW_HIDE);
-    v_showDice[2] = false;
 
     m_top_dices[2] = m_ready_dices[2];
 }
@@ -573,13 +567,12 @@ void CYachtDice1Dlg::OnBnClickedDiceButton5()
 
     // 버튼 5에 있는 이미지를 삭제합니다.
     pButton5->SetBitmap(nullptr);
-    pickDice[3] = false;
+    pickDice[3] = TRUE;
 
     pButton5->EnableWindow(FALSE);
     pButton10->EnableWindow(TRUE);
 
     pButton5->ShowWindow(SW_HIDE);
-    v_showDice[3] = false;
 
     m_top_dices[3] = m_ready_dices[3];
 }
@@ -601,13 +594,12 @@ void CYachtDice1Dlg::OnBnClickedDiceButton6()
 
     // 버튼 6에 있는 이미지를 삭제합니다.
     pButton6->SetBitmap(nullptr);
-    pickDice[4] = false;
+    pickDice[4] = TRUE;
 
     pButton6->EnableWindow(FALSE);
     pButton11->EnableWindow(TRUE);
 
     pButton6->ShowWindow(SW_HIDE);
-    v_showDice[4] = false;
 
     m_top_dices[4] = m_ready_dices[4];
 }
@@ -615,7 +607,6 @@ void CYachtDice1Dlg::OnBnClickedDiceButton6()
 
 void CYachtDice1Dlg::OnBnClickedDiceButton7()
 {
-    v_showDice[0] = true;
     pButton2->ShowWindow(SW_SHOW);
     pButton2->EnableWindow(TRUE);
 
@@ -628,7 +619,7 @@ void CYachtDice1Dlg::OnBnClickedDiceButton7()
 
     // 버튼 7에 있는 이미지를 삭제합니다.
     pButton7->SetBitmap(nullptr);
-    pickDice[0] = true;
+    pickDice[0] = FALSE;
 
     CString str;
     pButton7->GetWindowText(str);
@@ -648,7 +639,6 @@ void CYachtDice1Dlg::OnBnClickedDiceButton7()
 
 void CYachtDice1Dlg::OnBnClickedDiceButton8()
 {
-    v_showDice[1] = true;
     pButton3->ShowWindow(SW_SHOW);
     pButton3->EnableWindow(TRUE);
 
@@ -661,7 +651,7 @@ void CYachtDice1Dlg::OnBnClickedDiceButton8()
 
     // 버튼 8에 있는 이미지를 삭제합니다.
     pButton8->SetBitmap(nullptr);
-    pickDice[1] = true;
+    pickDice[1] = FALSE;
 
     CString str;
     pButton8->GetWindowText(str);
@@ -681,7 +671,6 @@ void CYachtDice1Dlg::OnBnClickedDiceButton8()
 
 void CYachtDice1Dlg::OnBnClickedDiceButton9()
 {
-    v_showDice[2] = true;
     pButton4->ShowWindow(SW_SHOW);
     pButton4->EnableWindow(TRUE);
 
@@ -694,7 +683,7 @@ void CYachtDice1Dlg::OnBnClickedDiceButton9()
 
     // 버튼 9에 있는 이미지를 삭제합니다.
     pButton9->SetBitmap(nullptr);
-    pickDice[2] = true;
+    pickDice[2] = FALSE;
 
     CString str;
     pButton9->GetWindowText(str);
@@ -714,7 +703,6 @@ void CYachtDice1Dlg::OnBnClickedDiceButton9()
 
 void CYachtDice1Dlg::OnBnClickedDiceButton10()
 {
-    v_showDice[3] = true;
     pButton5->ShowWindow(SW_SHOW);
     pButton5->EnableWindow(TRUE);
 
@@ -727,7 +715,7 @@ void CYachtDice1Dlg::OnBnClickedDiceButton10()
 
     // 버튼 10에 있는 이미지를 삭제합니다.
     pButton10->SetBitmap(nullptr);
-    pickDice[3] = true;
+    pickDice[3] = FALSE;
 
     CString str;
     pButton10->GetWindowText(str);
@@ -747,7 +735,6 @@ void CYachtDice1Dlg::OnBnClickedDiceButton10()
 
 void CYachtDice1Dlg::OnBnClickedDiceButton11()
 {
-    v_showDice[4] = true;
     pButton6->ShowWindow(SW_SHOW);
     pButton6->EnableWindow(TRUE);
 
@@ -760,7 +747,7 @@ void CYachtDice1Dlg::OnBnClickedDiceButton11()
 
     // 버튼 11에 있는 이미지를 삭제합니다.
     pButton11->SetBitmap(nullptr);
-    pickDice[4] = true;
+    pickDice[4] = FALSE;
 
     CString str;
     pButton11->GetWindowText(str);
@@ -785,7 +772,7 @@ void CYachtDice1Dlg::OnBnClickedChoosecategory()
 
     for (int i = 0; i < 5; i++)
     {
-        if (v_showDice[i]) // 선택이 안 된 주사위
+        if (!pickDice[i]) // 선택이 안 된 주사위
         {
             switch (i)
             {
@@ -1143,7 +1130,7 @@ void CYachtDice1Dlg::UpdateScoreBoard()
     //m_p1Bonus.Invalidate();
     //m_p1Bonus.UpdateWindow();
 
-
+    
     // sub + bonus + p1_7부터 p1_12까지의 값을 합산
     int total = sub + bonus;
     for (int i = 6; i < 12; i++) {
