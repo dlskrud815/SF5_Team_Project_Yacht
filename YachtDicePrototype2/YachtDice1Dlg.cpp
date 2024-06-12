@@ -19,6 +19,7 @@
 #include <numeric>
 #include <random>
 #include <chrono>
+#include <iterator> // std::begin, std::end
 
 using namespace std;
 
@@ -62,6 +63,14 @@ void CYachtDice1Dlg::DoDataExchange(CDataExchange* pDX)
     DDX_Control(pDX, IDC_STATIC_TURN2, m_turn_cpu);
 
     DDX_Control(pDX, IDC_roll_num, m_roll_try);
+
+    // 컨트롤과 멤버 변수를 연결
+    DDX_Control(pDX, IDC_p1_sub, m_p1Sub);
+    DDX_Control(pDX, IDC_p1_bonus, m_p1Bonus);
+    DDX_Control(pDX, IDC_p1_total, m_p1Total);
+    for (int i = 0; i < 12; i++) {
+        DDX_Control(pDX, IDC_p1_1 + i, m_p1[i]);
+    }
 }
 
 
@@ -86,8 +95,19 @@ BEGIN_MESSAGE_MAP(CYachtDice1Dlg, CDialogEx)
     ON_BN_CLICKED(IDC_DICE_BUTTON10, &CYachtDice1Dlg::OnBnClickedDiceButton10)
     ON_BN_CLICKED(IDC_DICE_BUTTON11, &CYachtDice1Dlg::OnBnClickedDiceButton11)
     ON_BN_CLICKED(IDC_ChooseCategory, &CYachtDice1Dlg::OnBnClickedChoosecategory)
-    ON_BN_CLICKED(IDC_p1_1, &CYachtDice1Dlg::OnBnClickedp11)
-    ON_BN_CLICKED(IDC_p1_2, &CYachtDice1Dlg::OnBnClickedp12)
+
+    ON_BN_CLICKED(IDC_p1_1, &CYachtDice1Dlg::OnBnClickedp1_1)
+    ON_BN_CLICKED(IDC_p1_2, &CYachtDice1Dlg::OnBnClickedp1_2)
+    ON_BN_CLICKED(IDC_p1_3, &CYachtDice1Dlg::OnBnClickedP1_3)
+    ON_BN_CLICKED(IDC_p1_4, &CYachtDice1Dlg::OnBnClickedP1_4)
+    ON_BN_CLICKED(IDC_p1_5, &CYachtDice1Dlg::OnBnClickedP1_5)
+    ON_BN_CLICKED(IDC_p1_6, &CYachtDice1Dlg::OnBnClickedP1_6)
+    ON_BN_CLICKED(IDC_p1_7, &CYachtDice1Dlg::OnBnClickedP1_7)
+    ON_BN_CLICKED(IDC_p1_8, &CYachtDice1Dlg::OnBnClickedP1_8)
+    ON_BN_CLICKED(IDC_p1_9, &CYachtDice1Dlg::OnBnClickedP1_9)
+    ON_BN_CLICKED(IDC_p1_10, &CYachtDice1Dlg::OnBnClickedP1_10)
+    ON_BN_CLICKED(IDC_p1_11, &CYachtDice1Dlg::OnBnClickedP1_11)
+    ON_BN_CLICKED(IDC_p1_12, &CYachtDice1Dlg::OnBnClickedP1_12)
 END_MESSAGE_MAP()
 
 
@@ -159,12 +179,12 @@ BOOL CYachtDice1Dlg::OnInitDialog()
         pickDice.push_back(1);
     }
 
-    // 모든 버튼에 owner draw 스타일 적용
-    for (int i = IDC_p1_1; i <= IDC_p1_12; i++)
-    {
-        m_btnPlayers[i - IDC_p1_1].SubclassDlgItem(i, this);
-        m_btnPlayers[i - IDC_p1_1].ModifyStyle(0, BS_OWNERDRAW);
-    }
+    //// 모든 버튼에 owner draw 스타일 적용
+    //for (int i = IDC_p1_1; i <= IDC_p1_12; i++)
+    //{
+    //    m_btnPlayers[i - IDC_p1_1].SubclassDlgItem(i, this);
+    //    m_btnPlayers[i - IDC_p1_1].ModifyStyle(0, BS_OWNERDRAW);
+    //}
 
     srand(static_cast<unsigned int>(time(nullptr)));
 
@@ -186,12 +206,12 @@ HBRUSH CYachtDice1Dlg::OnCtlColor(CDC* pDC, CWnd* pWnd, UINT nCtlColor)
 {
     HBRUSH hbr = CDialogEx::OnCtlColor(pDC, pWnd, nCtlColor);
 
-    // 모든 버튼의 배경을 투명하게 설정
-    if (nCtlColor == CTLCOLOR_BTN)
-    {
-        pDC->SetBkMode(TRANSPARENT);
-        return (HBRUSH)GetStockObject(NULL_BRUSH);
-    }
+    //// 모든 버튼의 배경을 투명하게 설정
+    //if (nCtlColor == CTLCOLOR_BTN)
+    //{
+    //    pDC->SetBkMode(TRANSPARENT);
+    //    return (HBRUSH)GetStockObject(NULL_BRUSH);
+    //}
 
     if (nCtlColor == CTLCOLOR_STATIC)
     {
@@ -219,32 +239,32 @@ HBRUSH CYachtDice1Dlg::OnCtlColor(CDC* pDC, CWnd* pWnd, UINT nCtlColor)
     return hbr;
 }
 
-void CYachtDice1Dlg::OnDrawItem(int nIDCtl, LPDRAWITEMSTRUCT lpDrawItemStruct)
-{
-    // 모든 버튼을 그리는 코드
-    for (int i = IDC_p1_1; i <= IDC_p1_12; i++)
-    {
-        if (nIDCtl == i)
-        {
-            CDC dc;
-            dc.Attach(lpDrawItemStruct->hDC);
-
-            // 버튼의 영역 설정
-            CRect rect(lpDrawItemStruct->rcItem);
-
-            // 버튼의 배경을 투명하게 설정
-            dc.SetBkMode(TRANSPARENT);
-
-            // 버튼의 텍스트 출력
-            CString strText;
-            m_btnPlayers[i - IDC_p1_1].GetWindowText(strText);
-            dc.DrawText(strText, rect, DT_CENTER | DT_VCENTER | DT_SINGLELINE);
-            dc.Detach();
-            return;
-        }
-    }
-
-}
+//void CYachtDice1Dlg::OnDrawItem(int nIDCtl, LPDRAWITEMSTRUCT lpDrawItemStruct)
+//{
+//    // 모든 버튼을 그리는 코드
+//    for (int i = IDC_p1_1; i <= IDC_p1_12; i++)
+//    {
+//        if (nIDCtl == i)
+//        {
+//            CDC dc;
+//            dc.Attach(lpDrawItemStruct->hDC);
+//
+//            // 버튼의 영역 설정
+//            CRect rect(lpDrawItemStruct->rcItem);
+//
+//            // 버튼의 배경을 투명하게 설정
+//            dc.SetBkMode(TRANSPARENT);
+//
+//            // 버튼의 텍스트 출력
+//            CString strText;
+//            m_btnPlayers[i - IDC_p1_1].GetWindowText(strText);
+//            dc.DrawText(strText, rect, DT_CENTER | DT_VCENTER | DT_SINGLELINE);
+//            dc.Detach();
+//            return;
+//        }
+//    }
+//
+//}
 
 // 비트맵 리소스를 로드하는 함수
 HBITMAP LoadBitmapFromResource(HINSTANCE hInstance, int resourceID) {
@@ -260,6 +280,14 @@ void CYachtDice1Dlg::OnBnClickedRoll()
 
     HINSTANCE hInstance = GetModuleHandle(nullptr);
     int idx_dice = 0;
+
+    m_ready_dices.clear();
+    m_top_dices.clear();
+
+
+    // 벡터의 크기를 미리 설정
+    m_ready_dices.resize(5);
+    m_top_dices.resize(5);
 
     for (int j = 0; j < 5; ++j) {
         int i = rand() % 6;
@@ -803,17 +831,335 @@ BOOL CYachtDice1Dlg::PreTranslateMessage(MSG* pMsg)
 }
 
 
-void CYachtDice1Dlg::OnBnClickedp11()
+void CYachtDice1Dlg::OnBnClickedp1_1()
 {
     // TODO: Add your control notification handler code here
-    m_turn_user.SetBitmap(m_Pepe2);
-    m_turn_cpu.SetBitmap(m_Pepe1);
+    //m_turn_user.SetBitmap(m_Pepe2);
+    //m_turn_cpu.SetBitmap(m_Pepe1);
+
+        // 주사위에서 숫자 1의 개수를 계산
+    int countOfOnes = 0;
+    for (int die : m_top_dices) {
+        if (die == 1) {
+            countOfOnes++;
+        }
+    }
+
+    // p1_1 버튼에 해당 계산식 적용하여 결과 출력
+    int score = countOfOnes * 1; // 숫자 1의 개수에 1을 곱한 값
+    CString strScore;
+    strScore.Format(_T("%d"), score);
+
+    CRect rect;
+    GetDlgItem(IDC_p1_1)->GetWindowRect(&rect);
+    ScreenToClient(&rect);
+    InvalidateRect(rect);
+
+    GetDlgItem(IDC_p1_1)->SetWindowTextW(strScore);
+
+    UpdateScoreBoard();
 }
 
 
-void CYachtDice1Dlg::OnBnClickedp12()
+void CYachtDice1Dlg::OnBnClickedp1_2()
 {
     // TODO: Add your control notification handler code here
-    m_turn_user.SetBitmap(m_Pepe1);
-    m_turn_cpu.SetBitmap(m_Pepe2);
+    //m_turn_user.SetBitmap(m_Pepe1);
+    //m_turn_cpu.SetBitmap(m_Pepe2);
+
+        // 주사위에서 숫자 2의 개수를 계산
+    int countOfTwos = 0;
+    for (int die : m_top_dices) {
+        if (die == 2) {
+            countOfTwos++;
+        }
+    }
+
+    // p1_2 버튼에 해당 계산식 적용하여 결과 출력
+    int score = countOfTwos * 2; // 숫자 2의 개수에 2를 곱한 값
+    CString strScore;
+    strScore.Format(_T("%d"), score);
+    SetDlgItemText(IDC_p1_2, strScore);
+
+    UpdateScoreBoard();
+}
+
+
+
+void CYachtDice1Dlg::OnBnClickedP1_3()
+{
+
+    // 주사위에서 숫자 3의 개수를 계산
+    int countOfThrees = 0;
+    for (int die : m_top_dices) {
+        if (die == 3) {
+            countOfThrees++;
+        }
+    }
+
+    // p1_3 버튼에 해당 계산식 적용하여 결과 출력
+    int score = countOfThrees * 3; // 숫자 3의 개수에 3을 곱한 값
+    CString strScore;
+    strScore.Format(_T("%d"), score);
+    SetDlgItemText(IDC_p1_3, strScore);
+
+    UpdateScoreBoard();
+}
+
+
+void CYachtDice1Dlg::OnBnClickedP1_4()
+{
+
+    // 주사위에서 숫자 4의 개수를 계산
+    int countOfFours = 0;
+    for (int die : m_top_dices) {
+        if (die == 4) {
+            countOfFours++;
+        }
+    }
+
+    // p1_4 버튼에 해당 계산식 적용하여 결과 출력
+    int score = countOfFours * 4; // 숫자 4의 개수에 4를 곱한 값
+    CString strScore;
+    strScore.Format(_T("%d"), score);
+    SetDlgItemText(IDC_p1_4, strScore);
+
+    UpdateScoreBoard();
+}
+
+
+void CYachtDice1Dlg::OnBnClickedP1_5()
+{
+
+    // 주사위에서 숫자 5의 개수를 계산
+    int countOfFives = 0;
+    for (int die : m_top_dices) {
+        if (die == 5) {
+            countOfFives++;
+        }
+    }
+
+    // p1_5 버튼에 해당 계산식 적용하여 결과 출력
+    int score = countOfFives * 5; // 숫자 5의 개수에 5를 곱한 값
+    CString strScore;
+    strScore.Format(_T("%d"), score);
+    SetDlgItemText(IDC_p1_5, strScore);
+
+    UpdateScoreBoard();
+}
+
+
+void CYachtDice1Dlg::OnBnClickedP1_6()
+{
+    // 주사위에서 숫자 6의 개수를 계산
+    int countOfsixes = 0;
+    for (int die : m_top_dices) {
+        if (die == 6) {
+            countOfsixes++;
+        }
+    }
+
+    // p1_6 버튼에 해당 계산식 적용하여 결과 출력
+    int score = countOfsixes * 6; // 숫자 6의 개수에 6을 곱한 값
+    CString strScore;
+    strScore.Format(_T("%d"), score);
+    SetDlgItemText(IDC_p1_6, strScore);
+
+    UpdateScoreBoard();
+}
+
+
+void CYachtDice1Dlg::OnBnClickedP1_7()
+{
+    // 주사위 숫자들의 합을 계산
+    int sum = 0;
+    for (int die : m_top_dices) {
+        sum += die;
+    }
+
+    // p1_7 버튼에 계산된 합계를 출력
+    CString strSum;
+    strSum.Format(_T("%d"), sum);
+    SetDlgItemText(IDC_p1_7, strSum);
+
+    UpdateScoreBoard();
+}
+
+
+void CYachtDice1Dlg::OnBnClickedP1_8()
+{
+    // 배열에 같은 수 4개 이상이면 해당 합계 출력
+    int count[7] = { 0 };
+    for (int die : m_top_dices) {
+        count[die]++;
+    }
+    for (int i = 1; i <= 6; i++) {
+        if (count[i] >= 4) {
+            // p1_8 버튼에 계산된 합계를 출력
+            CString strScore;
+            strScore.Format(_T("%d"), accumulate(m_top_dices.begin(), m_top_dices.end(), 0));
+            SetDlgItemText(IDC_p1_8, strScore);
+            return;
+        }
+    }
+    // 조건에 맞는 경우가 없을 때는 0 출력
+    SetDlgItemText(IDC_p1_8, _T("0"));
+
+
+    UpdateScoreBoard();
+
+}
+
+
+void CYachtDice1Dlg::OnBnClickedP1_9()
+{
+    // 배열에 Full House가 되면 해당 합계 출력
+    int count[7] = { 0 };
+    for (int die : m_top_dices) {
+        count[die]++;
+    }
+    bool twoSame = false, threeSame = false;
+    for (int i = 1; i <= 6; i++) {
+        if (count[i] == 2) {
+            twoSame = true;
+        }
+        if (count[i] == 3) {
+            threeSame = true;
+        }
+    }
+    if (twoSame && threeSame) {
+        // p1_9 버튼에 계산된 합계를 출력
+        CString strScore;
+        strScore.Format(_T("%d"), accumulate(m_top_dices.begin(), m_top_dices.end(), 0));
+        SetDlgItemText(IDC_p1_9, strScore);
+    }
+    else {
+        // 조건에 맞는 경우가 없을 때는 0 출력
+        SetDlgItemText(IDC_p1_9, _T("0"));
+    }
+
+    UpdateScoreBoard();
+}
+
+
+void CYachtDice1Dlg::OnBnClickedP1_10()
+{
+
+    // 배열에 Small Straight가 되면 해당 합계 출력
+    vector<int> uniqueDice(m_top_dices.begin(), m_top_dices.end());
+    sort(uniqueDice.begin(), uniqueDice.end());
+
+    vector<vector<int>> smallStraightPatterns = {
+        {1, 2, 3, 4}, {2, 3, 4, 5}, {3, 4, 5, 6}, {1, 2, 3, 4, 5}, {2, 3, 4, 5, 6}
+    };
+
+    for (const auto& pattern : smallStraightPatterns) {
+        bool found = true;
+        for (int i = 0; i < 4; i++) {
+            if (find(uniqueDice.begin(), uniqueDice.end(), pattern[i]) == uniqueDice.end()) {
+                found = false;
+                break;
+            }
+        }
+        if (found) {
+            // p1_10 버튼에 계산된 합계를 출력
+            SetDlgItemText(IDC_p1_10, _T("15"));
+            return;
+        }
+    }
+    // 조건에 맞는 경우가 없을 때는 0 출력
+    SetDlgItemText(IDC_p1_10, _T("0"));
+
+    UpdateScoreBoard();
+}
+
+
+void CYachtDice1Dlg::OnBnClickedP1_11()
+{
+
+    // 배열에 Large Straight가 되면 해당 합계 출력
+    vector<int> uniqueDice(m_top_dices.begin(), m_top_dices.end());
+    sort(uniqueDice.begin(), uniqueDice.end());
+
+    if ((uniqueDice == vector<int>{1, 2, 3, 4, 5}) || (uniqueDice == vector<int>{2, 3, 4, 5, 6})) {
+        // p1_11 버튼에 계산된 합계를 출력
+        SetDlgItemText(IDC_p1_11, _T("30"));
+    }
+    else {
+        // 조건에 맞는 경우가 없을 때는 0 출력
+        SetDlgItemText(IDC_p1_11, _T("0"));
+    }
+
+    UpdateScoreBoard();
+}
+
+
+void CYachtDice1Dlg::OnBnClickedP1_12()
+{
+    // 배열에 Yacht가 되면 해당 합계 출력
+    int count[7] = { 0 };
+    for (int die : m_top_dices) {
+        count[die]++;
+    }
+    if (count[m_top_dices[0]] == 5) {
+        // p1_12 버튼에 계산된 합계를 출력
+        SetDlgItemText(IDC_p1_12, _T("50"));
+    }
+    else {
+        // 조건에 맞는 경우가 없을 때는 0 출력
+        SetDlgItemText(IDC_p1_12, _T("0"));
+    }
+
+    UpdateScoreBoard();
+}
+
+void CYachtDice1Dlg::UpdateScoreBoard()
+{
+    // p1_1부터 p1_6까지의 값을 합산
+    int sub = 0;
+    for (int i = 0; i < 6; i++) {
+        CString str;
+        m_p1[i].GetWindowText(str);
+        int value = _ttoi(str);
+        sub += value;
+    }
+
+    // p1_sub에 합계 출력
+    CString sumStr;
+    sumStr.Format(_T("%d"), sub);
+    m_p1Sub.SetWindowText(sumStr);
+
+    //// 다이얼로그를 강제로 다시 그림
+    //m_p1Sub.Invalidate();
+    //m_p1Sub.UpdateWindow();
+
+    // p1_sub이 65 이상인 경우 p1_bonus에 35 출력
+    int bonus = (sub >= 65) ? 35 : 0;
+    CString bonusStr;
+    bonusStr.Format(_T("%d"), bonus);
+    m_p1Bonus.SetWindowText(bonusStr);
+
+    //// 다이얼로그를 강제로 다시 그림
+    //m_p1Bonus.Invalidate();
+    //m_p1Bonus.UpdateWindow();
+
+
+    // sub + bonus + p1_7부터 p1_12까지의 값을 합산
+    int total = sub + bonus;
+    for (int i = 6; i < 12; i++) {
+        CString str;
+        m_p1[i].GetWindowText(str);
+        int value = _ttoi(str);
+        total += value;
+    }
+
+
+    // p1_total에 합계 출력
+    CString totalStr;
+    totalStr.Format(_T("%d"), total);
+    m_p1Total.SetWindowText(totalStr);
+
+    //// 다이얼로그를 강제로 다시 그림
+    //m_p1Total.Invalidate();
+    //m_p1Total.UpdateWindow();
 }
