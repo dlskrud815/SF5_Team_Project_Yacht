@@ -46,10 +46,6 @@ private:
 	CStatic m_dicePics[5]; // Picture Control 배열
 	CBitmap m_diceBitmaps[6]; // Bitmap 이미지 배열
 
-	void LoadDiceBitmaps();
-	void ShowDiceImage(int diceIndex, int imageIndex);
-	void ArrangeDicePics(); // Picture Control 정렬 함수
-
 	CString m_strData;
 	CToolTipCtrl m_tip_ctrl;
 
@@ -80,6 +76,11 @@ public:
 	CBitmapButton m_score4;
 	CBitmapButton m_score5;
 
+	CStatic m_p1Sub;
+	CStatic m_p1Bonus;
+	CStatic m_p1Total;
+	CEdit m_p1[12];
+
 	afx_msg void OnBnClickedDiceButton2();
 	afx_msg void OnBnClickedDiceButton3();
 	afx_msg void OnBnClickedDiceButton4();
@@ -95,7 +96,12 @@ public:
 	//CStatic m_turn_user;
 	//CStatic m_turn_cpu;
 	CStatic m_roll_try;
-	int r;
+	int m_round;
 	vector<bool> pickDice;
+	vector<int> dice_result;
+
+	int m_ready_dices[5];
+	int m_top_dices[5];
+
 	virtual BOOL PreTranslateMessage(MSG* pMsg);
 };
