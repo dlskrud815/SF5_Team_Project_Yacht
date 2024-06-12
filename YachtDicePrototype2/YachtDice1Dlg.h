@@ -54,6 +54,12 @@ private:
 
 	vector<bool> v_showDice;
 
+	CBitmap m_Pepe1;
+	CBitmap m_Pepe2;
+
+	CStatic m_turn_user;
+	CStatic m_turn_cpu;
+
 public:
 	CBitmapButton m_bitmapBtn;
 
@@ -93,8 +99,6 @@ public:
 	afx_msg void OnBnClickedDiceButton11();
 	afx_msg void OnBnClickedChoosecategory();
 
-	//CStatic m_turn_user;
-	//CStatic m_turn_cpu;
 	CStatic m_roll_try;
 	int m_round;
 	vector<bool> pickDice;
@@ -104,4 +108,6 @@ public:
 	int m_top_dices[5];
 
 	virtual BOOL PreTranslateMessage(MSG* pMsg);
+	afx_msg void OnBnClickedp11();
+	afx_msg void OnBnClickedp12();
 };

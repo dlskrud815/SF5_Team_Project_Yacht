@@ -57,8 +57,10 @@ void CYachtDice1Dlg::DoDataExchange(CDataExchange* pDX)
     DDX_Control(pDX, IDC_DICE_BUTTON9, m_score3);
     DDX_Control(pDX, IDC_DICE_BUTTON10, m_score4);
     DDX_Control(pDX, IDC_DICE_BUTTON11, m_score5);
-    //DDX_Control(pDX, IDC_STATIC_TURN1, m_turn_user);
-    //DDX_Control(pDX, IDC_STATIC_TURN2, m_turn_cpu);
+
+    DDX_Control(pDX, IDC_STATIC_TURN1, m_turn_user);
+    DDX_Control(pDX, IDC_STATIC_TURN2, m_turn_cpu);
+
     DDX_Control(pDX, IDC_roll_num, m_roll_try);
 }
 
@@ -84,6 +86,8 @@ BEGIN_MESSAGE_MAP(CYachtDice1Dlg, CDialogEx)
     ON_BN_CLICKED(IDC_DICE_BUTTON10, &CYachtDice1Dlg::OnBnClickedDiceButton10)
     ON_BN_CLICKED(IDC_DICE_BUTTON11, &CYachtDice1Dlg::OnBnClickedDiceButton11)
     ON_BN_CLICKED(IDC_ChooseCategory, &CYachtDice1Dlg::OnBnClickedChoosecategory)
+    ON_BN_CLICKED(IDC_p1_1, &CYachtDice1Dlg::OnBnClickedp11)
+    ON_BN_CLICKED(IDC_p1_2, &CYachtDice1Dlg::OnBnClickedp12)
 END_MESSAGE_MAP()
 
 
@@ -163,6 +167,13 @@ BOOL CYachtDice1Dlg::OnInitDialog()
     }
 
     srand(static_cast<unsigned int>(time(nullptr)));
+
+    //턴 이미지
+    m_Pepe1.LoadBitmapW(IDB_PEPE1);
+    m_Pepe2.LoadBitmapW(IDB_PEPE2);
+
+    m_turn_user.SetBitmap(m_Pepe1);
+    m_turn_cpu.SetBitmap(m_Pepe2);
 
     return TRUE;  // return TRUE  unless you set the focus to a control
 }
@@ -789,4 +800,20 @@ BOOL CYachtDice1Dlg::PreTranslateMessage(MSG* pMsg)
     m_tip_ctrl.RelayEvent(pMsg);
 
     return CDialogEx::PreTranslateMessage(pMsg);
+}
+
+
+void CYachtDice1Dlg::OnBnClickedp11()
+{
+    // TODO: Add your control notification handler code here
+    m_turn_user.SetBitmap(m_Pepe2);
+    m_turn_cpu.SetBitmap(m_Pepe1);
+}
+
+
+void CYachtDice1Dlg::OnBnClickedp12()
+{
+    // TODO: Add your control notification handler code here
+    m_turn_user.SetBitmap(m_Pepe1);
+    m_turn_cpu.SetBitmap(m_Pepe2);
 }

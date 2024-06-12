@@ -155,5 +155,11 @@
     <Image Include="ROLL.bmp">
       <Filter>Resource Files</Filter>
     </Image>
+    <Image Include="pepe1.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="pepe2.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
   </ItemGroup>
 </Project>

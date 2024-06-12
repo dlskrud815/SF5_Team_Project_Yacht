@@ -232,6 +232,8 @@
     <Image Include="dice_6.bmp" />
     <Image Include="DUAL.bmp" />
     <Image Include="Enter your username.bmp" />
+    <Image Include="pepe1.bmp" />
+    <Image Include="pepe2.bmp" />
     <Image Include="playBackground.bmp" />
     <Image Include="qMark.bmp" />
     <Image Include="Reroll.bmp" />
