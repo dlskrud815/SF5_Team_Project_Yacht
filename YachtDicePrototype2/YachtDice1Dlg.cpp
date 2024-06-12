@@ -817,6 +817,26 @@ BOOL CYachtDice1Dlg::PreTranslateMessage(MSG* pMsg)
     return CDialogEx::PreTranslateMessage(pMsg);
 }
 
+void CYachtDice1Dlg::textOverlap(CString strScore)
+{
+    CRect rect1, rect2, rect3;
+
+    GetDlgItem(IDC_p1_sub)->GetWindowRect(&rect1);
+    ScreenToClient(&rect1);
+    InvalidateRect(rect1);
+
+    GetDlgItem(IDC_p1_bonus)->GetWindowRect(&rect2);
+    ScreenToClient(&rect2);
+    InvalidateRect(rect2);
+
+    GetDlgItem(IDC_p1_total)->GetWindowRect(&rect3);
+    ScreenToClient(&rect3);
+    InvalidateRect(rect3);
+
+    GetDlgItem(IDC_p1_sub)->SetWindowTextW(strScore);
+    GetDlgItem(IDC_p1_bonus)->SetWindowTextW(strScore);
+    GetDlgItem(IDC_p1_total)->SetWindowTextW(strScore);
+}
 
 void CYachtDice1Dlg::OnBnClickedp1_1()
 {
@@ -836,14 +856,9 @@ void CYachtDice1Dlg::OnBnClickedp1_1()
     int score = countOfOnes * 1; // 숫자 1의 개수에 1을 곱한 값
     CString strScore;
     strScore.Format(_T("%d"), score);
+    SetDlgItemText(IDC_p1_1, strScore);
 
-    CRect rect;
-    GetDlgItem(IDC_p1_1)->GetWindowRect(&rect);
-    ScreenToClient(&rect);
-    InvalidateRect(rect);
-
-    GetDlgItem(IDC_p1_1)->SetWindowTextW(strScore);
-
+    textOverlap(strScore);
     UpdateScoreBoard();
 }
 
@@ -868,6 +883,7 @@ void CYachtDice1Dlg::OnBnClickedp1_2()
     strScore.Format(_T("%d"), score);
     SetDlgItemText(IDC_p1_2, strScore);
 
+    textOverlap(strScore);
     UpdateScoreBoard();
 }
 
@@ -890,6 +906,7 @@ void CYachtDice1Dlg::OnBnClickedP1_3()
     strScore.Format(_T("%d"), score);
     SetDlgItemText(IDC_p1_3, strScore);
 
+    textOverlap(strScore);
     UpdateScoreBoard();
 }
 
@@ -911,6 +928,7 @@ void CYachtDice1Dlg::OnBnClickedP1_4()
     strScore.Format(_T("%d"), score);
     SetDlgItemText(IDC_p1_4, strScore);
 
+    textOverlap(strScore);
     UpdateScoreBoard();
 }
 
@@ -932,6 +950,7 @@ void CYachtDice1Dlg::OnBnClickedP1_5()
     strScore.Format(_T("%d"), score);
     SetDlgItemText(IDC_p1_5, strScore);
 
+    textOverlap(strScore);
     UpdateScoreBoard();
 }
 
@@ -952,6 +971,7 @@ void CYachtDice1Dlg::OnBnClickedP1_6()
     strScore.Format(_T("%d"), score);
     SetDlgItemText(IDC_p1_6, strScore);
 
+    textOverlap(strScore);
     UpdateScoreBoard();
 }
 
@@ -969,6 +989,7 @@ void CYachtDice1Dlg::OnBnClickedP1_7()
     strSum.Format(_T("%d"), sum);
     SetDlgItemText(IDC_p1_7, strSum);
 
+    textOverlap(strSum);
     UpdateScoreBoard();
 }
 
@@ -986,15 +1007,15 @@ void CYachtDice1Dlg::OnBnClickedP1_8()
             CString strScore;
             strScore.Format(_T("%d"), accumulate(m_top_dices.begin(), m_top_dices.end(), 0));
             SetDlgItemText(IDC_p1_8, strScore);
+            textOverlap(strScore);
             return;
         }
     }
     // 조건에 맞는 경우가 없을 때는 0 출력
     SetDlgItemText(IDC_p1_8, _T("0"));
-
+    textOverlap(L"0");
 
     UpdateScoreBoard();
-
 }
 
 
@@ -1019,10 +1040,12 @@ void CYachtDice1Dlg::OnBnClickedP1_9()
         CString strScore;
         strScore.Format(_T("%d"), accumulate(m_top_dices.begin(), m_top_dices.end(), 0));
         SetDlgItemText(IDC_p1_9, strScore);
+        textOverlap(strScore);
     }
     else {
         // 조건에 맞는 경우가 없을 때는 0 출력
         SetDlgItemText(IDC_p1_9, _T("0"));
+        textOverlap(L"0");
     }
 
     UpdateScoreBoard();
@@ -1051,11 +1074,13 @@ void CYachtDice1Dlg::OnBnClickedP1_10()
         if (found) {
             // p1_10 버튼에 계산된 합계를 출력
             SetDlgItemText(IDC_p1_10, _T("15"));
+            textOverlap(L"15");
             return;
         }
     }
     // 조건에 맞는 경우가 없을 때는 0 출력
     SetDlgItemText(IDC_p1_10, _T("0"));
+    textOverlap(L"0");
 
     UpdateScoreBoard();
 }
@@ -1071,10 +1096,12 @@ void CYachtDice1Dlg::OnBnClickedP1_11()
     if ((uniqueDice == vector<int>{1, 2, 3, 4, 5}) || (uniqueDice == vector<int>{2, 3, 4, 5, 6})) {
         // p1_11 버튼에 계산된 합계를 출력
         SetDlgItemText(IDC_p1_11, _T("30"));
+        textOverlap(L"30");
     }
     else {
         // 조건에 맞는 경우가 없을 때는 0 출력
         SetDlgItemText(IDC_p1_11, _T("0"));
+        textOverlap(L"0");
     }
 
     UpdateScoreBoard();
@@ -1091,10 +1118,12 @@ void CYachtDice1Dlg::OnBnClickedP1_12()
     if (count[m_top_dices[0]] == 5) {
         // p1_12 버튼에 계산된 합계를 출력
         SetDlgItemText(IDC_p1_12, _T("50"));
+        textOverlap(L"50");
     }
     else {
         // 조건에 맞는 경우가 없을 때는 0 출력
         SetDlgItemText(IDC_p1_12, _T("0"));
+        textOverlap(L"0");
     }
 
     UpdateScoreBoard();

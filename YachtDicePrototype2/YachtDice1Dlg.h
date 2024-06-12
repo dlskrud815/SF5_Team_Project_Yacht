@@ -109,6 +109,7 @@ public:
 	virtual BOOL PreTranslateMessage(MSG* pMsg);
 
 	void UpdateScoreBoard();
+	void textOverlap(CString strScore);
 
 	afx_msg void OnBnClickedp1_1();
 	afx_msg void OnBnClickedp1_2();
