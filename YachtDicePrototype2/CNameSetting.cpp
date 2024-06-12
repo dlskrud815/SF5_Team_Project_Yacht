@@ -24,12 +24,14 @@ CNameSetting::~CNameSetting()
 void CNameSetting::DoDataExchange(CDataExchange* pDX)
 {
 	CDialogEx::DoDataExchange(pDX);
+	DDX_Control(pDX, IDC_EDIT_NAME, m_editBox);
 }
 
 
 BEGIN_MESSAGE_MAP(CNameSetting, CDialogEx)
 	ON_WM_PAINT()
 	ON_BN_CLICKED(IDOK, &CNameSetting::OnBnClickedOk)
+	ON_WM_SHOWWINDOW()
 END_MESSAGE_MAP()
 
 
@@ -78,5 +80,18 @@ void CNameSetting::OnBnClickedOk()
 		dlgGame.DoModal();
 
 		CDialogEx::OnOK();
+	}
+}
+
+
+void CNameSetting::OnShowWindow(BOOL bShow, UINT nStatus)
+{
+	CDialogEx::OnShowWindow(bShow, nStatus);
+
+	// TODO: Add your message handler code here
+		// 다이얼로그가 표시될 때 포커스를 설정
+	if (bShow)
+	{
+		PostMessage(WM_NEXTDLGCTL, (WPARAM)m_editBox.GetSafeHwnd(), TRUE);
 	}
 }
