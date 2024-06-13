@@ -160,7 +160,9 @@ BOOL CYachtDice1Dlg::OnInitDialog()
     {
         m_playerEditControls[i]->SetWindowText(L"");
     }
-
+    m_p1Sub.SetWindowText(L"");
+    m_p1Bonus.SetWindowText(L"");
+    m_p1Total.SetWindowText(L"");
 
     //주사위 버튼 초기화?
     for (int id : DiceButtonIds)
@@ -581,6 +583,126 @@ BOOL CYachtDice1Dlg::PreTranslateMessage(MSG* pMsg)
     return CDialogEx::PreTranslateMessage(pMsg);
 }
 
+void CYachtDice1Dlg::PlayYachtCPU()
+{
+    v_tempCpuScore = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 }; //Aces ~ Yacht
+
+    for (int i = 0; i < v_tempCpuScore.size(); i++)
+    {
+        v_check[i] = false;
+    }
+
+    int num = rand() % 3 + 1;
+
+    //랜덤으로 1~3회 주사위 돌리기
+    for (int i = 0; i < num; i++)
+    {
+        OnBnClickedRoll();
+        Sleep(1500);
+    }
+    OnBnClickedChoosecategory();
+
+    //점수 계산
+    //Aces ~ Sixes
+    for (int i = 1; i <= 6; i++)
+    {
+        for (int die : m_top_dices) {
+            if (die == i) {
+                v_tempCpuScore[i - 1] += i;
+            }
+        }
+    }
+
+    //Choice
+    for (int die : m_top_dices) {
+        v_tempCpuScore[6] += die;
+    }
+
+    int count[7] = { 0 };
+    for (int die : m_top_dices) {
+        count[die]++;
+    }
+
+    bool twoSame = false, threeSame = false;
+
+    for (int i = 1; i <= 6; i++) {
+        //4 of a kind
+        if (count[i] >= 4) {
+            for (int die : m_top_dices)
+            {
+                v_tempCpuScore[7] += die;
+            }
+        }
+
+        //풀하우스
+        if (count[i] == 2) {
+            twoSame = true;
+        }
+        if (count[i] == 3) {
+            threeSame = true;
+        }
+    }
+
+    //풀하우스
+    if (twoSame && threeSame)
+    {
+        v_tempCpuScore[8] = accumulate(m_top_dices.begin(), m_top_dices.end(), 0);
+    }
+
+
+    vector<int> uniqueDice(m_top_dices.begin(), m_top_dices.end());
+    sort(uniqueDice.begin(), uniqueDice.end());
+
+    //S.S
+    vector<vector<int>> smallStraightPatterns = {
+        {1, 2, 3, 4}, {2, 3, 4, 5}, {3, 4, 5, 6}, {1, 2, 3, 4, 5}, {2, 3, 4, 5, 6}
+    };
+
+    for (const auto& pattern : smallStraightPatterns) {
+        bool found = true;
+        for (int i = 0; i < pattern.size(); i++) {
+            if (find(uniqueDice.begin(), uniqueDice.end(), pattern[i]) == uniqueDice.end()) {
+                found = false;
+                break;
+            }
+        }
+        if (found) {
+            v_tempCpuScore[9] = 15;
+            break;
+        }
+    }
+
+    //L.S
+    if ((uniqueDice == vector<int>{1, 2, 3, 4, 5}) || (uniqueDice == vector<int>{2, 3, 4, 5, 6})) {
+        v_tempCpuScore[10] = 30;
+    }
+
+    //Yacht
+    if (count[m_top_dices[0]] == 5) {
+        v_tempCpuScore[11] = 50;
+    }
+
+
+    //CPU는 최대 점수를 획득할 수 있도록 카테고리 선택
+    int max = 0, max_i = -1;
+    for (int i = 0; i < v_tempCpuScore.size(); i++)
+    {
+        if (num >= max && !v_check[i])
+        {
+            max = v_tempCpuScore[i];
+            max_i = i;
+        }
+    }
+
+    v_check[max_i] = true;
+    v_CpuScore[max_i] = max;
+
+    CString strScore;
+    strScore.Format(_T("%d"), max);
+
+
+}
+
 void CYachtDice1Dlg::SwitchTurn(int turn)
 {
     //턴 표시 0으로 
@@ -596,19 +718,25 @@ void CYachtDice1Dlg::SwitchTurn(int turn)
     //ROLL 버튼 다시 표시
     GetDlgItem(IDC_Roll)->ShowWindow(SW_SHOW);
 
-    //주사위 다시 내리기
-    for (int i = 0; i < 10; i++) //BUTTON7 ~ 11
+    //올라간 주사위 안 보이게
+    for (int i = 0; i < 10; i++)
     {
         if (i <= 4)
         {
             m_DiceButtonControls[i]->EnableWindow(TRUE);
-            m_DiceButtonControls[i]->ShowWindow(SW_SHOW);
         }
         else
         {
-            m_DiceButtonControls[i]->EnableWindow(FALSE);
+            m_DiceButtonControls[i]->EnableWindow(TRUE);
             m_DiceButtonControls[i]->ShowWindow(SW_HIDE);
         }
+    }
+
+    m_top_dices.clear();
+    pickDice.clear();
+    for (int i = 0; i < 5; i++)
+    {
+        pickDice.push_back(0);
     }
 
     if (turn) //CPU 턴일 때
@@ -625,8 +753,10 @@ void CYachtDice1Dlg::SwitchTurn(int turn)
 
 
         //이하 CPU 플레이 코드 들어갈 예정
-
-      
+        //PlayYachtCPU();
+        
+        //플레이어로 턴 전환
+        SwitchTurn(0);
     }
     else //플레이어 턴일 때
     {
@@ -643,11 +773,7 @@ void CYachtDice1Dlg::SwitchTurn(int turn)
 
 void CYachtDice1Dlg::OnBnClickedp1_1()
 {
-    // TODO: Add your control notification handler code here
-    //m_turn_user.SetBitmap(m_Pepe2);
-    //m_turn_cpu.SetBitmap(m_Pepe1);
-
-        // 주사위에서 숫자 1의 개수를 계산
+    // 주사위에서 숫자 1의 개수를 계산
     int countOfOnes = 0;
     for (int die : m_top_dices) {
         if (die == 1) {
@@ -667,11 +793,7 @@ void CYachtDice1Dlg::OnBnClickedp1_1()
 
 void CYachtDice1Dlg::OnBnClickedp1_2()
 {
-    // TODO: Add your control notification handler code here
-    //m_turn_user.SetBitmap(m_Pepe1);
-    //m_turn_cpu.SetBitmap(m_Pepe2);
-
-        // 주사위에서 숫자 2의 개수를 계산
+    // 주사위에서 숫자 2의 개수를 계산
     int countOfTwos = 0;
     for (int die : m_top_dices) {
         if (die == 2) {
@@ -692,7 +814,6 @@ void CYachtDice1Dlg::OnBnClickedp1_2()
 
 void CYachtDice1Dlg::OnBnClickedP1_3()
 {
-
     // 주사위에서 숫자 3의 개수를 계산
     int countOfThrees = 0;
     for (int die : m_top_dices) {
@@ -713,7 +834,6 @@ void CYachtDice1Dlg::OnBnClickedP1_3()
 
 void CYachtDice1Dlg::OnBnClickedP1_4()
 {
-
     // 주사위에서 숫자 4의 개수를 계산
     int countOfFours = 0;
     for (int die : m_top_dices) {
@@ -734,7 +854,6 @@ void CYachtDice1Dlg::OnBnClickedP1_4()
 
 void CYachtDice1Dlg::OnBnClickedP1_5()
 {
-
     // 주사위에서 숫자 5의 개수를 계산
     int countOfFives = 0;
     for (int die : m_top_dices) {

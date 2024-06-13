@@ -62,6 +62,9 @@ private:
 	vector<CEdit*> m_cpuEditControls;
 	vector<CButton*> m_playerEditControls;
 	vector<CButton*> m_DiceButtonControls;
+	
+	vector <int> v_tempCpuScore, v_CpuScore;
+	vector <bool> v_check;
 
 public:
 	CBitmapButton m_bitmapBtn;
@@ -105,6 +108,7 @@ public:
 	void UpdateScoreBoard();
 	void ClickedDiceButton(int btnNum);
 	void SwitchTurn(int turn); //0: 플레이어, 1: cpu
+	void PlayYachtCPU();
 
 	afx_msg void OnBnClickedp1_1();
 	afx_msg void OnBnClickedp1_2();
