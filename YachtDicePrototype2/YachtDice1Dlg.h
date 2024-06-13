@@ -1,4 +1,5 @@
 ﻿#pragma once
+
 #include "afxdialogex.h"
 #include <vector>
 
@@ -80,6 +81,7 @@ public:
 	CFont  m_roundFont, m_rollFont, m_boldFont, m_scoreFont, m_totalFont;
 
 	CBitmapButton m_dice1, m_dice2, m_dice3, m_dice4, m_dice5;
+	CBitmapButton m_pic_ChooseCategory, m_pic_Roll;
 
 	CButton m_showScore;
 	CBitmapButton m_score1, m_score2, m_score3, m_score4, m_score5;
@@ -126,4 +128,5 @@ public:
 	afx_msg void OnBnClickedP1_10();
 	afx_msg void OnBnClickedP1_11();
 	afx_msg void OnBnClickedP1_12();
+
 };

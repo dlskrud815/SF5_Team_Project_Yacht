@@ -46,7 +46,6 @@ void CYachtDice1Dlg::DoDataExchange(CDataExchange* pDX)
     CDialogEx::DoDataExchange(pDX);
     DDX_Control(pDX, IDC_TUTORIAL_BTN, m_bitmapBtn);
 
-
     DDX_Control(pDX, IDC_DICE_BUTTON2, m_dice1);
     DDX_Control(pDX, IDC_DICE_BUTTON3, m_dice2);
     DDX_Control(pDX, IDC_DICE_BUTTON4, m_dice3);
@@ -70,6 +69,8 @@ void CYachtDice1Dlg::DoDataExchange(CDataExchange* pDX)
     for (int i = 0; i < 12; i++) {
         DDX_Control(pDX, IDC_p1_1 + i, m_p1[i]);
     }
+    DDX_Control(pDX, IDC_ChooseCategory, m_pic_ChooseCategory);
+    DDX_Control(pDX, IDC_Roll, m_pic_Roll);
 }
 
 
@@ -195,6 +196,15 @@ BOOL CYachtDice1Dlg::OnInitDialog()
 
     back.Load(_T("GameBoard_Background.png"));
     
+    //m_bitmapBtn.LoadBitmaps(IDB_BITMAP3, NULL, NULL, NULL);
+    //m_bitmapBtn.SizeToContent(); // 이미지 크기에 버튼 크기를 맞춰주는 작업
+
+    //m_pic_ChooseCategory.LoadBitmaps(IDB_ChooseCategory, NULL, NULL, NULL); // 첫 번째 인자에는 추가한 비트맵 ID명
+    //m_pic_ChooseCategory.SizeToContent(); // 이미지 크기에 버튼 크기를 맞춰주는 작업
+
+    //m_pic_Roll.LoadBitmaps(IDB_Roll, NULL, NULL, NULL); // 첫 번째 인자에는 추가한 비트맵 ID명
+    //m_pic_Roll.SizeToContent(); // 이미지 크기에 버튼 크기를 맞춰주는 작업
+
     // 닉네임
     // Create a LOGFONT structure
     LOGFONT lf;
