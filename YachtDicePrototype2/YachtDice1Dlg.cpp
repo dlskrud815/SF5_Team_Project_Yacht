@@ -2,7 +2,6 @@
 //
 
 #include "pch.h"
-#include "framework.h"
 #include "YachtDicePrototype2.h"
 #include "afxdialogex.h"
 #include "YachtDice1Dlg.h"
@@ -11,7 +10,6 @@
 #include "WinnerDlg.h"
 
 #include <Windows.h>
-#include <iostream>
 #include <string>
 #include <array>
 #include <vector>
@@ -23,16 +21,12 @@
 
 using namespace std;
 
-#ifdef _DEBUG
-#define new DEBUG_NEW
-#endif
-
 // CYachtDice1Dlg dialog
 
 IMPLEMENT_DYNAMIC(CYachtDice1Dlg, CDialogEx)
 
 CYachtDice1Dlg::CYachtDice1Dlg(CWnd* pParent /*=nullptr*/)
-	: CDialogEx(IDD_YACHTDICE1_DIALOG, pParent)
+    : CDialogEx(IDD_YACHTDICE1_DIALOG, pParent)
 {
     m_hIcon = AfxGetApp()->LoadIcon(IDR_MAINFRAME);
 }
@@ -72,7 +66,6 @@ void CYachtDice1Dlg::DoDataExchange(CDataExchange* pDX)
     DDX_Control(pDX, IDC_TUTORIAL_BTN, m_q_btn);
     DDX_Control(pDX, IDC_ChooseCategory, m_pic_ChooseCategory);
     DDX_Control(pDX, IDC_Roll, m_pic_Roll);
-
 }
 
 
@@ -137,11 +130,11 @@ BOOL CYachtDice1Dlg::OnInitDialog()
     vector <int> cpuEditIds = { IDC_cpu_1, IDC_cpu_2, IDC_cpu_3, IDC_cpu_4, IDC_cpu_5, IDC_cpu_6, IDC_cpu_7,
             IDC_cpu_8, IDC_cpu_9, IDC_cpu_10, IDC_cpu_11, IDC_cpu_12, IDC_cpu_sub, IDC_cpu_bonus, IDC_cpu_total };
 
-    vector <int> playerEditIds = { IDC_p1_1, IDC_p1_2, IDC_p1_3, IDC_p1_4, IDC_p1_5, 
-            IDC_p1_6, IDC_p1_7, IDC_p1_8, IDC_p1_9, IDC_p1_10, IDC_p1_11, IDC_p1_12};
+    vector <int> playerEditIds = { IDC_p1_1, IDC_p1_2, IDC_p1_3, IDC_p1_4, IDC_p1_5,
+            IDC_p1_6, IDC_p1_7, IDC_p1_8, IDC_p1_9, IDC_p1_10, IDC_p1_11, IDC_p1_12 };
 
     vector <int> DiceButtonIds = { IDC_DICE_BUTTON2, IDC_DICE_BUTTON3, IDC_DICE_BUTTON4, IDC_DICE_BUTTON5, IDC_DICE_BUTTON6, IDC_DICE_BUTTON7, IDC_DICE_BUTTON8,
-            IDC_DICE_BUTTON9, IDC_DICE_BUTTON10, IDC_DICE_BUTTON11};
+            IDC_DICE_BUTTON9, IDC_DICE_BUTTON10, IDC_DICE_BUTTON11 };
 
     //cpu 점수판 초기화
     for (int id : cpuEditIds)
@@ -197,9 +190,10 @@ BOOL CYachtDice1Dlg::OnInitDialog()
     GetDlgItem(IDC_ChooseCategory)->ShowWindow(SW_HIDE);
 
     back.Load(_T("GameBoard_Background.png"));
-    
-    //m_q_btn.LoadBitmaps(IDB_BITMAP4); // IDB_OK_BITMAP은 리소스에 추가된 비트맵의 리소스 ID입니다.
-    //m_q_btn.SizeToContent();
+
+    SetButtonBitmapFromFile(m_q_btn, L"qMark.bmp");
+    SetButtonBitmapFromFile(m_pic_ChooseCategory, L"ChooseCategory.bmp");
+    SetButtonBitmapFromFile(m_pic_Roll, L"ROLL.bmp");
 
     //m_pic_ChooseCategory.LoadBitmaps(IDB_ChooseCategory, NULL, NULL, NULL); // 첫 번째 인자에는 추가한 비트맵 ID명
     //m_pic_ChooseCategory.SizeToContent(); // 이미지 크기에 버튼 크기를 맞춰주는 작업
@@ -357,6 +351,21 @@ void CYachtDice1Dlg::OnDrawItem(int nIDCtl, LPDRAWITEMSTRUCT lpDrawItemStruct)
 
 }
 
+void CYachtDice1Dlg::SetButtonBitmapFromFile(CButton& button, const std::wstring& filePath)
+{
+    // 비트맵 로드
+    HBITMAP hBitmap = (HBITMAP)LoadImage(NULL, filePath.c_str(), IMAGE_BITMAP, 0, 0, LR_LOADFROMFILE);
+
+    // 비트맵 정보 가져오기
+    BITMAP bm;
+    GetObject(hBitmap, sizeof(BITMAP), &bm);
+
+    // 버튼에 비트맵 설정
+    button.SetBitmap(hBitmap);
+
+    // 버튼 크기 조정
+    button.SetWindowPos(nullptr, 0, 0, bm.bmWidth, bm.bmHeight, SWP_NOMOVE | SWP_NOZORDER);
+}
 
 // 비트맵 리소스를 로드하는 함수
 HBITMAP LoadBitmapFromResource(HINSTANCE hInstance, int resourceID) {
@@ -373,10 +382,10 @@ void CYachtDice1Dlg::OnBnClickedRoll()
     HINSTANCE hInstance = GetModuleHandle(nullptr);
 
     m_ready_dices.clear();
-   // m_top_dices.clear();
+    // m_top_dices.clear();
 
 
-    // 벡터의 크기를 미리 설정
+     // 벡터의 크기를 미리 설정
     m_ready_dices.resize(5);
     m_top_dices.resize(5);
 
@@ -585,7 +594,7 @@ void CYachtDice1Dlg::ClickedDiceButton(int btnNum)
 
         m_top_dices[btnNum - 5] = 0;
     }
-    
+
 }
 
 void CYachtDice1Dlg::OnBnClickedDiceButton2()
@@ -688,7 +697,7 @@ void CYachtDice1Dlg::OnBnClickedChoosecategory()
     for (int i = 0; i < 5; i++)
     {
         m_DiceButtonControls[i]->ShowWindow(SW_HIDE); //BUTTON 2 ~ 6
-        m_DiceButtonControls[i+5]->EnableWindow(FALSE); //BUTTON 7 ~ 11
+        m_DiceButtonControls[i + 5]->EnableWindow(FALSE); //BUTTON 7 ~ 11
     }
 
     GetDlgItem(IDC_ChooseCategory)->ShowWindow(SW_HIDE);
@@ -732,7 +741,7 @@ void CYachtDice1Dlg::PlayYachtCPU()
     v_tempCpuScore = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 }; //Aces ~ Yacht
 
     int num = rand() % 3 + 1; //1 ~ 3회
-     
+
     //랜덤으로 1~3회 주사위 돌리기
     for (int i = 0; i < num; i++)
     {
@@ -947,12 +956,12 @@ void CYachtDice1Dlg::SwitchTurn(bool turn)
     // 점수 집계를 위한 벡터 초기화
     m_top_dices.clear();
 
-     //ROLL 버튼 다시 표시
+    //ROLL 버튼 다시 표시
     GetDlgItem(IDC_Roll)->ShowWindow(SW_SHOW);
     GetDlgItem(IDC_ChooseCategory)->ShowWindow(SW_SHOW);
 
     //올라간 주사위 안 보이게
-    for (int i = 0; i < 10; i++)    
+    for (int i = 0; i < 10; i++)
     {
         if (i <= 4)
         {
@@ -1320,7 +1329,7 @@ void CYachtDice1Dlg::UpdateScoreBoard()
     bonusStr.Format(_T("%d"), bonus);
     m_p1Bonus.SetWindowText(bonusStr);
 
-    
+
     // sub + bonus + p1_7부터 p1_12까지의 값을 합산
     int total = sub + bonus;
     for (int i = 6; i < 12; i++) {
