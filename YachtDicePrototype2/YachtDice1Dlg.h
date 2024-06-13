@@ -112,6 +112,7 @@ public:
 	void ClickedDiceButton(int btnNum);
 	void SwitchTurn(bool turn); // false: cpu, ture: player
 	void PlayYachtCPU();
+	void Winner();
 
 	afx_msg void OnBnClickedp1_1();
 	afx_msg void OnBnClickedp1_2();
