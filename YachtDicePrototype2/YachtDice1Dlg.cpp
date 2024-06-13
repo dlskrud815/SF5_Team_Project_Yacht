@@ -123,6 +123,8 @@ BOOL CYachtDice1Dlg::OnInitDialog()
     SetIcon(m_hIcon, FALSE);		// Set small icon
 
     // TODO: Add extra initialization here
+    turn = true; //플레이어;
+
     for (int i = 0; i < 12; i++)
     {
         v_check.push_back(false);
@@ -169,6 +171,12 @@ BOOL CYachtDice1Dlg::OnInitDialog()
     m_p1Sub.SetWindowText(L"");
     m_p1Bonus.SetWindowText(L"");
     m_p1Total.SetWindowText(L"");
+
+    //플레이어 점수판 버튼 비활성화
+    for (int i = 0; i < m_playerEditControls.size(); i++)
+    {
+        m_playerEditControls[i]->EnableWindow(FALSE);
+    }
 
     //주사위 버튼 초기화?
     for (int id : DiceButtonIds)
@@ -548,6 +556,13 @@ void CYachtDice1Dlg::OnBnClickedDiceButton11()
 void CYachtDice1Dlg::OnBnClickedChoosecategory()
 {
     // TODO: Add your control notification handler code here
+
+    //플레이어 점수판 버튼 활성/비활성
+    for (int i = 0; i < m_playerEditControls.size(); i++)
+    {
+        m_playerEditControls[i]->EnableWindow(turn);
+    }
+
     GetDlgItem(IDC_Roll)->ShowWindow(SW_HIDE);
 
     for (int i = 0; i < 5; i++)
@@ -722,7 +737,7 @@ void CYachtDice1Dlg::PlayYachtCPU()
     //CPU는 최대 점수를 획득할 수 있도록 카테고리 선택
     int max = 0, max_i = -1;
 
-    //v_check이 가득차거나 점수 먼저 넘기는 사람이 승리 ************************* 다른 데 코드 추가 필요
+    //v_check이 가득차거나 승리 ************************* 다른 데 코드 추가 필요
     for (int i = 0; i < v_tempCpuScore.size(); i++)
     {
         if (v_tempCpuScore[i] >= max && !v_check[i])
@@ -783,10 +798,11 @@ void CYachtDice1Dlg::PlayYachtCPU()
 
     Wait(700);
     //플레이어로 턴 전환
-    SwitchTurn(0);
+    turn = true;
+    SwitchTurn(1);
 }
 
-void CYachtDice1Dlg::SwitchTurn(int turn)
+void CYachtDice1Dlg::SwitchTurn(bool turn)
 {
     //턴 표시 0으로 
     m_round = 0;
@@ -823,7 +839,7 @@ void CYachtDice1Dlg::SwitchTurn(int turn)
         pickDice.push_back(0);
     }
 
-    if (turn == 1) //CPU 턴일 때
+    if (!turn) //CPU 턴일 때
     {
         //턴 이미지 바꾸기
         m_turn_user.SetBitmap(m_Pepe2);
@@ -843,17 +859,6 @@ void CYachtDice1Dlg::SwitchTurn(int turn)
         //턴 이미지 바꾸기
         m_turn_user.SetBitmap(m_Pepe1);
         m_turn_cpu.SetBitmap(m_Pepe2);
-
-        //플레이어 점수판 버튼 활성화
-        for (int i = 0; i < m_playerEditControls.size(); i++)
-        {
-            m_playerEditControls[i]->EnableWindow(TRUE);
-        }
-
-        for (int i = 0; i < m_playerEditControls.size(); i++)
-        {
-            m_playerEditControls[i]->EnableWindow(TRUE);
-        }
     }
 }
 
@@ -1071,6 +1076,7 @@ void CYachtDice1Dlg::OnBnClickedP1_10()
         if (found) {
             // p1_10 버튼에 계산된 합계를 출력
             SetDlgItemText(IDC_p1_10, _T("15"));
+            UpdateScoreBoard();
             return;
         }
     }
@@ -1174,5 +1180,6 @@ void CYachtDice1Dlg::UpdateScoreBoard()
     m_p1Total.SetWindowText(totalStr);
 
     //CPU로 턴 전환
-    SwitchTurn(1);
+    turn = false;
+    SwitchTurn(turn);
 }

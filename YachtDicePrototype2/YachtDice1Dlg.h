@@ -65,6 +65,7 @@ private:
 	
 	vector <int> v_tempCpuScore, v_CpuScore;
 	vector <bool> v_check;
+	bool turn;
 
 	void Wait(DWORD dwMillisecond);
 
@@ -109,7 +110,7 @@ public:
 
 	void UpdateScoreBoard();
 	void ClickedDiceButton(int btnNum);
-	void SwitchTurn(int turn); //0: 플레이어, 1: cpu
+	void SwitchTurn(bool turn); // false: cpu, ture: player
 	void PlayYachtCPU();
 
 	afx_msg void OnBnClickedp1_1();
