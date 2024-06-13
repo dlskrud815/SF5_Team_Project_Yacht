@@ -8,7 +8,7 @@
 #include "YachtDice1Dlg.h"
 #include "resource.h" 
 #include "CTutorial.h"
-
+#include "WinnerDlg.h"
 
 #include <Windows.h>
 #include <iostream>
@@ -511,8 +511,13 @@ void CYachtDice1Dlg::OnPaint()
 void CYachtDice1Dlg::OnBnClickedTutorialBtn()
 {
     // TODO: Add your control notification handler code here
-    CTutorial dlgT;
-    dlgT.DoModal();
+    // 테스트 후 주석 해제하기!! ************************************88
+    //CTutorial dlgT;
+    //dlgT.DoModal();
+
+    WinnerDlg dlgWinner;
+    dlgWinner.SetData(20, 5, m_strData);
+    dlgWinner.DoModal();
 }
 
 void CYachtDice1Dlg::SetData(const CString& strData)
@@ -905,18 +910,12 @@ void CYachtDice1Dlg::Winner()
 
     player_Sum = _ttoi(str);
 
-    if (cpu_Sum > player_Sum) // CPU Win
-    {
+    GetDlgItem(IDC_Roll)->ShowWindow(SW_HIDE);
+    GetDlgItem(IDC_ChooseCategory)->ShowWindow(SW_HIDE);
 
-    }
-    else if (player_Sum > cpu_Sum) // Player Win
-    {
-
-    }
-    else // 비김
-    {
-
-    }
+    WinnerDlg dlgWinner;
+    dlgWinner.SetData(cpu_Sum, player_Sum, m_strData);
+    dlgWinner.DoModal();
 }
 
 void CYachtDice1Dlg::SwitchTurn(bool turn)
@@ -981,15 +980,15 @@ void CYachtDice1Dlg::SwitchTurn(bool turn)
     }
     else //플레이어 턴일 때
     {
+        //라운드 횟수 추가
+        m_round++;
+
         if (m_round > 12)
         {
             //승리 비교
             Winner();
             return;
         }
-
-        //라운드 횟수 추가
-        m_round++;
 
         CString strRound;
         strRound.Format(_T("Round  %d"), m_round);
