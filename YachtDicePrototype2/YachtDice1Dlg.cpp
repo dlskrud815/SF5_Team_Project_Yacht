@@ -976,17 +976,15 @@ void CYachtDice1Dlg::SwitchTurn(bool turn)
     }
     else //플레이어 턴일 때
     {
-        //라운드 횟수 추가
-        m_round++;
-        CString strRound;
-        strRound.Format(_T("Round %d"), m_round);
-
         if (m_round > 12)
         {
             //승리 비교
             Winner();
             return;
         }
+
+        //라운드 횟수 추가
+        m_round++;
 
         CString strRound;
         strRound.Format(_T("Round  %d"), m_round);
