@@ -8,7 +8,7 @@
 #include "YachtDice1Dlg.h"
 #include "resource.h" 
 #include "CTutorial.h"
-
+#include "WinnerDlg.h"
 
 #include <Windows.h>
 #include <iostream>
@@ -44,7 +44,6 @@ CYachtDice1Dlg::~CYachtDice1Dlg()
 void CYachtDice1Dlg::DoDataExchange(CDataExchange* pDX)
 {
     CDialogEx::DoDataExchange(pDX);
-    DDX_Control(pDX, IDC_TUTORIAL_BTN, m_bitmapBtn);
 
     DDX_Control(pDX, IDC_DICE_BUTTON2, m_dice1);
     DDX_Control(pDX, IDC_DICE_BUTTON3, m_dice2);
@@ -69,8 +68,11 @@ void CYachtDice1Dlg::DoDataExchange(CDataExchange* pDX)
     for (int i = 0; i < 12; i++) {
         DDX_Control(pDX, IDC_p1_1 + i, m_p1[i]);
     }
+
+    DDX_Control(pDX, IDC_TUTORIAL_BTN, m_q_btn);
     DDX_Control(pDX, IDC_ChooseCategory, m_pic_ChooseCategory);
     DDX_Control(pDX, IDC_Roll, m_pic_Roll);
+
 }
 
 
@@ -196,8 +198,8 @@ BOOL CYachtDice1Dlg::OnInitDialog()
 
     back.Load(_T("GameBoard_Background.png"));
     
-    //m_bitmapBtn.LoadBitmaps(IDB_BITMAP3, NULL, NULL, NULL);
-    //m_bitmapBtn.SizeToContent(); // 이미지 크기에 버튼 크기를 맞춰주는 작업
+    //m_q_btn.LoadBitmaps(IDB_BITMAP4); // IDB_OK_BITMAP은 리소스에 추가된 비트맵의 리소스 ID입니다.
+    //m_q_btn.SizeToContent();
 
     //m_pic_ChooseCategory.LoadBitmaps(IDB_ChooseCategory, NULL, NULL, NULL); // 첫 번째 인자에는 추가한 비트맵 ID명
     //m_pic_ChooseCategory.SizeToContent(); // 이미지 크기에 버튼 크기를 맞춰주는 작업
@@ -521,8 +523,13 @@ void CYachtDice1Dlg::OnPaint()
 void CYachtDice1Dlg::OnBnClickedTutorialBtn()
 {
     // TODO: Add your control notification handler code here
-    CTutorial dlgT;
-    dlgT.DoModal();
+    // 테스트 후 주석 해제하기!! ************************************88
+    //CTutorial dlgT;
+    //dlgT.DoModal();
+
+    WinnerDlg dlgWinner;
+    dlgWinner.SetData(20, 5, m_strData);
+    dlgWinner.DoModal();
 }
 
 void CYachtDice1Dlg::SetData(const CString& strData)
@@ -915,18 +922,12 @@ void CYachtDice1Dlg::Winner()
 
     player_Sum = _ttoi(str);
 
-    if (cpu_Sum > player_Sum) // CPU Win
-    {
+    GetDlgItem(IDC_Roll)->ShowWindow(SW_HIDE);
+    GetDlgItem(IDC_ChooseCategory)->ShowWindow(SW_HIDE);
 
-    }
-    else if (player_Sum > cpu_Sum) // Player Win
-    {
-
-    }
-    else // 비김
-    {
-
-    }
+    WinnerDlg dlgWinner;
+    dlgWinner.SetData(cpu_Sum, player_Sum, m_strData);
+    dlgWinner.DoModal();
 }
 
 void CYachtDice1Dlg::SwitchTurn(bool turn)
@@ -991,15 +992,15 @@ void CYachtDice1Dlg::SwitchTurn(bool turn)
     }
     else //플레이어 턴일 때
     {
+        //라운드 횟수 추가
+        m_round++;
+
         if (m_round > 12)
         {
             //승리 비교
             Winner();
             return;
         }
-
-        //라운드 횟수 추가
-        m_round++;
 
         CString strRound;
         strRound.Format(_T("Round  %d"), m_round);
