@@ -32,7 +32,7 @@ protected:
 	// Generated message map functions
 	virtual BOOL OnInitDialog();
 	afx_msg HBRUSH OnCtlColor(CDC* pDC, CWnd* pWnd, UINT nCtlColor);
-	//afx_msg void OnDrawItem(int nIDCtl, LPDRAWITEMSTRUCT lpDrawItemStruct);
+	afx_msg void OnDrawItem(int nIDCtl, LPDRAWITEMSTRUCT lpDrawItemStruct);
 	afx_msg void OnBnClickedRoll();
 	afx_msg HCURSOR OnQueryDragIcon();
 	LRESULT OnUpdateDice(WPARAM wParam, LPARAM lParam);
@@ -76,7 +76,8 @@ public:
 	afx_msg void OnBnClickedTutorialBtn();
 
 	void SetData(const CString& str);
-	CFont m_rollFont, m_boldFont;
+
+	CFont  m_roundFont, m_rollFont, m_boldFont, m_score, m_total;
 
 	CBitmapButton m_dice1, m_dice2, m_dice3, m_dice4, m_dice5;
 
@@ -84,7 +85,7 @@ public:
 	CBitmapButton m_score1, m_score2, m_score3, m_score4, m_score5;
 
 	CStatic m_p1Sub, m_p1Bonus, m_p1Total;
-	CEdit m_p1[12];
+	CButton m_p1[12];
 
 	afx_msg void OnBnClickedDiceButton2();
 	afx_msg void OnBnClickedDiceButton3();
@@ -124,5 +125,4 @@ public:
 	afx_msg void OnBnClickedP1_10();
 	afx_msg void OnBnClickedP1_11();
 	afx_msg void OnBnClickedP1_12();
-	CStatic m_round_num;
 };
