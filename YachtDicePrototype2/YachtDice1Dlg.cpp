@@ -523,13 +523,12 @@ void CYachtDice1Dlg::OnPaint()
 void CYachtDice1Dlg::OnBnClickedTutorialBtn()
 {
     // TODO: Add your control notification handler code here
-    // 테스트 후 주석 해제하기!! ************************************88
-    //CTutorial dlgT;
-    //dlgT.DoModal();
+    CTutorial dlgT;
+    dlgT.DoModal();
 
-    WinnerDlg dlgWinner;
-    dlgWinner.SetData(20, 5, m_strData);
-    dlgWinner.DoModal();
+    //WinnerDlg dlgWinner;
+    //dlgWinner.SetData(20, 5, m_strData);
+    //dlgWinner.DoModal();
 }
 
 void CYachtDice1Dlg::SetData(const CString& strData)
@@ -992,6 +991,8 @@ void CYachtDice1Dlg::SwitchTurn(bool turn)
     }
     else //플레이어 턴일 때
     {
+        GetDlgItem(IDC_ChooseCategory)->ShowWindow(SW_HIDE);
+
         //라운드 횟수 추가
         m_round++;
 
