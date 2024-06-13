@@ -73,7 +73,8 @@ public:
 	afx_msg void OnBnClickedTutorialBtn();
 
 	void SetData(const CString& str);
-	CFont m_rollFont, m_boldFont, m_score, m_total;
+
+	CFont  m_roundFont, m_rollFont, m_boldFont, m_score, m_total;
 
 	CBitmapButton m_dice1, m_dice2, m_dice3, m_dice4, m_dice5;
 
@@ -121,5 +122,4 @@ public:
 	afx_msg void OnBnClickedP1_10();
 	afx_msg void OnBnClickedP1_11();
 	afx_msg void OnBnClickedP1_12();
-	CStatic m_round_num;
 };
