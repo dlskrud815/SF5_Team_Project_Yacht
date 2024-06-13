@@ -127,21 +127,21 @@ BOOL CYachtDice1Dlg::OnInitDialog()
     vector <int> editIds = { IDC_cpu_1, IDC_cpu_2, IDC_cpu_3, IDC_cpu_4, IDC_cpu_5, IDC_cpu_6, IDC_cpu_7,
     IDC_cpu_8, IDC_cpu_9, IDC_cpu_10, IDC_cpu_11, IDC_cpu_12, IDC_cpu_sub, IDC_cpu_bonus, IDC_cpu_total };
 
-    vector <int> buttonIds = { IDC_DICE_BUTTON2, IDC_DICE_BUTTON3, IDC_DICE_BUTTON4, IDC_DICE_BUTTON5, IDC_DICE_BUTTON6, IDC_DICE_BUTTON7, IDC_DICE_BUTTON8,
+    vector <int> DiceButtonIds = { IDC_DICE_BUTTON2, IDC_DICE_BUTTON3, IDC_DICE_BUTTON4, IDC_DICE_BUTTON5, IDC_DICE_BUTTON6, IDC_DICE_BUTTON7, IDC_DICE_BUTTON8,
     IDC_DICE_BUTTON9, IDC_DICE_BUTTON10, IDC_DICE_BUTTON11};
 
-    for (int id : buttonIds)
+    for (int id : DiceButtonIds)
     {
         CButton* pButton = reinterpret_cast<CButton*>(GetDlgItem(id));
         if (pButton != nullptr)
         {
-            m_buttonControls.push_back(pButton);
+            m_DiceButtonControls.push_back(pButton);
         }
     }
 
     for (int i = 5; i < 10; i++) //BUTTON7 ~ 11
     {
-        m_buttonControls[i]->ShowWindow(SW_HIDE);
+        m_DiceButtonControls[i]->ShowWindow(SW_HIDE);
     }
 
     back.Load(_T("GameBoard_Background.png"));
@@ -304,50 +304,12 @@ void CYachtDice1Dlg::OnBnClickedRoll()
         if (pickDice[i])
         {
             //BUTTON2 ~ 6
-            m_buttonControls[i]->ShowWindow(SW_HIDE);
-
-            //switch (i)
-            //{
-            //case 0:
-            //    pButton2->ShowWindow(SW_HIDE);
-            //    break;
-            //case 1:
-            //    pButton3->ShowWindow(SW_HIDE);
-            //    break;
-            //case 2:
-            //    pButton4->ShowWindow(SW_HIDE);
-            //    break;
-            //case 3:
-            //    pButton5->ShowWindow(SW_HIDE);
-            //    break;
-            //case 4:
-            //    pButton6->ShowWindow(SW_HIDE);
-            //    break;
-            //}
+            m_DiceButtonControls[i]->ShowWindow(SW_HIDE);
         }
         else
         {
             //BUTTON2 ~ 6
-            m_buttonControls[i]->ShowWindow(SW_SHOW);
-
-            //switch (i)
-            //{
-            //case 0:
-            //    pButton2->ShowWindow(SW_SHOW);
-            //    break;
-            //case 1:
-            //    pButton3->ShowWindow(SW_SHOW);
-            //    break;
-            //case 2:
-            //    pButton4->ShowWindow(SW_SHOW);
-            //    break;
-            //case 3:
-            //    pButton5->ShowWindow(SW_SHOW);
-            //    break;
-            //case 4:
-            //    pButton6->ShowWindow(SW_SHOW);
-            //    break;
-            //}
+            m_DiceButtonControls[i]->ShowWindow(SW_SHOW);
         }
     }
 
@@ -451,48 +413,48 @@ void CYachtDice1Dlg::ClickedDiceButton(int btnNum)
 {
     if (btnNum <= 4) //BUTTON 2 ~ 6
     {
-        m_buttonControls[btnNum + 5]->ShowWindow(SW_SHOW);
+        m_DiceButtonControls[btnNum + 5]->ShowWindow(SW_SHOW);
         // 버튼 2에서 이미지를 추출합니다.
-        HBITMAP hBitmap = (HBITMAP)m_buttonControls[btnNum]->SendMessage(BM_GETIMAGE, IMAGE_BITMAP, 0);
+        HBITMAP hBitmap = (HBITMAP)m_DiceButtonControls[btnNum]->SendMessage(BM_GETIMAGE, IMAGE_BITMAP, 0);
         BITMAP bm;
         GetObject(hBitmap, sizeof(BITMAP), &bm);
 
         // 버튼 7에 이미지를 설정합니다.
-        m_buttonControls[btnNum + 5]->SetBitmap(hBitmap);
-        m_buttonControls[btnNum + 5]->SetWindowPos(nullptr, 0, 0, bm.bmWidth, bm.bmHeight, SWP_NOMOVE | SWP_NOZORDER);
+        m_DiceButtonControls[btnNum + 5]->SetBitmap(hBitmap);
+        m_DiceButtonControls[btnNum + 5]->SetWindowPos(nullptr, 0, 0, bm.bmWidth, bm.bmHeight, SWP_NOMOVE | SWP_NOZORDER);
 
 
         // 버튼 2에 있는 이미지를 삭제합니다.
-        m_buttonControls[btnNum]->SetBitmap(nullptr);
+        m_DiceButtonControls[btnNum]->SetBitmap(nullptr);
         pickDice[btnNum] = TRUE;
 
-        m_buttonControls[btnNum]->EnableWindow(FALSE);
-        m_buttonControls[btnNum + 5]->EnableWindow(TRUE);
+        m_DiceButtonControls[btnNum]->EnableWindow(FALSE);
+        m_DiceButtonControls[btnNum + 5]->EnableWindow(TRUE);
 
-        m_buttonControls[btnNum]->ShowWindow(SW_HIDE);
+        m_DiceButtonControls[btnNum]->ShowWindow(SW_HIDE);
 
         m_top_dices[btnNum] = m_ready_dices[btnNum];
     }
     else //BUTTON 7 ~ 11
     {
-        m_buttonControls[btnNum - 5]->ShowWindow(SW_SHOW);
-        m_buttonControls[btnNum - 5]->EnableWindow(TRUE);
+        m_DiceButtonControls[btnNum - 5]->ShowWindow(SW_SHOW);
+        m_DiceButtonControls[btnNum - 5]->EnableWindow(TRUE);
 
         // 버튼 7에서 이미지를 추출합니다.
-        HBITMAP hBitmap = (HBITMAP)m_buttonControls[btnNum]->SendMessage(BM_GETIMAGE, IMAGE_BITMAP, 0);
+        HBITMAP hBitmap = (HBITMAP)m_DiceButtonControls[btnNum]->SendMessage(BM_GETIMAGE, IMAGE_BITMAP, 0);
 
         // 버튼 2에 이미지를 설정합니다.
-        m_buttonControls[btnNum - 5]->SetBitmap(hBitmap);
+        m_DiceButtonControls[btnNum - 5]->SetBitmap(hBitmap);
 
         // 버튼 7에 있는 이미지를 삭제합니다.
-        m_buttonControls[btnNum]->SetBitmap(nullptr);
+        m_DiceButtonControls[btnNum]->SetBitmap(nullptr);
         pickDice[btnNum - 5] = FALSE;
 
         CString str;
-        m_buttonControls[btnNum]->GetWindowText(str);
+        m_DiceButtonControls[btnNum]->GetWindowText(str);
 
-        m_buttonControls[btnNum]->EnableWindow(FALSE);
-        m_buttonControls[btnNum]->ShowWindow(SW_HIDE);
+        m_DiceButtonControls[btnNum]->EnableWindow(FALSE);
+        m_DiceButtonControls[btnNum]->ShowWindow(SW_HIDE);
 
         m_top_dices[btnNum - 5] = 0;
     }
@@ -591,8 +553,8 @@ void CYachtDice1Dlg::OnBnClickedChoosecategory()
 
     for (int i = 0; i < 5; i++)
     {
-        m_buttonControls[i]->ShowWindow(SW_HIDE); //BUTTON 2 ~ 6
-        m_buttonControls[i+5]->EnableWindow(FALSE); //BUTTON 7 ~ 11
+        m_DiceButtonControls[i]->ShowWindow(SW_HIDE); //BUTTON 2 ~ 6
+        m_DiceButtonControls[i+5]->EnableWindow(FALSE); //BUTTON 7 ~ 11
     }
 }
 

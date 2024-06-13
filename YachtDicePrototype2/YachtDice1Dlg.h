@@ -61,7 +61,7 @@ private:
 
 	vector<CEdit*> m_editControls;
 	vector<CEdit*> m_editControls2;
-	vector<CButton*> m_buttonControls;
+	vector<CButton*> m_DiceButtonControls;
 
 public:
 	CBitmapButton m_bitmapBtn;
