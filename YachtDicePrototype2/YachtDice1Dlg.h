@@ -77,7 +77,7 @@ public:
 
 	void SetData(const CString& str);
 
-	CFont  m_roundFont, m_rollFont, m_boldFont, m_score, m_total;
+	CFont  m_roundFont, m_rollFont, m_boldFont, m_scoreFont, m_totalFont;
 
 	CBitmapButton m_dice1, m_dice2, m_dice3, m_dice4, m_dice5;
 

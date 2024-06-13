@@ -220,22 +220,27 @@ BOOL CYachtDice1Dlg::OnInitDialog()
     GetDlgItem(IDC_roll_num)->SetFont(&m_rollFont);
 
     // Score Board 글꼴    
-    m_score.CreatePointFont(90, _T("Segoe Script"));
-    for (int i = 0; i < 12; i++) {
-        m_p1[i].SetFont(&m_score);
-    }
-    m_p1Sub.SetFont(&m_score);
-    m_p1Bonus.SetFont(&m_score);
+    m_scoreFont.CreatePointFont(90, _T("Segoe Script"));
+    m_totalFont.CreatePointFont(110, _T("Segoe Script"));
 
-    m_total.CreatePointFont(110, _T("Segoe Script"));
-    m_p1Total.SetFont(&m_total);
+    for (int i = 0; i < 12; i++) {
+        m_p1[i].SetFont(&m_scoreFont);
+        m_cpuEditControls[i]->SetFont(&m_scoreFont);
+    }
+    m_p1Sub.SetFont(&m_scoreFont);
+    GetDlgItem(IDC_cpu_sub)->SetFont(&m_scoreFont);
+
+    m_p1Bonus.SetFont(&m_scoreFont);
+    GetDlgItem(IDC_cpu_bonus)->SetFont(&m_scoreFont);
+
+    m_p1Total.SetFont(&m_totalFont);
+    GetDlgItem(IDC_cpu_total)->SetFont(&m_totalFont);
 
     // m_p1[i] 비활성화
     for (int i = 0; i < 12; i++)
     {
         m_p1[i].EnableWindow(FALSE);
     }
-
 
     // 주사위 돌린 횟수 체크할 변수 초기화
     m_roll = 0;
@@ -244,7 +249,7 @@ BOOL CYachtDice1Dlg::OnInitDialog()
     m_round = 1;
 
     CString strRound;
-    strRound.Format(_T("Round  %d"), m_round);
+    strRound.Format(_T("Round %d"), m_round);
 
     CRect rect;
     GetDlgItem(IDC_round_num)->GetWindowRect(&rect);
@@ -842,7 +847,6 @@ void CYachtDice1Dlg::PlayYachtCPU()
     ScreenToClient(&rect3);
     InvalidateRect(rect3);
 
-
     m_cpuEditControls[max_i]->SetWindowTextW(strScore);
 
     int sum = 0;
@@ -921,15 +925,6 @@ void CYachtDice1Dlg::SwitchTurn(bool turn)
 
     if (!turn) //CPU 턴일 때
     {
-        //라운드 횟수 추가
-        m_round++;
-        CString strRound;
-        strRound.Format(_T("Round  %d"), m_round);
-        CRect rect;
-        GetDlgItem(IDC_round_num)->GetWindowRect(&rect);
-        ScreenToClient(&rect);
-        InvalidateRect(rect);
-        GetDlgItem(IDC_round_num)->SetWindowTextW(strRound);
 
         //턴 이미지 바꾸기
         m_turn_user.SetBitmap(m_Pepe2);
@@ -947,6 +942,16 @@ void CYachtDice1Dlg::SwitchTurn(bool turn)
     }
     else //플레이어 턴일 때
     {
+        //라운드 횟수 추가
+        m_round++;
+        CString strRound;
+        strRound.Format(_T("Round %d"), m_round);
+        CRect rect;
+        GetDlgItem(IDC_round_num)->GetWindowRect(&rect);
+        ScreenToClient(&rect);
+        InvalidateRect(rect);
+        GetDlgItem(IDC_round_num)->SetWindowTextW(strRound);
+
         //턴 이미지 바꾸기
         m_turn_user.SetBitmap(m_Pepe1);
         m_turn_cpu.SetBitmap(m_Pepe2);
