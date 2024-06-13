@@ -62,7 +62,6 @@ void CYachtDice1Dlg::DoDataExchange(CDataExchange* pDX)
     DDX_Control(pDX, IDC_STATIC_TURN1, m_turn_user);
     DDX_Control(pDX, IDC_STATIC_TURN2, m_turn_cpu);
 
-    DDX_Control(pDX, IDC_roll_num, m_roll_try);
 
     // 컨트롤과 멤버 변수를 연결
     DDX_Control(pDX, IDC_p1_sub, m_p1Sub);
@@ -71,6 +70,7 @@ void CYachtDice1Dlg::DoDataExchange(CDataExchange* pDX)
     for (int i = 0; i < 12; i++) {
         DDX_Control(pDX, IDC_p1_1 + i, m_p1[i]);
     }
+    DDX_Control(pDX, IDC_round_num, m_round_num);
 }
 
 
@@ -212,7 +212,13 @@ BOOL CYachtDice1Dlg::OnInitDialog()
     GetDlgItem(IDC_roll_num)->SetFont(&m_rollFont);
 
     // 주사위 돌린 횟수 체크할 변수 초기화
-    m_round = 0;
+    m_roll = 0;
+
+    //라운드 초기화
+    m_round = 1;
+    CString strRound;
+    strRound.Format(_T("%d"), m_round);
+    GetDlgItem(IDC_round_num)->SetWindowTextW(strRound);
 
     // 툴팁컨트롤을 생성한다.
     m_tip_ctrl.Create(this);
@@ -343,11 +349,11 @@ void CYachtDice1Dlg::OnBnClickedRoll()
         }
     }
 
-    m_round++;
+    m_roll++;
 
     // 정수를 CString으로 변환
     CString strRollNum;
-    strRollNum.Format(_T("%d/3"), m_round);
+    strRollNum.Format(_T("%d/3"), m_roll);
 
     CRect rect;
     GetDlgItem(IDC_roll_num)->GetWindowRect(&rect);
@@ -422,7 +428,7 @@ void CYachtDice1Dlg::OnPaint()
 
     back.StretchBlt(dc.m_hDC, 0, 0, rect.Width(), rect.Height(), SRCCOPY);//이미지를 픽쳐 컨트롤 크기로 조정
 
-    if (m_round >= 3) {
+    if (m_roll >= 3) {
         GetDlgItem(IDC_Roll)->ShowWindow(SW_HIDE);
         //Wait(700);
         //OnBnClickedChoosecategory();
@@ -805,9 +811,9 @@ void CYachtDice1Dlg::PlayYachtCPU()
 void CYachtDice1Dlg::SwitchTurn(bool turn)
 {
     //턴 표시 0으로 
-    m_round = 0;
+    m_roll = 0;
     CString strRollNum;
-    strRollNum.Format(_T("%d/3"), m_round);
+    strRollNum.Format(_T("%d/3"), m_roll);
     CRect rect;
     GetDlgItem(IDC_roll_num)->GetWindowRect(&rect);
     ScreenToClient(&rect);
@@ -819,7 +825,7 @@ void CYachtDice1Dlg::SwitchTurn(bool turn)
     GetDlgItem(IDC_ChooseCategory)->ShowWindow(SW_SHOW);
 
     //올라간 주사위 안 보이게
-    for (int i = 0; i < 10; i++)
+    for (int i = 0; i < 10; i++)    
     {
         if (i <= 4)
         {
@@ -841,6 +847,12 @@ void CYachtDice1Dlg::SwitchTurn(bool turn)
 
     if (!turn) //CPU 턴일 때
     {
+        //라운드 횟수 추가
+        m_round++;
+        CString strRound;
+        strRound.Format(_T("%d"), m_round);
+        GetDlgItem(IDC_round_num)->SetWindowTextW(strRound);
+
         //턴 이미지 바꾸기
         m_turn_user.SetBitmap(m_Pepe2);
         m_turn_cpu.SetBitmap(m_Pepe1);

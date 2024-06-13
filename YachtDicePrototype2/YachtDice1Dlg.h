@@ -98,8 +98,7 @@ public:
 	afx_msg void OnBnClickedDiceButton11();
 	afx_msg void OnBnClickedChoosecategory();
 
-	CStatic m_roll_try;
-	int m_round;
+	int m_roll, m_round;
 	vector<bool> pickDice;
 	vector<int> dice_result;
 
@@ -125,4 +124,5 @@ public:
 	afx_msg void OnBnClickedP1_10();
 	afx_msg void OnBnClickedP1_11();
 	afx_msg void OnBnClickedP1_12();
+	CStatic m_round_num;
 };
