@@ -195,8 +195,8 @@ BOOL CYachtDice1Dlg::OnInitDialog()
 
     LOGFONT lrf;
     memset(&lrf, 0, sizeof(LOGFONT));
-    lrf.lfHeight = 80; // Font height
-    lrf.lfWeight = FW_MEDIUM; // Bold weight
+    lrf.lfHeight = 60; // Font height
+    lrf.lfWeight = FW_SEMIBOLD; // Bold weight
     _tcscpy_s(lrf.lfFaceName, _T("Segoe Script")); // Font face name
 
     m_roundFont.CreateFontIndirect(&lrf);
@@ -212,7 +212,7 @@ BOOL CYachtDice1Dlg::OnInitDialog()
     m_round = 1;
 
     CString strRound;
-    strRound.Format(_T("%d"), m_round);
+    strRound.Format(_T("Round  %d"), m_round);
 
     CRect rect;
     GetDlgItem(IDC_round_num)->GetWindowRect(&rect);
@@ -768,7 +768,7 @@ void CYachtDice1Dlg::SwitchTurn(int turn)
         //라운드 횟수 추가
         m_round++;
         CString strRound;
-        strRound.Format(_T("%d"), m_round);
+        strRound.Format(_T("Round  %d"), m_round);
         CRect rect;
         GetDlgItem(IDC_round_num)->GetWindowRect(&rect);
         ScreenToClient(&rect);
