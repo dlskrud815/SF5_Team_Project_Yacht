@@ -29,6 +29,8 @@
 #define IDB_PEPE1                       151
 #define IDB_PEPE2                       152
 #define IDB_BITMAP5                     154
+#define IDB_OK                          155
+#define IDB_CANCLE                      156
 #define IDC_BUTTON1                     200
 #define IDC_TEST_BTN                    201
 #define IDC_EDIT_NAME                   202
@@ -100,7 +102,7 @@
 // 
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
-#define _APS_NEXT_RESOURCE_VALUE        155
+#define _APS_NEXT_RESOURCE_VALUE        157
 #define _APS_NEXT_COMMAND_VALUE         32771
 #define _APS_NEXT_CONTROL_VALUE         1052
 #define _APS_NEXT_SYMED_VALUE           110

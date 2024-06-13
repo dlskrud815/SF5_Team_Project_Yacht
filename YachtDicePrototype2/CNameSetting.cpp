@@ -25,6 +25,9 @@ void CNameSetting::DoDataExchange(CDataExchange* pDX)
 {
 	CDialogEx::DoDataExchange(pDX);
 	DDX_Control(pDX, IDC_EDIT_NAME, m_editBox);
+	//  DDX_Control(pDX, IDOK, m_pic_OK);
+	DDX_Control(pDX, IDCANCEL, m_pic_Cancle);
+	DDX_Control(pDX, IDOK, m_pic_OK);
 }
 
 
@@ -45,6 +48,11 @@ BOOL CNameSetting::OnInitDialog()
 	// TODO:  Add extra initialization here
 	backImage.Load(_T("BACKGROUND.png"));
 
+	m_pic_Cancle.LoadBitmaps(IDB_CANCLE);
+	m_pic_Cancle.SizeToContent();
+
+	m_pic_OK.LoadBitmaps(IDB_OK);
+	m_pic_OK.SizeToContent();
 
 	return TRUE;  // return TRUE unless you set the focus to a control
 	// EXCEPTION: OCX Property Pages should return FALSE

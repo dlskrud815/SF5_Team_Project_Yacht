@@ -31,4 +31,6 @@ public:
 	afx_msg void OnShowWindow(BOOL bShow, UINT nStatus);
 
 	CEdit m_editBox;
+	CBitmapButton m_pic_Cancle;
+	CBitmapButton m_pic_OK;
 };

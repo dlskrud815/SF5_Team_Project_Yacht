@@ -225,6 +225,7 @@
     <Image Include="..\..\..\..\..\Downloads\YachtDice1-main (1)\YachtDice1-main\YachtDice1\res\playBackground.bmp" />
     <Image Include="..\..\..\..\..\Downloads\YachtDice1-main (1)\YachtDice1-main\YachtDice1\res\Reroll.bmp" />
     <Image Include="..\..\..\..\..\Downloads\YachtDice1-main (1)\YachtDice1-main\YachtDice1\res\ROLL.bmp" />
+    <Image Include="CANCLE.bmp" />
     <Image Include="ChooseCategory.bmp" />
     <Image Include="dice_1.bmp" />
     <Image Include="dice_2.bmp" />
@@ -235,6 +236,7 @@
     <Image Include="DUAL.bmp" />
     <Image Include="Enter your username.bmp" />
     <Image Include="MAIN.bmp" />
+    <Image Include="OK.bmp" />
     <Image Include="pepe1.bmp" />
     <Image Include="pepe2.bmp" />
     <Image Include="playBackground.bmp" />

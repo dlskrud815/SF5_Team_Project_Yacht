@@ -170,5 +170,11 @@
     <Image Include="MAIN.bmp">
       <Filter>Resource Files</Filter>
     </Image>
+    <Image Include="OK.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="CANCLE.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
   </ItemGroup>
 </Project>
