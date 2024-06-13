@@ -205,6 +205,24 @@ BOOL CYachtDice1Dlg::OnInitDialog()
     m_rollFont.CreatePointFont(135, _T("Segoe Script"));
     GetDlgItem(IDC_roll_num)->SetFont(&m_rollFont);
 
+    // Score Board 글꼴    
+    m_score.CreatePointFont(90, _T("Segoe Script"));
+    for (int i = 0; i < 12; i++) {
+        m_p1[i].SetFont(&m_score);
+    }
+    m_p1Sub.SetFont(&m_score);
+    m_p1Bonus.SetFont(&m_score);
+
+    m_total.CreatePointFont(110, _T("Segoe Script"));
+    m_p1Total.SetFont(&m_total);
+
+    // m_p1[i] 비활성화
+    for (int i = 0; i < 12; i++)
+    {
+        m_p1[i].EnableWindow(FALSE);
+    }
+
+
     // 주사위 돌린 횟수 체크할 변수 초기화
     m_roll = 0;
 
@@ -250,13 +268,16 @@ HBRUSH CYachtDice1Dlg::OnCtlColor(CDC* pDC, CWnd* pWnd, UINT nCtlColor)
 {
     HBRUSH hbr = CDialogEx::OnCtlColor(pDC, pWnd, nCtlColor);
 
-    if (nCtlColor == CTLCOLOR_STATIC)
+    // IDC_p1_1 ~ IDC_p1_12 배경을 투명하게 설정
+    if (nCtlColor == CTLCOLOR_BTN)
     {
-        // Picture Control의 배경을 투명하게 설정
-        if (pWnd->GetDlgCtrlID() >= IDC_Dices_1 && pWnd->GetDlgCtrlID() <= IDC_Dices_5)
+        for (int i = 0; i < 12; i++)
         {
-            pDC->SetBkMode(TRANSPARENT);
-            return (HBRUSH)GetStockObject(NULL_BRUSH);
+            if (pWnd->GetDlgCtrlID() == (IDC_p1_1 + i))
+            {
+                pDC->SetBkMode(TRANSPARENT);
+                return (HBRUSH)GetStockObject(NULL_BRUSH);
+            }
         }
     }
 
@@ -274,6 +295,33 @@ HBRUSH CYachtDice1Dlg::OnCtlColor(CDC* pDC, CWnd* pWnd, UINT nCtlColor)
     }
 
     return hbr;
+}
+
+void CYachtDice1Dlg::OnDrawItem(int nIDCtl, LPDRAWITEMSTRUCT lpDrawItemStruct)
+{
+    // m_p1[i] 버튼을 그리는 코드
+    for (int i = IDC_p1_1; i <= IDC_p1_12; i++)
+    {
+        if (nIDCtl == i)
+        {
+            CDC dc;
+            dc.Attach(lpDrawItemStruct->hDC);
+
+            // 버튼의 영역 설정
+            CRect rect(lpDrawItemStruct->rcItem);
+
+            // 버튼의 배경을 투명하게 설정
+            dc.SetBkMode(TRANSPARENT);
+
+            // 버튼의 텍스트 출력
+            CString strText;
+            m_p1[i - IDC_p1_1].GetWindowText(strText);
+            dc.DrawText(strText, rect, DT_CENTER | DT_VCENTER | DT_SINGLELINE);
+            dc.Detach();
+            return;
+        }
+    }
+
 }
 
 
@@ -299,7 +347,7 @@ void CYachtDice1Dlg::OnBnClickedRoll()
     m_ready_dices.resize(5);
     m_top_dices.resize(5);
 
-    for (int j = 0; j < 5; ++j) {
+    for (int j = 0; j < 5; j++) {
         int i = rand() % 6;
 
         int diceValue = indices[i] - 139;
@@ -592,6 +640,11 @@ void CYachtDice1Dlg::OnBnClickedChoosecategory()
     {
         m_DiceButtonControls[i]->ShowWindow(SW_HIDE); //BUTTON 2 ~ 6
         m_DiceButtonControls[i+5]->EnableWindow(FALSE); //BUTTON 7 ~ 11
+    }
+
+    for (int i = 0; i < 12; i++)
+    {
+        m_p1[i].EnableWindow(TRUE); // 모든 p1 점수 버튼 활성화
     }
 }
 
@@ -1120,6 +1173,12 @@ void CYachtDice1Dlg::UpdateScoreBoard()
     CString totalStr;
     totalStr.Format(_T("%d"), total);
     m_p1Total.SetWindowText(totalStr);
+
+    // m_p1[i] 비활성화
+    for (int i = 0; i < 12; i++)
+    {
+        m_p1[i].EnableWindow(FALSE);
+    }
 
     //CPU로 턴 전환
     SwitchTurn(1);
