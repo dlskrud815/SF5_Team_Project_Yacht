@@ -700,6 +700,9 @@ void CYachtDice1Dlg::Wait(DWORD dwMillisecond)
 
 void CYachtDice1Dlg::PlayYachtCPU()
 {
+    GetDlgItem(IDC_Roll)->ShowWindow(SW_HIDE);
+    GetDlgItem(IDC_ChooseCategory)->ShowWindow(SW_HIDE);
+
     v_tempCpuScore = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 }; //Aces ~ Yacht
 
     int num = rand() % 3 + 1; //1 ~ 3회
@@ -711,21 +714,16 @@ void CYachtDice1Dlg::PlayYachtCPU()
         OnBnClickedRoll();
     }
 
-    Wait(700);
-    GetDlgItem(IDC_Roll)->ShowWindow(SW_HIDE);
-
     for (int i = 0; i < 5; i++)
     {
         Wait(500);
         ClickedDiceButton(i);
     }
+    Wait(700);
     for (int i = 5; i < m_DiceButtonControls.size(); i++)
     {
         m_DiceButtonControls[i]->EnableWindow(FALSE);
     }
-
-    Wait(700);
-    GetDlgItem(IDC_ChooseCategory)->ShowWindow(SW_HIDE);
 
     ////점수 계산
     //Aces ~ Sixes
@@ -807,6 +805,13 @@ void CYachtDice1Dlg::PlayYachtCPU()
         v_tempCpuScore[11] = 50;
     }
 
+    if (m_round == 1)
+    {
+        for (int i = 12; i < m_cpuEditControls.size(); i++)
+        {
+            m_cpuEditControls[i]->SetWindowText(L"0");
+        }
+    }
 
     //CPU는 최대 점수를 획득할 수 있도록 카테고리 선택
     int max = 0, max_i = -1;
@@ -876,6 +881,35 @@ void CYachtDice1Dlg::PlayYachtCPU()
     SwitchTurn(1);
 }
 
+void CYachtDice1Dlg::Winner()
+{
+    int cpu_Sum = 0;
+    int player_Sum = 0;
+
+    for (int i = 0; i < v_CpuScore.size(); i++)
+    {
+        cpu_Sum += v_CpuScore[i];
+    }
+
+    CString str;
+    m_p1Total.GetWindowText(str);
+
+    player_Sum = _ttoi(str);
+
+    if (cpu_Sum > player_Sum) // CPU Win
+    {
+
+    }
+    else if (player_Sum > cpu_Sum) // Player Win
+    {
+
+    }
+    else // 비김
+    {
+
+    }
+}
+
 void CYachtDice1Dlg::SwitchTurn(bool turn)
 {
     //턴 표시 0으로 
@@ -921,16 +955,6 @@ void CYachtDice1Dlg::SwitchTurn(bool turn)
 
     if (!turn) //CPU 턴일 때
     {
-        //라운드 횟수 추가
-        m_round++;
-        CString strRound;
-        strRound.Format(_T("Round  %d"), m_round);
-        CRect rect;
-        GetDlgItem(IDC_round_num)->GetWindowRect(&rect);
-        ScreenToClient(&rect);
-        InvalidateRect(rect);
-        GetDlgItem(IDC_round_num)->SetWindowTextW(strRound);
-
         //턴 이미지 바꾸기
         m_turn_user.SetBitmap(m_Pepe2);
         m_turn_cpu.SetBitmap(m_Pepe1);
@@ -947,6 +971,27 @@ void CYachtDice1Dlg::SwitchTurn(bool turn)
     }
     else //플레이어 턴일 때
     {
+        //라운드 횟수 추가
+        m_round++;
+
+        if (m_round > 12)
+        {
+            //승리 비교
+            Winner();
+            return;
+        }
+
+        CString strRound;
+        strRound.Format(_T("Round  %d"), m_round);
+        CRect rect;
+        GetDlgItem(IDC_round_num)->GetWindowRect(&rect);
+        ScreenToClient(&rect);
+        InvalidateRect(rect);
+        GetDlgItem(IDC_round_num)->SetWindowTextW(strRound);
+
+        GetDlgItem(IDC_Roll)->ShowWindow(SW_SHOW);
+        GetDlgItem(IDC_ChooseCategory)->ShowWindow(SW_SHOW);
+
         //턴 이미지 바꾸기
         m_turn_user.SetBitmap(m_Pepe1);
         m_turn_cpu.SetBitmap(m_Pepe2);
