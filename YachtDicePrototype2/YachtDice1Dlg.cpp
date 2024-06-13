@@ -124,12 +124,45 @@ BOOL CYachtDice1Dlg::OnInitDialog()
 
     // TODO: Add extra initialization here
 
-    vector <int> editIds = { IDC_cpu_1, IDC_cpu_2, IDC_cpu_3, IDC_cpu_4, IDC_cpu_5, IDC_cpu_6, IDC_cpu_7,
-    IDC_cpu_8, IDC_cpu_9, IDC_cpu_10, IDC_cpu_11, IDC_cpu_12, IDC_cpu_sub, IDC_cpu_bonus, IDC_cpu_total };
+    vector <int> cpuEditIds = { IDC_cpu_1, IDC_cpu_2, IDC_cpu_3, IDC_cpu_4, IDC_cpu_5, IDC_cpu_6, IDC_cpu_7,
+            IDC_cpu_8, IDC_cpu_9, IDC_cpu_10, IDC_cpu_11, IDC_cpu_12, IDC_cpu_sub, IDC_cpu_bonus, IDC_cpu_total };
+
+    vector <int> playerEditIds = { IDC_p1_1, IDC_p1_2, IDC_p1_3, IDC_p1_4, IDC_p1_5, 
+            IDC_p1_6, IDC_p1_7, IDC_p1_8, IDC_p1_9, IDC_p1_10, IDC_p1_11, IDC_p1_12};
 
     vector <int> DiceButtonIds = { IDC_DICE_BUTTON2, IDC_DICE_BUTTON3, IDC_DICE_BUTTON4, IDC_DICE_BUTTON5, IDC_DICE_BUTTON6, IDC_DICE_BUTTON7, IDC_DICE_BUTTON8,
-    IDC_DICE_BUTTON9, IDC_DICE_BUTTON10, IDC_DICE_BUTTON11};
+            IDC_DICE_BUTTON9, IDC_DICE_BUTTON10, IDC_DICE_BUTTON11};
 
+    //cpu 점수판 초기화
+    for (int id : cpuEditIds)
+    {
+        CEdit* pEdit = reinterpret_cast<CEdit*>(GetDlgItem(id));
+        if (pEdit != nullptr)
+        {
+            m_cpuEditControls.push_back(pEdit);
+        }
+    }
+    for (int i = 0; i < m_cpuEditControls.size(); i++)
+    {
+        m_cpuEditControls[i]->SetWindowText(L"");
+    }
+
+    //플레이어 점수판 초기화
+    for (int id : playerEditIds)
+    {
+        CButton* pButton = reinterpret_cast<CButton*>(GetDlgItem(id));
+        if (pButton != nullptr)
+        {
+            m_playerEditControls.push_back(pButton);
+        }
+    }
+    for (int i = 0; i < m_playerEditControls.size(); i++)
+    {
+        m_playerEditControls[i]->SetWindowText(L"");
+    }
+
+
+    //주사위 버튼 초기화?
     for (int id : DiceButtonIds)
     {
         CButton* pButton = reinterpret_cast<CButton*>(GetDlgItem(id));
@@ -138,7 +171,6 @@ BOOL CYachtDice1Dlg::OnInitDialog()
             m_DiceButtonControls.push_back(pButton);
         }
     }
-
     for (int i = 5; i < 10; i++) //BUTTON7 ~ 11
     {
         m_DiceButtonControls[i]->ShowWindow(SW_HIDE);
@@ -179,13 +211,6 @@ BOOL CYachtDice1Dlg::OnInitDialog()
         pickDice.push_back(0);
     }
 
-    //// 모든 버튼에 owner draw 스타일 적용
-    //for (int i = IDC_p1_1; i <= IDC_p1_12; i++)
-    //{
-    //    m_btnPlayers[i - IDC_p1_1].SubclassDlgItem(i, this);
-    //    m_btnPlayers[i - IDC_p1_1].ModifyStyle(0, BS_OWNERDRAW);
-    //}
-
     srand(static_cast<unsigned int>(time(nullptr)));
 
     //턴 이미지
@@ -198,20 +223,9 @@ BOOL CYachtDice1Dlg::OnInitDialog()
     return TRUE;  // return TRUE  unless you set the focus to a control
 }
 
-// If you add a minimize button to your dialog, you will need the code below
-//  to draw the icon.  For MFC applications using the document/view model,
-//  this is automatically done for you by the framework.
-
 HBRUSH CYachtDice1Dlg::OnCtlColor(CDC* pDC, CWnd* pWnd, UINT nCtlColor)
 {
     HBRUSH hbr = CDialogEx::OnCtlColor(pDC, pWnd, nCtlColor);
-
-    //// 모든 버튼의 배경을 투명하게 설정
-    //if (nCtlColor == CTLCOLOR_BTN)
-    //{
-    //    pDC->SetBkMode(TRANSPARENT);
-    //    return (HBRUSH)GetStockObject(NULL_BRUSH);
-    //}
 
     if (nCtlColor == CTLCOLOR_STATIC)
     {
@@ -567,6 +581,66 @@ BOOL CYachtDice1Dlg::PreTranslateMessage(MSG* pMsg)
     return CDialogEx::PreTranslateMessage(pMsg);
 }
 
+void CYachtDice1Dlg::SwitchTurn(int turn)
+{
+    //턴 표시 0으로 
+    m_round = 0;
+    CString strRollNum;
+    strRollNum.Format(_T("%d/3"), m_round);
+    CRect rect;
+    GetDlgItem(IDC_roll_num)->GetWindowRect(&rect);
+    ScreenToClient(&rect);
+    InvalidateRect(rect);
+    GetDlgItem(IDC_roll_num)->SetWindowTextW(strRollNum);
+
+    //ROLL 버튼 다시 표시
+    GetDlgItem(IDC_Roll)->ShowWindow(SW_SHOW);
+
+    //주사위 다시 내리기
+    for (int i = 0; i < 10; i++) //BUTTON7 ~ 11
+    {
+        if (i <= 4)
+        {
+            m_DiceButtonControls[i]->EnableWindow(TRUE);
+            m_DiceButtonControls[i]->ShowWindow(SW_SHOW);
+        }
+        else
+        {
+            m_DiceButtonControls[i]->EnableWindow(FALSE);
+            m_DiceButtonControls[i]->ShowWindow(SW_HIDE);
+        }
+    }
+
+    if (turn) //CPU 턴일 때
+    {
+        //턴 이미지 바꾸기
+        m_turn_user.SetBitmap(m_Pepe2);
+        m_turn_cpu.SetBitmap(m_Pepe1);
+
+        //플레이어 점수판 버튼 비활성화
+        for (int i = 0; i < m_playerEditControls.size(); i++)
+        {
+            m_playerEditControls[i]->EnableWindow(FALSE);
+        }
+
+
+        //이하 CPU 플레이 코드 들어갈 예정
+
+      
+    }
+    else //플레이어 턴일 때
+    {
+        //턴 이미지 바꾸기
+        m_turn_user.SetBitmap(m_Pepe1);
+        m_turn_cpu.SetBitmap(m_Pepe2);
+
+        for (int i = 0; i < m_playerEditControls.size(); i++)
+        {
+            m_playerEditControls[i]->EnableWindow(TRUE);
+        }
+    }
+}
+
 void CYachtDice1Dlg::OnBnClickedp1_1()
 {
     // TODO: Add your control notification handler code here
@@ -894,4 +968,6 @@ void CYachtDice1Dlg::UpdateScoreBoard()
     totalStr.Format(_T("%d"), total);
     m_p1Total.SetWindowText(totalStr);
 
+    //CPU로 턴 전환
+    SwitchTurn(1);
 }

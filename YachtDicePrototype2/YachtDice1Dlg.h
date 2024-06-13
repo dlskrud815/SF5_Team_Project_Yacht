@@ -59,8 +59,8 @@ private:
 	CStatic m_turn_user;
 	CStatic m_turn_cpu;
 
-	vector<CEdit*> m_editControls;
-	vector<CEdit*> m_editControls2;
+	vector<CEdit*> m_cpuEditControls;
+	vector<CButton*> m_playerEditControls;
 	vector<CButton*> m_DiceButtonControls;
 
 public:
@@ -104,6 +104,7 @@ public:
 
 	void UpdateScoreBoard();
 	void ClickedDiceButton(int btnNum);
+	void SwitchTurn(int turn); //0: 플레이어, 1: cpu
 
 	afx_msg void OnBnClickedp1_1();
 	afx_msg void OnBnClickedp1_2();
