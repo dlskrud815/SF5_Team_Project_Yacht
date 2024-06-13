@@ -191,6 +191,8 @@ BOOL CYachtDice1Dlg::OnInitDialog()
         m_DiceButtonControls[i]->ShowWindow(SW_HIDE);
     }
 
+    GetDlgItem(IDC_ChooseCategory)->ShowWindow(SW_HIDE);
+
     back.Load(_T("GameBoard_Background.png"));
     
     // 닉네임
@@ -429,7 +431,10 @@ void CYachtDice1Dlg::OnBnClickedRoll()
     InvalidateRect(rect);
 
     GetDlgItem(IDC_roll_num)->SetWindowTextW(strRollNum);
-
+    if (turn)
+    {
+        GetDlgItem(IDC_ChooseCategory)->ShowWindow(SW_SHOW);
+    }
 }
 
 void AdjustButtonToBitmap(CButton& button, HBITMAP hBitmap)
@@ -995,7 +1000,6 @@ void CYachtDice1Dlg::SwitchTurn(bool turn)
         GetDlgItem(IDC_round_num)->SetWindowTextW(strRound);
 
         GetDlgItem(IDC_Roll)->ShowWindow(SW_SHOW);
-        GetDlgItem(IDC_ChooseCategory)->ShowWindow(SW_SHOW);
 
         //턴 이미지 바꾸기
         m_turn_user.SetBitmap(m_Pepe1);
