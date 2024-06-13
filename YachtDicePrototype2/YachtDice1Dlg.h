@@ -1,6 +1,7 @@
 ﻿#pragma once
 
 #include "afxdialogex.h"
+#include <iostream>
 #include <vector>
 
 using namespace std;
@@ -69,6 +70,7 @@ private:
 	bool turn;
 
 	void Wait(DWORD dwMillisecond);
+	void SetButtonBitmapFromFile(CButton& button, const std::wstring& filePath);
 
 public:
 	afx_msg void OnPaint();
