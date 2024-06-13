@@ -27,6 +27,7 @@ protected:
 	COLORREF m_textColor;
 	CFont m_nameFont, m_scoreFont;
 
+	CBitmapButton m_okButton;
 
 	virtual BOOL OnInitDialog();
 	afx_msg HBRUSH OnCtlColor(CDC* pDC, CWnd* pWnd, UINT nCtlColor);

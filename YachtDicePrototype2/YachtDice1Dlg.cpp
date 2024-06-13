@@ -44,8 +44,6 @@ CYachtDice1Dlg::~CYachtDice1Dlg()
 void CYachtDice1Dlg::DoDataExchange(CDataExchange* pDX)
 {
     CDialogEx::DoDataExchange(pDX);
-    DDX_Control(pDX, IDC_TUTORIAL_BTN, m_bitmapBtn);
-
 
     DDX_Control(pDX, IDC_DICE_BUTTON2, m_dice1);
     DDX_Control(pDX, IDC_DICE_BUTTON3, m_dice2);
@@ -70,6 +68,7 @@ void CYachtDice1Dlg::DoDataExchange(CDataExchange* pDX)
     for (int i = 0; i < 12; i++) {
         DDX_Control(pDX, IDC_p1_1 + i, m_p1[i]);
     }
+    DDX_Control(pDX, IDC_TUTORIAL_BTN, m_q_btn);
 }
 
 
@@ -195,6 +194,9 @@ BOOL CYachtDice1Dlg::OnInitDialog()
 
     back.Load(_T("GameBoard_Background.png"));
     
+    m_q_btn.LoadBitmaps(IDB_BITMAP4); // IDB_OK_BITMAP은 리소스에 추가된 비트맵의 리소스 ID입니다.
+    m_q_btn.SizeToContent();
+
     // 닉네임
     // Create a LOGFONT structure
     LOGFONT lf;

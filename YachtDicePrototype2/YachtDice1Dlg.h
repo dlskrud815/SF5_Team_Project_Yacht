@@ -70,8 +70,6 @@ private:
 	void Wait(DWORD dwMillisecond);
 
 public:
-	CBitmapButton m_bitmapBtn;
-
 	afx_msg void OnPaint();
 	afx_msg void OnBnClickedTutorialBtn();
 
@@ -126,4 +124,6 @@ public:
 	afx_msg void OnBnClickedP1_10();
 	afx_msg void OnBnClickedP1_11();
 	afx_msg void OnBnClickedP1_12();
+
+	CBitmapButton m_q_btn;
 };

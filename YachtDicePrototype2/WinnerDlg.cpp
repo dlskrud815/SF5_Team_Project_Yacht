@@ -29,6 +29,7 @@ void WinnerDlg::DoDataExchange(CDataExchange* pDX)
     DDX_Control(pDX, IDC_STATIC_LOSER, m_loser_name);
     DDX_Control(pDX, IDC_WINNER_SCORE, m_winner_score);
     DDX_Control(pDX, IDC_LOSER_SCORE, m_loser_score);
+    DDX_Control(pDX, IDOK, m_okButton);
 }
 
 
@@ -112,6 +113,10 @@ BOOL WinnerDlg::OnInitDialog()
         m_winner_score.SetWindowTextW(winner_score);
         m_loser_score.SetWindowTextW(loser_score);
     }
+
+    // OK 버튼에 비트맵 이미지 설정
+    m_okButton.LoadBitmaps(IDB_BITMAP5); // IDB_OK_BITMAP은 리소스에 추가된 비트맵의 리소스 ID입니다.
+    m_okButton.SizeToContent();
 
 
 	return TRUE;  // return TRUE unless you set the focus to a control

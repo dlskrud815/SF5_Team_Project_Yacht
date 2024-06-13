@@ -167,5 +167,8 @@
     <Image Include="pepe2.bmp">
       <Filter>Resource Files</Filter>
     </Image>
+    <Image Include="MAIN.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
   </ItemGroup>
 </Project>
