@@ -123,6 +123,12 @@ BOOL CYachtDice1Dlg::OnInitDialog()
     SetIcon(m_hIcon, FALSE);		// Set small icon
 
     // TODO: Add extra initialization here
+    for (int i = 0; i < 12; i++)
+    {
+        v_check.push_back(false);
+    }
+
+    v_CpuScore = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 }; //Aces ~ Yacht
 
     vector <int> cpuEditIds = { IDC_cpu_1, IDC_cpu_2, IDC_cpu_3, IDC_cpu_4, IDC_cpu_5, IDC_cpu_6, IDC_cpu_7,
             IDC_cpu_8, IDC_cpu_9, IDC_cpu_10, IDC_cpu_11, IDC_cpu_12, IDC_cpu_sub, IDC_cpu_bonus, IDC_cpu_total };
@@ -409,7 +415,9 @@ void CYachtDice1Dlg::OnPaint()
     back.StretchBlt(dc.m_hDC, 0, 0, rect.Width(), rect.Height(), SRCCOPY);//이미지를 픽쳐 컨트롤 크기로 조정
 
     if (m_round >= 3) {
-        OnBnClickedChoosecategory();
+        GetDlgItem(IDC_Roll)->ShowWindow(SW_HIDE);
+        //Wait(700);
+        //OnBnClickedChoosecategory();
     }
 }
 
@@ -572,6 +580,8 @@ void CYachtDice1Dlg::OnBnClickedChoosecategory()
         m_DiceButtonControls[i]->ShowWindow(SW_HIDE); //BUTTON 2 ~ 6
         m_DiceButtonControls[i+5]->EnableWindow(FALSE); //BUTTON 7 ~ 11
     }
+
+    GetDlgItem(IDC_ChooseCategory)->ShowWindow(SW_HIDE);
 }
 
 
@@ -583,26 +593,52 @@ BOOL CYachtDice1Dlg::PreTranslateMessage(MSG* pMsg)
     return CDialogEx::PreTranslateMessage(pMsg);
 }
 
+void CYachtDice1Dlg::Wait(DWORD dwMillisecond)
+{
+    MSG msg;
+    DWORD dwStart;
+    dwStart = GetTickCount();
+
+    while (GetTickCount() - dwStart < dwMillisecond)
+    {
+        while (PeekMessage(&msg, NULL, 0, 0, PM_REMOVE))
+        {
+            TranslateMessage(&msg);
+            DispatchMessage(&msg);
+        }
+    }
+}
+
 void CYachtDice1Dlg::PlayYachtCPU()
 {
     v_tempCpuScore = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 }; //Aces ~ Yacht
 
-    for (int i = 0; i < v_tempCpuScore.size(); i++)
-    {
-        v_check[i] = false;
-    }
-
-    int num = rand() % 3 + 1;
-
+    int num = rand() % 3 + 1; //1 ~ 3회
+     
     //랜덤으로 1~3회 주사위 돌리기
     for (int i = 0; i < num; i++)
     {
+        Wait(700);
         OnBnClickedRoll();
-        Sleep(1500);
     }
-    OnBnClickedChoosecategory();
 
-    //점수 계산
+    Wait(700);
+    GetDlgItem(IDC_Roll)->ShowWindow(SW_HIDE);
+
+    for (int i = 0; i < 5; i++)
+    {
+        Wait(500);
+        ClickedDiceButton(i);
+    }
+    for (int i = 5; i < m_DiceButtonControls.size(); i++)
+    {
+        m_DiceButtonControls[i]->EnableWindow(FALSE);
+    }
+
+    Wait(700);
+    GetDlgItem(IDC_ChooseCategory)->ShowWindow(SW_HIDE);
+
+    ////점수 계산
     //Aces ~ Sixes
     for (int i = 1; i <= 6; i++)
     {
@@ -660,7 +696,7 @@ void CYachtDice1Dlg::PlayYachtCPU()
 
     for (const auto& pattern : smallStraightPatterns) {
         bool found = true;
-        for (int i = 0; i < pattern.size(); i++) {
+        for (int i = 0; i < 4; i++) {
             if (find(uniqueDice.begin(), uniqueDice.end(), pattern[i]) == uniqueDice.end()) {
                 found = false;
                 break;
@@ -685,9 +721,11 @@ void CYachtDice1Dlg::PlayYachtCPU()
 
     //CPU는 최대 점수를 획득할 수 있도록 카테고리 선택
     int max = 0, max_i = -1;
+
+    //v_check이 가득차거나 점수 먼저 넘기는 사람이 승리 ************************* 다른 데 코드 추가 필요
     for (int i = 0; i < v_tempCpuScore.size(); i++)
     {
-        if (num >= max && !v_check[i])
+        if (v_tempCpuScore[i] >= max && !v_check[i])
         {
             max = v_tempCpuScore[i];
             max_i = i;
@@ -700,7 +738,52 @@ void CYachtDice1Dlg::PlayYachtCPU()
     CString strScore;
     strScore.Format(_T("%d"), max);
 
+    //글자 겹침 해결
+    CRect rect1, rect2, rect3;
 
+    GetDlgItem(IDC_cpu_sub)->GetWindowRect(&rect1);
+    ScreenToClient(&rect1);
+    InvalidateRect(rect1);
+
+    GetDlgItem(IDC_cpu_bonus)->GetWindowRect(&rect2);
+    ScreenToClient(&rect2);
+    InvalidateRect(rect2);
+
+    GetDlgItem(IDC_cpu_total)->GetWindowRect(&rect3);
+    ScreenToClient(&rect3);
+    InvalidateRect(rect3);
+
+
+    m_cpuEditControls[max_i]->SetWindowTextW(strScore);
+
+    int sum = 0;
+    bool bonus = false;
+
+    for (int i = 0; i < v_CpuScore.size(); i++)
+    {
+        sum += v_CpuScore[i];
+
+        if (i == 5)
+        {
+            strScore.Format(_T("%d"), sum);
+            GetDlgItem(IDC_cpu_sub)->SetWindowTextW(strScore);
+            if (sum >= 63)
+            {
+                bonus = true;
+                GetDlgItem(IDC_cpu_bonus)->SetWindowTextW(L"35");
+            }
+        }
+    }
+    if (bonus)
+    {
+        sum += 35;
+    }
+    strScore.Format(_T("%d"), sum);
+    GetDlgItem(IDC_cpu_total)->SetWindowTextW(strScore);
+
+    Wait(700);
+    //플레이어로 턴 전환
+    SwitchTurn(0);
 }
 
 void CYachtDice1Dlg::SwitchTurn(int turn)
@@ -715,8 +798,9 @@ void CYachtDice1Dlg::SwitchTurn(int turn)
     InvalidateRect(rect);
     GetDlgItem(IDC_roll_num)->SetWindowTextW(strRollNum);
 
-    //ROLL 버튼 다시 표시
+    //CHOOSE CATEGORY, ROLL 버튼 다시 표시
     GetDlgItem(IDC_Roll)->ShowWindow(SW_SHOW);
+    GetDlgItem(IDC_ChooseCategory)->ShowWindow(SW_SHOW);
 
     //올라간 주사위 안 보이게
     for (int i = 0; i < 10; i++)
@@ -739,7 +823,7 @@ void CYachtDice1Dlg::SwitchTurn(int turn)
         pickDice.push_back(0);
     }
 
-    if (turn) //CPU 턴일 때
+    if (turn == 1) //CPU 턴일 때
     {
         //턴 이미지 바꾸기
         m_turn_user.SetBitmap(m_Pepe2);
@@ -751,18 +835,20 @@ void CYachtDice1Dlg::SwitchTurn(int turn)
             m_playerEditControls[i]->EnableWindow(FALSE);
         }
 
-
         //이하 CPU 플레이 코드 들어갈 예정
-        //PlayYachtCPU();
-        
-        //플레이어로 턴 전환
-        SwitchTurn(0);
+        PlayYachtCPU();
     }
     else //플레이어 턴일 때
     {
         //턴 이미지 바꾸기
         m_turn_user.SetBitmap(m_Pepe1);
         m_turn_cpu.SetBitmap(m_Pepe2);
+
+        //플레이어 점수판 버튼 활성화
+        for (int i = 0; i < m_playerEditControls.size(); i++)
+        {
+            m_playerEditControls[i]->EnableWindow(TRUE);
+        }
 
         for (int i = 0; i < m_playerEditControls.size(); i++)
         {

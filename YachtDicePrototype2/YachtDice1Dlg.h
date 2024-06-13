@@ -66,6 +66,8 @@ private:
 	vector <int> v_tempCpuScore, v_CpuScore;
 	vector <bool> v_check;
 
+	void Wait(DWORD dwMillisecond);
+
 public:
 	CBitmapButton m_bitmapBtn;
 
