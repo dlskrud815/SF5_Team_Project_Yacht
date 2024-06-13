@@ -70,7 +70,6 @@ void CYachtDice1Dlg::DoDataExchange(CDataExchange* pDX)
     for (int i = 0; i < 12; i++) {
         DDX_Control(pDX, IDC_p1_1 + i, m_p1[i]);
     }
-    DDX_Control(pDX, IDC_round_num, m_round_num);
 }
 
 
@@ -194,6 +193,15 @@ BOOL CYachtDice1Dlg::OnInitDialog()
     GetDlgItem(IDC_STATIC_NAME2)->SetFont(&m_boldFont);
     SetDlgItemText(IDC_STATIC_NAME, m_strData);
 
+    LOGFONT lrf;
+    memset(&lrf, 0, sizeof(LOGFONT));
+    lrf.lfHeight = 80; // Font height
+    lrf.lfWeight = FW_MEDIUM; // Bold weight
+    _tcscpy_s(lrf.lfFaceName, _T("Segoe Script")); // Font face name
+
+    m_roundFont.CreateFontIndirect(&lrf);
+    GetDlgItem(IDC_round_num)->SetFont(&m_roundFont);
+
     m_rollFont.CreatePointFont(135, _T("Segoe Script"));
     GetDlgItem(IDC_roll_num)->SetFont(&m_rollFont);
 
@@ -202,8 +210,15 @@ BOOL CYachtDice1Dlg::OnInitDialog()
 
     //라운드 초기화
     m_round = 1;
+
     CString strRound;
     strRound.Format(_T("%d"), m_round);
+
+    CRect rect;
+    GetDlgItem(IDC_round_num)->GetWindowRect(&rect);
+    ScreenToClient(&rect);
+    InvalidateRect(rect);
+
     GetDlgItem(IDC_round_num)->SetWindowTextW(strRound);
 
     // 툴팁컨트롤을 생성한다.
@@ -722,7 +737,6 @@ void CYachtDice1Dlg::SwitchTurn(int turn)
     GetDlgItem(IDC_roll_num)->SetWindowTextW(strRollNum);
 
     // 점수 집계를 위한 벡터 초기화
-    m_ready_dices.clear();
     m_top_dices.clear();
 
      //ROLL 버튼 다시 표시
@@ -742,7 +756,7 @@ void CYachtDice1Dlg::SwitchTurn(int turn)
         }
     }
 
-    m_top_dices.clear();
+    // pickDice 초기화
     pickDice.clear();
     for (int i = 0; i < 5; i++)
     {
@@ -755,6 +769,10 @@ void CYachtDice1Dlg::SwitchTurn(int turn)
         m_round++;
         CString strRound;
         strRound.Format(_T("%d"), m_round);
+        CRect rect;
+        GetDlgItem(IDC_round_num)->GetWindowRect(&rect);
+        ScreenToClient(&rect);
+        InvalidateRect(rect);
         GetDlgItem(IDC_round_num)->SetWindowTextW(strRound);
 
         //턴 이미지 바꾸기
@@ -772,7 +790,7 @@ void CYachtDice1Dlg::SwitchTurn(int turn)
         //PlayYachtCPU();
         
         //플레이어로 턴 전환
-        SwitchTurn(0);
+        //SwitchTurn(0);
     }
     else //플레이어 턴일 때
     {
