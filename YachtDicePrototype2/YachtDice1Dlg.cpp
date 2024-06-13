@@ -124,23 +124,25 @@ BOOL CYachtDice1Dlg::OnInitDialog()
 
     // TODO: Add extra initialization here
 
-    pButton2 = (CButton*)GetDlgItem(IDC_DICE_BUTTON2);
-    pButton3 = (CButton*)GetDlgItem(IDC_DICE_BUTTON3);
-    pButton4 = (CButton*)GetDlgItem(IDC_DICE_BUTTON4);
-    pButton5 = (CButton*)GetDlgItem(IDC_DICE_BUTTON5);
-    pButton6 = (CButton*)GetDlgItem(IDC_DICE_BUTTON6);
-    pButton7 = (CButton*)GetDlgItem(IDC_DICE_BUTTON7);
-    pButton8 = (CButton*)GetDlgItem(IDC_DICE_BUTTON8);
-    pButton9 = (CButton*)GetDlgItem(IDC_DICE_BUTTON9);
-    pButton10 = (CButton*)GetDlgItem(IDC_DICE_BUTTON10);
-    pButton11 = (CButton*)GetDlgItem(IDC_DICE_BUTTON11);
+    vector <int> editIds = { IDC_cpu_1, IDC_cpu_2, IDC_cpu_3, IDC_cpu_4, IDC_cpu_5, IDC_cpu_6, IDC_cpu_7,
+    IDC_cpu_8, IDC_cpu_9, IDC_cpu_10, IDC_cpu_11, IDC_cpu_12, IDC_cpu_sub, IDC_cpu_bonus, IDC_cpu_total };
 
-    pButton7->ShowWindow(SW_HIDE);
-    pButton8->ShowWindow(SW_HIDE);
-    pButton9->ShowWindow(SW_HIDE);
-    pButton10->ShowWindow(SW_HIDE);
-    pButton11->ShowWindow(SW_HIDE);
-   
+    vector <int> buttonIds = { IDC_DICE_BUTTON2, IDC_DICE_BUTTON3, IDC_DICE_BUTTON4, IDC_DICE_BUTTON5, IDC_DICE_BUTTON6, IDC_DICE_BUTTON7, IDC_DICE_BUTTON8,
+    IDC_DICE_BUTTON9, IDC_DICE_BUTTON10, IDC_DICE_BUTTON11};
+
+    for (int id : buttonIds)
+    {
+        CButton* pButton = reinterpret_cast<CButton*>(GetDlgItem(id));
+        if (pButton != nullptr)
+        {
+            m_buttonControls.push_back(pButton);
+        }
+    }
+
+    for (int i = 5; i < 10; i++) //BUTTON7 ~ 11
+    {
+        m_buttonControls[i]->ShowWindow(SW_HIDE);
+    }
 
     back.Load(_T("GameBoard_Background.png"));
     
@@ -237,32 +239,6 @@ HBRUSH CYachtDice1Dlg::OnCtlColor(CDC* pDC, CWnd* pWnd, UINT nCtlColor)
     return hbr;
 }
 
-//void CYachtDice1Dlg::OnDrawItem(int nIDCtl, LPDRAWITEMSTRUCT lpDrawItemStruct)
-//{
-//    // 모든 버튼을 그리는 코드
-//    for (int i = IDC_p1_1; i <= IDC_p1_12; i++)
-//    {
-//        if (nIDCtl == i)
-//        {
-//            CDC dc;
-//            dc.Attach(lpDrawItemStruct->hDC);
-//
-//            // 버튼의 영역 설정
-//            CRect rect(lpDrawItemStruct->rcItem);
-//
-//            // 버튼의 배경을 투명하게 설정
-//            dc.SetBkMode(TRANSPARENT);
-//
-//            // 버튼의 텍스트 출력
-//            CString strText;
-//            m_btnPlayers[i - IDC_p1_1].GetWindowText(strText);
-//            dc.DrawText(strText, rect, DT_CENTER | DT_VCENTER | DT_SINGLELINE);
-//            dc.Detach();
-//            return;
-//        }
-//    }
-//
-//}
 
 // 비트맵 리소스를 로드하는 함수
 HBITMAP LoadBitmapFromResource(HINSTANCE hInstance, int resourceID) {
@@ -327,45 +303,51 @@ void CYachtDice1Dlg::OnBnClickedRoll()
     {
         if (pickDice[i])
         {
-            switch (i)
-            {
-            case 0:
-                pButton2->ShowWindow(SW_HIDE);
-                break;
-            case 1:
-                pButton3->ShowWindow(SW_HIDE);
-                break;
-            case 2:
-                pButton4->ShowWindow(SW_HIDE);
-                break;
-            case 3:
-                pButton5->ShowWindow(SW_HIDE);
-                break;
-            case 4:
-                pButton6->ShowWindow(SW_HIDE);
-                break;
-            }
+            //BUTTON2 ~ 6
+            m_buttonControls[i]->ShowWindow(SW_HIDE);
+
+            //switch (i)
+            //{
+            //case 0:
+            //    pButton2->ShowWindow(SW_HIDE);
+            //    break;
+            //case 1:
+            //    pButton3->ShowWindow(SW_HIDE);
+            //    break;
+            //case 2:
+            //    pButton4->ShowWindow(SW_HIDE);
+            //    break;
+            //case 3:
+            //    pButton5->ShowWindow(SW_HIDE);
+            //    break;
+            //case 4:
+            //    pButton6->ShowWindow(SW_HIDE);
+            //    break;
+            //}
         }
         else
         {
-            switch (i)
-            {
-            case 0:
-                pButton2->ShowWindow(SW_SHOW);
-                break;
-            case 1:
-                pButton3->ShowWindow(SW_SHOW);
-                break;
-            case 2:
-                pButton4->ShowWindow(SW_SHOW);
-                break;
-            case 3:
-                pButton5->ShowWindow(SW_SHOW);
-                break;
-            case 4:
-                pButton6->ShowWindow(SW_SHOW);
-                break;
-            }
+            //BUTTON2 ~ 6
+            m_buttonControls[i]->ShowWindow(SW_SHOW);
+
+            //switch (i)
+            //{
+            //case 0:
+            //    pButton2->ShowWindow(SW_SHOW);
+            //    break;
+            //case 1:
+            //    pButton3->ShowWindow(SW_SHOW);
+            //    break;
+            //case 2:
+            //    pButton4->ShowWindow(SW_SHOW);
+            //    break;
+            //case 3:
+            //    pButton5->ShowWindow(SW_SHOW);
+            //    break;
+            //case 4:
+            //    pButton6->ShowWindow(SW_SHOW);
+            //    break;
+            //}
         }
     }
 
@@ -465,300 +447,115 @@ void CYachtDice1Dlg::SetData(const CString& strData)
     m_strData = strData;
 }
 
+void CYachtDice1Dlg::ClickedDiceButton(int btnNum)
+{
+    if (btnNum <= 4) //BUTTON 2 ~ 6
+    {
+        m_buttonControls[btnNum + 5]->ShowWindow(SW_SHOW);
+        // 버튼 2에서 이미지를 추출합니다.
+        HBITMAP hBitmap = (HBITMAP)m_buttonControls[btnNum]->SendMessage(BM_GETIMAGE, IMAGE_BITMAP, 0);
+        BITMAP bm;
+        GetObject(hBitmap, sizeof(BITMAP), &bm);
+
+        // 버튼 7에 이미지를 설정합니다.
+        m_buttonControls[btnNum + 5]->SetBitmap(hBitmap);
+        m_buttonControls[btnNum + 5]->SetWindowPos(nullptr, 0, 0, bm.bmWidth, bm.bmHeight, SWP_NOMOVE | SWP_NOZORDER);
+
+
+        // 버튼 2에 있는 이미지를 삭제합니다.
+        m_buttonControls[btnNum]->SetBitmap(nullptr);
+        pickDice[btnNum] = TRUE;
+
+        m_buttonControls[btnNum]->EnableWindow(FALSE);
+        m_buttonControls[btnNum + 5]->EnableWindow(TRUE);
+
+        m_buttonControls[btnNum]->ShowWindow(SW_HIDE);
+
+        m_top_dices[btnNum] = m_ready_dices[btnNum];
+    }
+    else //BUTTON 7 ~ 11
+    {
+        m_buttonControls[btnNum - 5]->ShowWindow(SW_SHOW);
+        m_buttonControls[btnNum - 5]->EnableWindow(TRUE);
+
+        // 버튼 7에서 이미지를 추출합니다.
+        HBITMAP hBitmap = (HBITMAP)m_buttonControls[btnNum]->SendMessage(BM_GETIMAGE, IMAGE_BITMAP, 0);
+
+        // 버튼 2에 이미지를 설정합니다.
+        m_buttonControls[btnNum - 5]->SetBitmap(hBitmap);
+
+        // 버튼 7에 있는 이미지를 삭제합니다.
+        m_buttonControls[btnNum]->SetBitmap(nullptr);
+        pickDice[btnNum - 5] = FALSE;
+
+        CString str;
+        m_buttonControls[btnNum]->GetWindowText(str);
+
+        m_buttonControls[btnNum]->EnableWindow(FALSE);
+        m_buttonControls[btnNum]->ShowWindow(SW_HIDE);
+
+        m_top_dices[btnNum - 5] = 0;
+    }
+    
+}
+
 void CYachtDice1Dlg::OnBnClickedDiceButton2()
 {
-    // TODO: Add your control notification handler code here
-    pButton7->ShowWindow(SW_SHOW);
-
-    // 버튼 2에서 이미지를 추출합니다.
-    HBITMAP hBitmap = (HBITMAP)pButton2->SendMessage(BM_GETIMAGE, IMAGE_BITMAP, 0);
-    BITMAP bm;
-    GetObject(hBitmap, sizeof(BITMAP), &bm);
-
-    // 버튼 7에 이미지를 설정합니다.
-    pButton7->SetBitmap(hBitmap);
-    pButton7->SetWindowPos(nullptr, 0, 0, bm.bmWidth, bm.bmHeight, SWP_NOMOVE | SWP_NOZORDER);
-
-    
-    // 버튼 2에 있는 이미지를 삭제합니다.
-    pButton2->SetBitmap(nullptr);
-    pickDice[0] = TRUE;
-
-    pButton2->EnableWindow(FALSE);
-    pButton7->EnableWindow(TRUE);
-
-    pButton2->ShowWindow(SW_HIDE);
-
-    m_top_dices[0] = m_ready_dices[0];
+    ClickedDiceButton(0);
 }
 
 
 void CYachtDice1Dlg::OnBnClickedDiceButton3()
 {
-    // TODO: Add your control notification handler code here
-    pButton8->ShowWindow(SW_SHOW);
-     
-     // 버튼 3에서 이미지를 추출합니다.
-    HBITMAP hBitmap = (HBITMAP)pButton3->SendMessage(BM_GETIMAGE, IMAGE_BITMAP, 0);
-    BITMAP bm;
-
-    GetObject(hBitmap, sizeof(BITMAP), &bm);
-
-    // 버튼 8에 이미지를 설정합니다.
-    pButton8->SetBitmap(hBitmap);
-    pButton8->SetWindowPos(nullptr, 0, 0, bm.bmWidth, bm.bmHeight, SWP_NOMOVE | SWP_NOZORDER);
-
-    // 버튼 3에 있는 이미지를 삭제합니다.
-    pButton3->SetBitmap(nullptr);
-    pickDice[1] = TRUE;
-
-    pButton3->EnableWindow(FALSE);
-    pButton8->EnableWindow(TRUE);
-
-    pButton3->ShowWindow(SW_HIDE);
-
-    m_top_dices[1] = m_ready_dices[1];
+    ClickedDiceButton(1);
 }
 
 
 void CYachtDice1Dlg::OnBnClickedDiceButton4()
 {
-    // TODO: Add your control notification handler code here
-    pButton9->ShowWindow(SW_SHOW);
-    // 버튼 4에서 이미지를 추출합니다.
-    HBITMAP hBitmap = (HBITMAP)pButton4->SendMessage(BM_GETIMAGE, IMAGE_BITMAP, 0);
-    BITMAP bm;
-
-    GetObject(hBitmap, sizeof(BITMAP), &bm);
-
-    // 버튼 9에 이미지를 설정합니다.
-    pButton9->SetBitmap(hBitmap);
-    pButton9->SetWindowPos(nullptr, 0, 0, bm.bmWidth, bm.bmHeight, SWP_NOMOVE | SWP_NOZORDER);
-
-    // 버튼 4에 있는 이미지를 삭제합니다.
-    pButton4->SetBitmap(nullptr);
-    pickDice[2] = TRUE;
-
-    pButton4->EnableWindow(FALSE);
-    pButton9->EnableWindow(TRUE);
-
-    pButton4->ShowWindow(SW_HIDE);
-
-    m_top_dices[2] = m_ready_dices[2];
+    ClickedDiceButton(2);
 }
 
 
 void CYachtDice1Dlg::OnBnClickedDiceButton5()
 {
-    // TODO: Add your control notification handler code here
-    pButton10->ShowWindow(SW_SHOW);
-    // 버튼 5에서 이미지를 추출합니다.
-    HBITMAP hBitmap = (HBITMAP)pButton5->SendMessage(BM_GETIMAGE, IMAGE_BITMAP, 0);
-    BITMAP bm;
-
-    GetObject(hBitmap, sizeof(BITMAP), &bm);
-
-    // 버튼 10에 이미지를 설정합니다.
-    pButton10->SetBitmap(hBitmap);
-    pButton10->SetWindowPos(nullptr, 0, 0, bm.bmWidth, bm.bmHeight, SWP_NOMOVE | SWP_NOZORDER);
-
-    // 버튼 5에 있는 이미지를 삭제합니다.
-    pButton5->SetBitmap(nullptr);
-    pickDice[3] = TRUE;
-
-    pButton5->EnableWindow(FALSE);
-    pButton10->EnableWindow(TRUE);
-
-    pButton5->ShowWindow(SW_HIDE);
-
-    m_top_dices[3] = m_ready_dices[3];
+    ClickedDiceButton(3);
 }
 
 
 void CYachtDice1Dlg::OnBnClickedDiceButton6()
 {
-    // TODO: Add your control notification handler code here
-    pButton11->ShowWindow(SW_SHOW);
-    // 버튼 6에서 이미지를 추출합니다.
-    HBITMAP hBitmap = (HBITMAP)pButton6->SendMessage(BM_GETIMAGE, IMAGE_BITMAP, 0);
-    BITMAP bm;
-
-    GetObject(hBitmap, sizeof(BITMAP), &bm);
-
-    // 버튼 11에 이미지를 설정합니다.
-    pButton11->SetBitmap(hBitmap);
-    pButton11->SetWindowPos(nullptr, 0, 0, bm.bmWidth, bm.bmHeight, SWP_NOMOVE | SWP_NOZORDER);
-
-    // 버튼 6에 있는 이미지를 삭제합니다.
-    pButton6->SetBitmap(nullptr);
-    pickDice[4] = TRUE;
-
-    pButton6->EnableWindow(FALSE);
-    pButton11->EnableWindow(TRUE);
-
-    pButton6->ShowWindow(SW_HIDE);
-
-    m_top_dices[4] = m_ready_dices[4];
+    ClickedDiceButton(4);
 }
 
 
 void CYachtDice1Dlg::OnBnClickedDiceButton7()
 {
-    pButton2->ShowWindow(SW_SHOW);
-    pButton2->EnableWindow(TRUE);
-
-    // TODO: Add your control notification handler code here
-    // 버튼 7에서 이미지를 추출합니다.
-    HBITMAP hBitmap = (HBITMAP)pButton7->SendMessage(BM_GETIMAGE, IMAGE_BITMAP, 0);
-
-    // 버튼 2에 이미지를 설정합니다.
-    pButton2->SetBitmap(hBitmap);
-
-    // 버튼 7에 있는 이미지를 삭제합니다.
-    pButton7->SetBitmap(nullptr);
-    pickDice[0] = FALSE;
-
-    CString str;
-    pButton7->GetWindowText(str);
-    //m_showScore.SetWindowText(str);
-
-
-    //CString str;
-    //GetDlgItemText(IDC_BUTTON7, str);
-    //m_showScore.SetWindowText(str);
-
-    pButton7->EnableWindow(FALSE);
-    pButton7->ShowWindow(SW_HIDE);
-
-    m_top_dices[0] = 0;
+    ClickedDiceButton(5);
 }
 
 
 void CYachtDice1Dlg::OnBnClickedDiceButton8()
 {
-    pButton3->ShowWindow(SW_SHOW);
-    pButton3->EnableWindow(TRUE);
-
-    // TODO: Add your control notification handler code here
-    // 버튼 8에서 이미지를 추출합니다.
-    HBITMAP hBitmap = (HBITMAP)pButton8->SendMessage(BM_GETIMAGE, IMAGE_BITMAP, 0);
-
-    // 버튼 3에 이미지를 설정합니다.
-    pButton3->SetBitmap(hBitmap);
-
-    // 버튼 8에 있는 이미지를 삭제합니다.
-    pButton8->SetBitmap(nullptr);
-    pickDice[1] = FALSE;
-
-    CString str;
-    pButton8->GetWindowText(str);
-    //m_showScore.SetWindowText(str);
-
-
-    //CString str;
-    //GetDlgItemText(IDC_BUTTON7, str);
-    //m_showScore.SetWindowText(str);
-
-    pButton8->EnableWindow(FALSE);
-    pButton8->ShowWindow(SW_HIDE);
-
-    m_top_dices[1] = 0;
+    ClickedDiceButton(6);
 }
 
 
 void CYachtDice1Dlg::OnBnClickedDiceButton9()
 {
-    pButton4->ShowWindow(SW_SHOW);
-    pButton4->EnableWindow(TRUE);
-
-    // TODO: Add your control notification handler code here
-    // 버튼 9에서 이미지를 추출합니다.
-    HBITMAP hBitmap = (HBITMAP)pButton9->SendMessage(BM_GETIMAGE, IMAGE_BITMAP, 0);
-
-    // 버튼 4에 이미지를 설정합니다.
-    pButton4->SetBitmap(hBitmap);
-
-    // 버튼 9에 있는 이미지를 삭제합니다.
-    pButton9->SetBitmap(nullptr);
-    pickDice[2] = FALSE;
-
-    CString str;
-    pButton9->GetWindowText(str);
-    //m_showScore.SetWindowText(str);
-
-
-    //CString str;
-    //GetDlgItemText(IDC_BUTTON7, str);
-    //m_showScore.SetWindowText(str);
-
-    pButton9->EnableWindow(FALSE);
-    pButton9->ShowWindow(SW_HIDE);
-
-    m_top_dices[2] = 0;
+    ClickedDiceButton(7);
 }
 
 
 void CYachtDice1Dlg::OnBnClickedDiceButton10()
 {
-    pButton5->ShowWindow(SW_SHOW);
-    pButton5->EnableWindow(TRUE);
-
-    // TODO: Add your control notification handler code here
-    // 버튼 10에서 이미지를 추출합니다.
-    HBITMAP hBitmap = (HBITMAP)pButton10->SendMessage(BM_GETIMAGE, IMAGE_BITMAP, 0);
-
-    // 버튼 5에 이미지를 설정합니다.
-    pButton5->SetBitmap(hBitmap);
-
-    // 버튼 10에 있는 이미지를 삭제합니다.
-    pButton10->SetBitmap(nullptr);
-    pickDice[3] = FALSE;
-
-    CString str;
-    pButton10->GetWindowText(str);
-    //m_showScore.SetWindowText(str);
-
-
-    //CString str;
-    //GetDlgItemText(IDC_BUTTON7, str);
-    //m_showScore.SetWindowText(str);}
-
-    pButton10->EnableWindow(FALSE);
-    pButton10->ShowWindow(SW_HIDE);
-
-    m_top_dices[3] = 0;
+    ClickedDiceButton(8);
 }
 
 
 void CYachtDice1Dlg::OnBnClickedDiceButton11()
 {
-    pButton6->ShowWindow(SW_SHOW);
-    pButton6->EnableWindow(TRUE);
-
-    // TODO: Add your control notification handler code here
-    // 버튼 11에서 이미지를 추출합니다.
-    HBITMAP hBitmap = (HBITMAP)pButton11->SendMessage(BM_GETIMAGE, IMAGE_BITMAP, 0);
-
-    // 버튼 6에 이미지를 설정합니다.
-    pButton6->SetBitmap(hBitmap);
-
-    // 버튼 11에 있는 이미지를 삭제합니다.
-    pButton11->SetBitmap(nullptr);
-    pickDice[4] = FALSE;
-
-    CString str;
-    pButton11->GetWindowText(str);
-    //m_showScore.SetWindowText(str);
-
-
-    //CString str;
-    //GetDlgItemText(IDC_BUTTON7, str);
-    //m_showScore.SetWindowText(str);}
-
-    pButton11->EnableWindow(FALSE);
-    pButton11->ShowWindow(SW_HIDE);
-
-    m_top_dices[4] = 0;
+    ClickedDiceButton(9);
 }
 
 
@@ -792,17 +589,11 @@ void CYachtDice1Dlg::OnBnClickedChoosecategory()
         }
     }
 
-    pButton2->ShowWindow(SW_HIDE);
-    pButton3->ShowWindow(SW_HIDE);
-    pButton4->ShowWindow(SW_HIDE);
-    pButton5->ShowWindow(SW_HIDE);
-    pButton6->ShowWindow(SW_HIDE);
-
-    pButton7->EnableWindow(FALSE);
-    pButton8->EnableWindow(FALSE);
-    pButton9->EnableWindow(FALSE);
-    pButton10->EnableWindow(FALSE);
-    pButton11->EnableWindow(FALSE);
+    for (int i = 0; i < 5; i++)
+    {
+        m_buttonControls[i]->ShowWindow(SW_HIDE); //BUTTON 2 ~ 6
+        m_buttonControls[i+5]->EnableWindow(FALSE); //BUTTON 7 ~ 11
+    }
 }
 
 
@@ -812,27 +603,6 @@ BOOL CYachtDice1Dlg::PreTranslateMessage(MSG* pMsg)
     m_tip_ctrl.RelayEvent(pMsg);
 
     return CDialogEx::PreTranslateMessage(pMsg);
-}
-
-void CYachtDice1Dlg::textOverlap(CString strScore)
-{
-    CRect rect1, rect2, rect3;
-
-    GetDlgItem(IDC_p1_sub)->GetWindowRect(&rect1);
-    ScreenToClient(&rect1);
-    InvalidateRect(rect1);
-
-    GetDlgItem(IDC_p1_bonus)->GetWindowRect(&rect2);
-    ScreenToClient(&rect2);
-    InvalidateRect(rect2);
-
-    GetDlgItem(IDC_p1_total)->GetWindowRect(&rect3);
-    ScreenToClient(&rect3);
-    InvalidateRect(rect3);
-
-    GetDlgItem(IDC_p1_sub)->SetWindowTextW(strScore);
-    GetDlgItem(IDC_p1_bonus)->SetWindowTextW(strScore);
-    GetDlgItem(IDC_p1_total)->SetWindowTextW(strScore);
 }
 
 void CYachtDice1Dlg::OnBnClickedp1_1()
@@ -855,7 +625,6 @@ void CYachtDice1Dlg::OnBnClickedp1_1()
     strScore.Format(_T("%d"), score);
     SetDlgItemText(IDC_p1_1, strScore);
 
-    textOverlap(strScore);
     UpdateScoreBoard();
 }
 
@@ -880,7 +649,6 @@ void CYachtDice1Dlg::OnBnClickedp1_2()
     strScore.Format(_T("%d"), score);
     SetDlgItemText(IDC_p1_2, strScore);
 
-    textOverlap(strScore);
     UpdateScoreBoard();
 }
 
@@ -903,7 +671,6 @@ void CYachtDice1Dlg::OnBnClickedP1_3()
     strScore.Format(_T("%d"), score);
     SetDlgItemText(IDC_p1_3, strScore);
 
-    textOverlap(strScore);
     UpdateScoreBoard();
 }
 
@@ -925,7 +692,6 @@ void CYachtDice1Dlg::OnBnClickedP1_4()
     strScore.Format(_T("%d"), score);
     SetDlgItemText(IDC_p1_4, strScore);
 
-    textOverlap(strScore);
     UpdateScoreBoard();
 }
 
@@ -947,7 +713,6 @@ void CYachtDice1Dlg::OnBnClickedP1_5()
     strScore.Format(_T("%d"), score);
     SetDlgItemText(IDC_p1_5, strScore);
 
-    textOverlap(strScore);
     UpdateScoreBoard();
 }
 
@@ -968,7 +733,6 @@ void CYachtDice1Dlg::OnBnClickedP1_6()
     strScore.Format(_T("%d"), score);
     SetDlgItemText(IDC_p1_6, strScore);
 
-    textOverlap(strScore);
     UpdateScoreBoard();
 }
 
@@ -986,7 +750,6 @@ void CYachtDice1Dlg::OnBnClickedP1_7()
     strSum.Format(_T("%d"), sum);
     SetDlgItemText(IDC_p1_7, strSum);
 
-    textOverlap(strSum);
     UpdateScoreBoard();
 }
 
@@ -1004,13 +767,11 @@ void CYachtDice1Dlg::OnBnClickedP1_8()
             CString strScore;
             strScore.Format(_T("%d"), accumulate(m_top_dices.begin(), m_top_dices.end(), 0));
             SetDlgItemText(IDC_p1_8, strScore);
-            textOverlap(strScore);
             return;
         }
     }
     // 조건에 맞는 경우가 없을 때는 0 출력
     SetDlgItemText(IDC_p1_8, _T("0"));
-    textOverlap(L"0");
 
     UpdateScoreBoard();
 }
@@ -1037,12 +798,10 @@ void CYachtDice1Dlg::OnBnClickedP1_9()
         CString strScore;
         strScore.Format(_T("%d"), accumulate(m_top_dices.begin(), m_top_dices.end(), 0));
         SetDlgItemText(IDC_p1_9, strScore);
-        textOverlap(strScore);
     }
     else {
         // 조건에 맞는 경우가 없을 때는 0 출력
         SetDlgItemText(IDC_p1_9, _T("0"));
-        textOverlap(L"0");
     }
 
     UpdateScoreBoard();
@@ -1071,13 +830,11 @@ void CYachtDice1Dlg::OnBnClickedP1_10()
         if (found) {
             // p1_10 버튼에 계산된 합계를 출력
             SetDlgItemText(IDC_p1_10, _T("15"));
-            textOverlap(L"15");
             return;
         }
     }
     // 조건에 맞는 경우가 없을 때는 0 출력
     SetDlgItemText(IDC_p1_10, _T("0"));
-    textOverlap(L"0");
 
     UpdateScoreBoard();
 }
@@ -1093,12 +850,10 @@ void CYachtDice1Dlg::OnBnClickedP1_11()
     if ((uniqueDice == vector<int>{1, 2, 3, 4, 5}) || (uniqueDice == vector<int>{2, 3, 4, 5, 6})) {
         // p1_11 버튼에 계산된 합계를 출력
         SetDlgItemText(IDC_p1_11, _T("30"));
-        textOverlap(L"30");
     }
     else {
         // 조건에 맞는 경우가 없을 때는 0 출력
         SetDlgItemText(IDC_p1_11, _T("0"));
-        textOverlap(L"0");
     }
 
     UpdateScoreBoard();
@@ -1115,12 +870,10 @@ void CYachtDice1Dlg::OnBnClickedP1_12()
     if (count[m_top_dices[0]] == 5) {
         // p1_12 버튼에 계산된 합계를 출력
         SetDlgItemText(IDC_p1_12, _T("50"));
-        textOverlap(L"50");
     }
     else {
         // 조건에 맞는 경우가 없을 때는 0 출력
         SetDlgItemText(IDC_p1_12, _T("0"));
-        textOverlap(L"0");
     }
 
     UpdateScoreBoard();
@@ -1128,6 +881,21 @@ void CYachtDice1Dlg::OnBnClickedP1_12()
 
 void CYachtDice1Dlg::UpdateScoreBoard()
 {
+    //글자 겹침 해결
+    CRect rect1, rect2, rect3;
+
+    GetDlgItem(IDC_p1_sub)->GetWindowRect(&rect1);
+    ScreenToClient(&rect1);
+    InvalidateRect(rect1);
+
+    GetDlgItem(IDC_p1_bonus)->GetWindowRect(&rect2);
+    ScreenToClient(&rect2);
+    InvalidateRect(rect2);
+
+    GetDlgItem(IDC_p1_total)->GetWindowRect(&rect3);
+    ScreenToClient(&rect3);
+    InvalidateRect(rect3);
+
     // p1_1부터 p1_6까지의 값을 합산
     int sub = 0;
     for (int i = 0; i < 6; i++) {
@@ -1142,19 +910,11 @@ void CYachtDice1Dlg::UpdateScoreBoard()
     sumStr.Format(_T("%d"), sub);
     m_p1Sub.SetWindowText(sumStr);
 
-    //// 다이얼로그를 강제로 다시 그림
-    //m_p1Sub.Invalidate();
-    //m_p1Sub.UpdateWindow();
-
     // p1_sub이 65 이상인 경우 p1_bonus에 35 출력
     int bonus = (sub >= 65) ? 35 : 0;
     CString bonusStr;
     bonusStr.Format(_T("%d"), bonus);
     m_p1Bonus.SetWindowText(bonusStr);
-
-    //// 다이얼로그를 강제로 다시 그림
-    //m_p1Bonus.Invalidate();
-    //m_p1Bonus.UpdateWindow();
 
     
     // sub + bonus + p1_7부터 p1_12까지의 값을 합산
@@ -1172,7 +932,4 @@ void CYachtDice1Dlg::UpdateScoreBoard()
     totalStr.Format(_T("%d"), total);
     m_p1Total.SetWindowText(totalStr);
 
-    //// 다이얼로그를 강제로 다시 그림
-    //m_p1Total.Invalidate();
-    //m_p1Total.UpdateWindow();
 }
