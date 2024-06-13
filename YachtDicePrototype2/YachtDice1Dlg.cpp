@@ -700,6 +700,9 @@ void CYachtDice1Dlg::Wait(DWORD dwMillisecond)
 
 void CYachtDice1Dlg::PlayYachtCPU()
 {
+    GetDlgItem(IDC_Roll)->ShowWindow(SW_HIDE);
+    GetDlgItem(IDC_ChooseCategory)->ShowWindow(SW_HIDE);
+
     v_tempCpuScore = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 }; //Aces ~ Yacht
 
     int num = rand() % 3 + 1; //1 ~ 3회
@@ -711,21 +714,18 @@ void CYachtDice1Dlg::PlayYachtCPU()
         OnBnClickedRoll();
     }
 
-    Wait(700);
-    GetDlgItem(IDC_Roll)->ShowWindow(SW_HIDE);
-
     for (int i = 0; i < 5; i++)
     {
         Wait(500);
         ClickedDiceButton(i);
     }
+    Wait(700);
     for (int i = 5; i < m_DiceButtonControls.size(); i++)
     {
         m_DiceButtonControls[i]->EnableWindow(FALSE);
     }
 
-    Wait(700);
-    GetDlgItem(IDC_ChooseCategory)->ShowWindow(SW_HIDE);
+    
 
     ////점수 계산
     //Aces ~ Sixes
@@ -947,6 +947,9 @@ void CYachtDice1Dlg::SwitchTurn(bool turn)
     }
     else //플레이어 턴일 때
     {
+        GetDlgItem(IDC_Roll)->ShowWindow(SW_SHOW);
+        GetDlgItem(IDC_ChooseCategory)->ShowWindow(SW_SHOW);
+
         //턴 이미지 바꾸기
         m_turn_user.SetBitmap(m_Pepe1);
         m_turn_cpu.SetBitmap(m_Pepe2);
