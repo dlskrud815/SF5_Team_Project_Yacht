@@ -59,6 +59,10 @@ private:
 	CStatic m_turn_user;
 	CStatic m_turn_cpu;
 
+	vector<CEdit*> m_cpuEditControls;
+	vector<CButton*> m_playerEditControls;
+	vector<CButton*> m_DiceButtonControls;
+
 public:
 	CBitmapButton m_bitmapBtn;
 
@@ -68,22 +72,12 @@ public:
 	void SetData(const CString& str);
 	CFont m_rollFont, m_boldFont;
 
-	CBitmapButton m_dice1;
-	CBitmapButton m_dice2;
-	CBitmapButton m_dice3;
-	CBitmapButton m_dice4;
-	CBitmapButton m_dice5;
+	CBitmapButton m_dice1, m_dice2, m_dice3, m_dice4, m_dice5;
 
 	CButton m_showScore;
-	CBitmapButton m_score1;
-	CBitmapButton m_score2;
-	CBitmapButton m_score3;
-	CBitmapButton m_score4;
-	CBitmapButton m_score5;
+	CBitmapButton m_score1, m_score2, m_score3, m_score4, m_score5;
 
-	CStatic m_p1Sub;
-	CStatic m_p1Bonus;
-	CStatic m_p1Total;
+	CStatic m_p1Sub, m_p1Bonus, m_p1Total;
 	CEdit m_p1[12];
 
 	afx_msg void OnBnClickedDiceButton2();
@@ -109,7 +103,8 @@ public:
 	virtual BOOL PreTranslateMessage(MSG* pMsg);
 
 	void UpdateScoreBoard();
-	void textOverlap(CString strScore);
+	void ClickedDiceButton(int btnNum);
+	void SwitchTurn(int turn); //0: 플레이어, 1: cpu
 
 	afx_msg void OnBnClickedp1_1();
 	afx_msg void OnBnClickedp1_2();
