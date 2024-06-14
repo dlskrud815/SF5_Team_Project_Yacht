@@ -28,8 +28,15 @@ protected:
 public:
 	TUTORIAL1* m_tutorial1;
 	TUTORIAL2* m_tutorial2;
+
 	void AllocForm1();
 	void AllocForm2();
+
+	void HideForm1();
+	void HideForm2();
+
+	void ShowForm1();
+	void ShowForm2();
 
 	CImage back;
 	virtual BOOL OnInitDialog();

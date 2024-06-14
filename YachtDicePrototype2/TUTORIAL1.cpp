@@ -80,7 +80,10 @@ void TUTORIAL1::OnPaint()
 
 void TUTORIAL1::OnBnClickedNextBtn1()
 {
-	//AllocForm2();
-	//GetDlgItem(IDC_TUTORIAL_DLG1)->DestroyWindow();
-	//CTutorial::AllocForm2();
+	CTutorial* pTutorialDlg = static_cast<CTutorial*>(GetParent()); // Get parent dialog
+	if (pTutorialDlg)
+	{
+		pTutorialDlg->HideForm1();
+		pTutorialDlg->ShowForm2();
+	}
 }

@@ -4,6 +4,7 @@
 #include "pch.h"
 #include "YachtDicePrototype2.h"
 #include "TUTORIAL2.h"
+#include "CTutorial.h"
 
 // TUTORIAL2
 
@@ -80,5 +81,10 @@ void TUTORIAL2::OnPaint()
 
 void TUTORIAL2::OnBnClickedPreviousBtn1()
 {
-	// TODO: Add your control notification handler code here
+	CTutorial* pTutorialDlg = static_cast<CTutorial*>(GetParent()); // Get parent dialog
+	if (pTutorialDlg)
+	{
+		pTutorialDlg->HideForm2();
+		pTutorialDlg->ShowForm1();
+	}
 }

@@ -44,6 +44,8 @@ BOOL CTutorial::OnInitDialog()
 	SetIcon(m_hIcon, FALSE);		// Set small icon
 
 	AllocForm1();
+	AllocForm2();
+	ShowForm1();
 
 	return TRUE;  // return TRUE unless you set the focus to a control
 	// EXCEPTION: OCX Property Pages should return FALSE
@@ -69,9 +71,10 @@ void CTutorial::AllocForm1()
 	m_tutorial1 = new TUTORIAL1();
 	m_tutorial1->Create(NULL, NULL, WS_CHILD | WS_VSCROLL | WS_HSCROLL, rectOfPanelArea, this, IDD_TUTORIAL1, &context);
 	m_tutorial1->OnInitialUpdate();
-	m_tutorial1->ShowWindow(SW_SHOW);
+	//m_tutorial1->ShowWindow(SW_SHOW);
 	//GetDlgItem(IDC_TUTORIAL_DLG1)->DestroyWindow();
 }
+
 
 void CTutorial::AllocForm2()
 {
@@ -82,9 +85,29 @@ void CTutorial::AllocForm2()
 
 	GetDlgItem(IDC_TUTORIAL_DLG1)->GetWindowRect(&rectOfPanelArea);
 	ScreenToClient(&rectOfPanelArea);
-	m_tutorial1 = new TUTORIAL1();
-	m_tutorial1->Create(NULL, NULL, WS_CHILD | WS_VSCROLL | WS_HSCROLL, rectOfPanelArea, this, IDD_TUTORIAL1, &context);
-	m_tutorial1->OnInitialUpdate();
-	m_tutorial1->ShowWindow(SW_SHOW);
+	m_tutorial2 = new TUTORIAL2();
+	m_tutorial2->Create(NULL, NULL, WS_CHILD | WS_VSCROLL | WS_HSCROLL, rectOfPanelArea, this, IDD_TUTORIAL2, &context);
+	m_tutorial2->OnInitialUpdate();
+	//m_tutorial2->ShowWindow(SW_SHOW);
 	//GetDlgItem(IDC_TUTORIAL_DLG1)->DestroyWindow();
+}
+
+void CTutorial::HideForm1()
+{
+	m_tutorial1->ShowWindow(SW_HIDE);
+}
+
+void CTutorial::HideForm2()
+{
+	m_tutorial2->ShowWindow(SW_HIDE);
+}
+
+void CTutorial::ShowForm1()
+{
+	m_tutorial1->ShowWindow(SW_SHOW);
+}
+
+void CTutorial::ShowForm2()
+{
+	m_tutorial2->ShowWindow(SW_SHOW);
 }
