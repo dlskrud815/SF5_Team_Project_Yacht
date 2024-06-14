@@ -34,4 +34,7 @@ public:
 	CBitmapButton m_pic_Cancle;
 	CBitmapButton m_pic_OK;
 	afx_msg void OnStnClickedStaticUsername();
+	afx_msg HBRUSH OnCtlColor(CDC* pDC, CWnd* pWnd, UINT nCtlColor);
+//	afx_msg void OnKillFocus(CWnd* pNewWnd);
+//	afx_msg void OnSetFocus(CWnd* pOldWnd);
 };

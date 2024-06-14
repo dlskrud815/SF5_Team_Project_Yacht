@@ -36,6 +36,9 @@ BEGIN_MESSAGE_MAP(CNameSetting, CDialogEx)
 	ON_BN_CLICKED(IDOK, &CNameSetting::OnBnClickedOk)
 	ON_WM_SHOWWINDOW()
 	ON_STN_CLICKED(IDC_STATIC_USERNAME, &CNameSetting::OnStnClickedStaticUsername)
+	ON_WM_CTLCOLOR()
+//	ON_WM_KILLFOCUS()
+//	ON_WM_SETFOCUS()
 END_MESSAGE_MAP()
 
 
@@ -54,6 +57,25 @@ BOOL CNameSetting::OnInitDialog()
 
 	m_pic_OK.LoadBitmaps(IDB_OK);
 	m_pic_OK.SizeToContent();
+
+	CFont font;
+	font.CreateFont(
+		50,                         // 폰트 높이
+		0,                          // 폰트 너비
+		0,                          // 텍스트 각도
+		0,                          // 기준선에서의 각도
+		FW_NORMAL,                  // 폰트 굵기
+		FALSE,                      // 기울임
+		FALSE,                      // 밑줄
+		0,                          // 취소선
+		DEFAULT_CHARSET,            // 문자 집합
+		OUT_DEFAULT_PRECIS,         // 출력 정밀도
+		CLIP_DEFAULT_PRECIS,        // 클리핑 정밀도
+		DEFAULT_QUALITY,            // 출력 품질
+		DEFAULT_PITCH | FF_SWISS,   // 글꼴 이름
+		_T("Segoe Script")                 // 글꼴
+	);
+	m_editBox.SetFont(&font);
 
 	return TRUE;  // return TRUE unless you set the focus to a control
 	// EXCEPTION: OCX Property Pages should return FALSE
@@ -109,4 +131,22 @@ void CNameSetting::OnShowWindow(BOOL bShow, UINT nStatus)
 void CNameSetting::OnStnClickedStaticUsername()
 {
 	// TODO: Add your control notification handler code here
+}
+
+
+HBRUSH CNameSetting::OnCtlColor(CDC* pDC, CWnd* pWnd, UINT nCtlColor)
+{
+	HBRUSH hbr = CDialogEx::OnCtlColor(pDC, pWnd, nCtlColor);
+
+	// IDC_EDIT_NAME 컨트롤의 핸들 확인
+	if (pWnd->GetDlgCtrlID() == IDC_EDIT_NAME)
+	{
+		pDC->SetBkColor(RGB(104, 63, 45));  // 에디트 박스 배경색 설정
+		pDC->SetTextColor(RGB(255, 255, 255));  // 에디트 박스 텍스트 색상 설정
+
+		COLORREF rgbColor = RGB(104, 63, 45);
+		hbr = CreateSolidBrush(rgbColor);
+	}
+
+	return hbr;
 }
