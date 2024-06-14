@@ -36,6 +36,8 @@ public:
 // Implementation
 protected:
 	DECLARE_MESSAGE_MAP()
+public:
+//	afx_msg HBRUSH OnCtlColor(CDC* pDC, CWnd* pWnd, UINT nCtlColor);
 };
 
 CAboutDlg::CAboutDlg() : CDialogEx(IDD_ABOUTBOX)
@@ -48,6 +50,7 @@ void CAboutDlg::DoDataExchange(CDataExchange* pDX)
 }
 
 BEGIN_MESSAGE_MAP(CAboutDlg, CDialogEx)
+//	ON_WM_CTLCOLOR()
 END_MESSAGE_MAP()
 
 
@@ -203,3 +206,13 @@ void CYachtDicePrototype2Dlg::OnBnClickedButton1()
 	dlgN.DoModal();
 	// TODO: Add your control notification handler code here
 }
+
+//HBRUSH CAboutDlg::OnCtlColor(CDC* pDC, CWnd* pWnd, UINT nCtlColor)
+//{
+//	HBRUSH hbr = CDialogEx::OnCtlColor(pDC, pWnd, nCtlColor);
+//
+	// TODO:  Change any attributes of the DC here
+
+	// TODO:  Return a different brush if the default is not desired
+//	return hbr;
+//}
