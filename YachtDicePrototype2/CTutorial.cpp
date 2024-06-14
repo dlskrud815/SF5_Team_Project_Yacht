@@ -14,7 +14,7 @@ IMPLEMENT_DYNAMIC(CTutorial, CDialogEx)
 CTutorial::CTutorial(CWnd* pParent /*=nullptr*/)
 	: CDialogEx(IDD_TUTORIAL_DIALOG, pParent)
 {
-
+	m_hIcon = AfxGetApp()->LoadIcon(IDR_MAINFRAME);
 }
 
 CTutorial::~CTutorial()
@@ -29,6 +29,7 @@ void CTutorial::DoDataExchange(CDataExchange* pDX)
 
 BEGIN_MESSAGE_MAP(CTutorial, CDialogEx)
 	ON_WM_PAINT()
+	ON_WM_QUERYDRAGICON()
 END_MESSAGE_MAP()
 
 
@@ -38,6 +39,11 @@ END_MESSAGE_MAP()
 BOOL CTutorial::OnInitDialog()
 {
 	CDialogEx::OnInitDialog();
+
+	// Set the icon for this dialog.  The framework does this automatically
+	// when the application's main window is not a dialog
+	SetIcon(m_hIcon, TRUE);			// Set big icon
+	SetIcon(m_hIcon, FALSE);		// Set small icon
 
 	// TODO:  Add extra initialization here
 	back.Load(_T("BACKGROUND.png"));//이미지 로드
@@ -60,4 +66,12 @@ void CTutorial::OnPaint()
 	//dc = m_picture_control.GetDC(); //픽쳐 컨트롤의 DC를 얻는다.
 
 	back.StretchBlt(dc.m_hDC, 0, 0, rect.Width(), rect.Height(), SRCCOPY);//이미지를 픽쳐 컨트롤 크기로 조정
+}
+
+
+HCURSOR CTutorial::OnQueryDragIcon()
+{
+	// TODO: Add your message handler code here and/or call default
+
+	return static_cast<HCURSOR>(m_hIcon);
 }
