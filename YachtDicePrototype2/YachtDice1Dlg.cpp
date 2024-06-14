@@ -196,7 +196,7 @@ BOOL CYachtDice1Dlg::OnInitDialog()
 
     back.Load(_T("GameBoard_Background.png"));
 
-    SetButtonBitmapFromFile(m_q_btn, L"qMark.bmp");
+    SetButtonBitmapFromFile(m_q_btn, L"qMarkGame.bmp");
     SetButtonBitmapFromFile(m_pic_ChooseCategory, L"ChooseCategory.bmp");
     SetButtonBitmapFromFile(m_pic_Roll, L"ROLL.bmp");
 
