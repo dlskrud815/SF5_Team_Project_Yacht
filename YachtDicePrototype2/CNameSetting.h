@@ -33,4 +33,5 @@ public:
 	CEdit m_editBox;
 	CBitmapButton m_pic_Cancle;
 	CBitmapButton m_pic_OK;
+	afx_msg void OnStnClickedStaticUsername();
 };
