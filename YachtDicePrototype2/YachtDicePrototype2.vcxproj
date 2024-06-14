@@ -235,6 +235,7 @@
     <Image Include="dice_6.bmp" />
     <Image Include="DUAL.bmp" />
     <Image Include="Enter your username.bmp" />
+    <Image Include="hand_cursor.png" />
     <Image Include="MAIN.bmp" />
     <Image Include="OK.bmp" />
     <Image Include="pepe1.bmp" />

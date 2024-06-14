@@ -176,5 +176,8 @@
     <Image Include="CANCLE.bmp">
       <Filter>Resource Files</Filter>
     </Image>
+    <Image Include="hand_cursor.png">
+      <Filter>Resource Files</Filter>
+    </Image>
   </ItemGroup>
 </Project>

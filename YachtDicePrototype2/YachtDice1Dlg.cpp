@@ -118,6 +118,14 @@ BOOL CYachtDice1Dlg::OnInitDialog()
     SetIcon(m_hIcon, FALSE);		// Set small icon
 
     // TODO: Add extra initialization here
+    HCURSOR hCursor1 = AfxGetApp()->LoadStandardCursor(IDC_HAND);
+    // 버튼의 마우스 커서를 변경
+    ::SetClassLongPtr(m_dice1.GetSafeHwnd(), GCLP_HCURSOR, reinterpret_cast<LONG_PTR>(hCursor1));
+
+    //// 동작 완료 후 원래 커서로 복원
+    //HCURSOR hCursor2 = AfxGetApp()->LoadStandardCursor(IDC_ARROW);
+    //::SetClassLongPtr(m_dice1.GetSafeHwnd(), GCLP_HCURSOR, reinterpret_cast<LONG_PTR>(hCursor2));
+
     turn = true; //플레이어;
 
     for (int i = 0; i < 12; i++)
@@ -421,9 +429,7 @@ void CYachtDice1Dlg::OnBnClickedRoll()
                 m_score5.SetWindowText(scoreStr);
 
             }
-
         }
-
     }
 
     for (int i = 0; i < 5; i++)
@@ -660,7 +666,6 @@ void CYachtDice1Dlg::OnBnClickedDiceButton11()
 void CYachtDice1Dlg::OnBnClickedChoosecategory()
 {
     // TODO: Add your control notification handler code here
-
     //플레이어 점수판 버튼 활성/비활성
     for (int i = 0; i < m_playerEditControls.size(); i++)
     {
@@ -704,7 +709,17 @@ void CYachtDice1Dlg::OnBnClickedChoosecategory()
 
     for (int i = 0; i < 12; i++)
     {
-        m_p1[i].EnableWindow(TRUE); // 모든 p1 점수 버튼 활성화
+        CString str;
+        m_p1[i].GetWindowText(str);
+        
+        if (str == L"")
+        {
+            m_p1[i].EnableWindow(TRUE); // 모든 p1 점수 버튼 활성화
+        }
+        else
+        {
+            m_p1[i].EnableWindow(FALSE);
+        }
     }
 }
 
