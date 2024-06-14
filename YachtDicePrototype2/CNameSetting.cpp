@@ -15,7 +15,7 @@ IMPLEMENT_DYNAMIC(CNameSetting, CDialogEx)
 CNameSetting::CNameSetting(CWnd* pParent /*=nullptr*/)
 	: CDialogEx(IDD_NAME_DIALOG, pParent)
 {
-	m_hIcon = AfxGetApp()->LoadIcon(IDR_MAINFRAME);
+	m_hIcon = AfxGetApp()->LoadIcon(IDI_DICE_ICON);
 }
 
 CNameSetting::~CNameSetting()

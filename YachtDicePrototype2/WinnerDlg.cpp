@@ -14,6 +14,7 @@ IMPLEMENT_DYNAMIC(WinnerDlg, CDialogEx)
 WinnerDlg::WinnerDlg(CWnd* pParent /*=nullptr*/)
 	: CDialogEx(IDD_WinnerDlg, pParent)
 {
+    m_hIcon = AfxGetApp()->LoadIcon(IDI_DICE_ICON);
     m_textColor = RGB(255, 255, 255); // White color for text
     m_brush.CreateStockObject(NULL_BRUSH); // Transparent background brush
 }

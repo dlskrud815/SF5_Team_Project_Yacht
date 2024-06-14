@@ -23,6 +23,8 @@ protected:
 	
 
 protected:
+	HICON m_hIcon;
+
 	CBrush m_brush;
 	COLORREF m_textColor;
 	CFont m_nameFont, m_scoreFont;

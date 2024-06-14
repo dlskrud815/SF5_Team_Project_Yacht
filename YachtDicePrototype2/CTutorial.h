@@ -1,6 +1,7 @@
 ﻿#pragma once
 #include "afxdialogex.h"
-
+#include "TUTORIAL1.h"
+#include "TUTORIAL2.h"
 
 // CTutorial dialog
 
@@ -25,8 +26,12 @@ protected:
 	DECLARE_MESSAGE_MAP()
 
 public:
+	TUTORIAL1* m_tutorial1;
+	TUTORIAL2* m_tutorial2;
+	void AllocForm1();
+	void AllocForm2();
+
 	CImage back;
 	virtual BOOL OnInitDialog();
-	afx_msg void OnPaint();
 	afx_msg HCURSOR OnQueryDragIcon();
 };

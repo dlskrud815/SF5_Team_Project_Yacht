@@ -28,7 +28,7 @@ IMPLEMENT_DYNAMIC(CYachtDice1Dlg, CDialogEx)
 CYachtDice1Dlg::CYachtDice1Dlg(CWnd* pParent /*=nullptr*/)
     : CDialogEx(IDD_YACHTDICE1_DIALOG, pParent)
 {
-    m_hIcon = AfxGetApp()->LoadIcon(IDR_MAINFRAME);
+    m_hIcon = AfxGetApp()->LoadIcon(IDI_DICE_ICON);
 }
 
 CYachtDice1Dlg::~CYachtDice1Dlg()
