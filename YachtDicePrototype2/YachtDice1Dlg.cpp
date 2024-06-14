@@ -764,6 +764,11 @@ void CYachtDice1Dlg::PlayYachtCPU()
     GetDlgItem(IDC_Roll)->ShowWindow(SW_HIDE);
     GetDlgItem(IDC_ChooseCategory)->ShowWindow(SW_HIDE);
 
+    for (int i = 0; i < 5; i++)
+    {
+        m_DiceButtonControls[i]->EnableWindow(FALSE); //BUTTON 2 ~ 6 비활성화
+    }
+
     v_tempCpuScore = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 }; //Aces ~ Yacht
 
     int num = rand() % 3 + 1; //1 ~ 3회
@@ -779,12 +784,10 @@ void CYachtDice1Dlg::PlayYachtCPU()
     {
         Wait(500);
         ClickedDiceButton(i);
+
+        m_DiceButtonControls[i+5]->EnableWindow(FALSE); //BUTTON 7 ~ 11 비활성화
     }
     Wait(700);
-    for (int i = 5; i < m_DiceButtonControls.size(); i++)
-    {
-        m_DiceButtonControls[i]->EnableWindow(FALSE);
-    }
 
     ////점수 계산
     //Aces ~ Sixes
