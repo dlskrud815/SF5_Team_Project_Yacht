@@ -114,7 +114,6 @@ BOOL CYachtDicePrototype2Dlg::OnInitDialog()
 	SetIcon(m_hIcon, FALSE);		// Set small icon
 
 	HCURSOR hCursor1 = AfxGetApp()->LoadStandardCursor(IDC_HAND);
-	// 버튼의 마우스 커서를 변경
 	::SetClassLongPtr(m_start_bmp.GetSafeHwnd(), GCLP_HCURSOR, reinterpret_cast<LONG_PTR>(hCursor1));
 
 	main.Load(_T("main_noBT.bmp"));//이미지 로드
@@ -188,7 +187,6 @@ HCURSOR CYachtDicePrototype2Dlg::OnQueryDragIcon()
 {
 	return static_cast<HCURSOR>(m_hIcon);
 }
-
 
 
 void CYachtDicePrototype2Dlg::OnBnClickedButton3()

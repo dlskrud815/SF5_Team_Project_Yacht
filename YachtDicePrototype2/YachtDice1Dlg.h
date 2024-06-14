@@ -17,7 +17,7 @@ public:
 	virtual ~CYachtDice1Dlg();
 
 // Dialog Data
-#ifdef AFX_DESIGN_TIME
+#ifdef AFX_DESIGN_TIMEW
 	enum { IDD = IDD_YACHTDICE1_DIALOG };
 #endif
 

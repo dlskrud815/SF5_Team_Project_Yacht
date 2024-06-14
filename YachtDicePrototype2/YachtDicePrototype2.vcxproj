@@ -212,6 +212,7 @@
     <ResourceCompile Include="YachtDicePrototype2.rc" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="hand_cursor.cur" />
     <None Include="res\YachtDicePrototype2.rc2" />
   </ItemGroup>
   <ItemGroup>

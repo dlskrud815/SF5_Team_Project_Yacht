@@ -78,6 +78,9 @@
     <None Include="res\YachtDicePrototype2.rc2">
       <Filter>Resource Files</Filter>
     </None>
+    <None Include="hand_cursor.cur">
+      <Filter>Resource Files</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Image Include="res\YachtDicePrototype2.ico">

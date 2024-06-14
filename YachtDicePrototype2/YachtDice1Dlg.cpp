@@ -271,13 +271,27 @@ BOOL CYachtDice1Dlg::OnInitDialog()
 
     GetDlgItem(IDC_round_num)->SetWindowTextW(strRound);
 
-    // 툴팁컨트롤을 생성한다.
     m_tip_ctrl.Create(this);
-    m_tip_ctrl.AddTool(GetDlgItem(IDC_DICE_BUTTON2), _T("주사위 1 선택"));
     m_tip_ctrl.SetMaxTipWidth(300);
     m_tip_ctrl.SetDelayTime(TTDT_AUTOPOP, 2000);
 
+    // 각 버튼에 대한 툴팁 설정
+    for (int i = 0; i < m_DiceButtonControls.size(); i++)
+    {
+        CString tooltipText;
+        if (i <= 4)
+        {
+            tooltipText.Format(_T("Dice%d Hold"), i + 1);
+        }
+        else
+        {
+            tooltipText.Format(_T("Dice%d Release"), i - 4);
+        }
 
+        m_tip_ctrl.AddTool(m_DiceButtonControls[i], tooltipText);
+    }
+
+    
     // roll 직후, 주사위 상태(선택 여부)를 확인하는 벡터
     for (int i = 0; i < 5; i++) {
 
