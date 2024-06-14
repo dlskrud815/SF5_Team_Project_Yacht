@@ -35,6 +35,7 @@ BEGIN_MESSAGE_MAP(CNameSetting, CDialogEx)
 	ON_WM_PAINT()
 	ON_BN_CLICKED(IDOK, &CNameSetting::OnBnClickedOk)
 	ON_WM_SHOWWINDOW()
+	ON_STN_CLICKED(IDC_STATIC_USERNAME, &CNameSetting::OnStnClickedStaticUsername)
 END_MESSAGE_MAP()
 
 
@@ -102,4 +103,10 @@ void CNameSetting::OnShowWindow(BOOL bShow, UINT nStatus)
 	{
 		PostMessage(WM_NEXTDLGCTL, (WPARAM)m_editBox.GetSafeHwnd(), TRUE);
 	}
+}
+
+
+void CNameSetting::OnStnClickedStaticUsername()
+{
+	// TODO: Add your control notification handler code here
 }

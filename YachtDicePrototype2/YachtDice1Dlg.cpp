@@ -1194,6 +1194,7 @@ void CYachtDice1Dlg::OnBnClickedP1_7()
 
 void CYachtDice1Dlg::OnBnClickedP1_8()
 {
+    bool flag4ofKind = false;
     // 배열에 같은 수 4개 이상이면 해당 합계 출력
     int count[7] = { 0 };
     for (int die : m_top_dices) {
@@ -1205,11 +1206,13 @@ void CYachtDice1Dlg::OnBnClickedP1_8()
             CString strScore;
             strScore.Format(_T("%d"), accumulate(m_top_dices.begin(), m_top_dices.end(), 0));
             SetDlgItemText(IDC_p1_8, strScore);
-            return;
+            flag4ofKind = true;
         }
     }
-    // 조건에 맞는 경우가 없을 때는 0 출력
-    SetDlgItemText(IDC_p1_8, _T("0"));
+    if (!flag4ofKind) {
+        // 조건에 맞는 경우가 없을 때는 0 출력
+        SetDlgItemText(IDC_p1_8, _T("0"));
+    }
 
     UpdateScoreBoard();
 }
