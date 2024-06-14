@@ -23,6 +23,7 @@ TUTORIAL2::~TUTORIAL2()
 void TUTORIAL2::DoDataExchange(CDataExchange* pDX)
 {
 	CFormView::DoDataExchange(pDX);
+	DDX_Control(pDX, IDC_PREVIOUS_BTN1, m_previous_btn);
 }
 
 BEGIN_MESSAGE_MAP(TUTORIAL2, CFormView)
@@ -65,6 +66,8 @@ void TUTORIAL2::OnInitialUpdate()
 
 	// TODO: Add your specialized code here and/or call the base class
 	back.Load(_T("BACKGROUND.png"));//이미지 로드
+	m_previous_btn.LoadBitmaps(IDB_PREVIOUS, NULL, NULL, NULL); // 첫 번째 인자에는 추가한 비트맵 ID명
+	m_previous_btn.SizeToContent(); // 이미지 크기에 버튼 크기를 맞춰주는 작업
 }
 
 

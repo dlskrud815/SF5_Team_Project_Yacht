@@ -242,10 +242,12 @@
     <Image Include="Enter your username.bmp" />
     <Image Include="hand_cursor.png" />
     <Image Include="MAIN.bmp" />
+    <Image Include="NEXT.bmp" />
     <Image Include="OK.bmp" />
     <Image Include="pepe1.bmp" />
     <Image Include="pepe2.bmp" />
     <Image Include="playBackground.bmp" />
+    <Image Include="PREVIOUS.bmp" />
     <Image Include="qMark.bmp" />
     <Image Include="Reroll.bmp" />
     <Image Include="res\bitmap5.bmp" />

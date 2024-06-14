@@ -33,6 +33,7 @@ public:
 	CImage back;
 	afx_msg void OnPaint();
 	afx_msg void OnBnClickedPreviousBtn1();
+	CBitmapButton m_previous_btn;
 };
 
 
