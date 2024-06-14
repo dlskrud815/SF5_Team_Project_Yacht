@@ -118,9 +118,6 @@ BOOL CYachtDice1Dlg::OnInitDialog()
     SetIcon(m_hIcon, FALSE);		// Set small icon
 
     // TODO: Add extra initialization here
-    HCURSOR hCursor1 = AfxGetApp()->LoadStandardCursor(IDC_HAND);
-    // 버튼의 마우스 커서를 변경
-    ::SetClassLongPtr(m_dice1.GetSafeHwnd(), GCLP_HCURSOR, reinterpret_cast<LONG_PTR>(hCursor1));
 
     //// 동작 완료 후 원래 커서로 복원
     //HCURSOR hCursor2 = AfxGetApp()->LoadStandardCursor(IDC_ARROW);
