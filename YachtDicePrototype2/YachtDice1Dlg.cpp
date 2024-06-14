@@ -1193,7 +1193,8 @@ void CYachtDice1Dlg::OnBnClickedP1_7()
 
 
 void CYachtDice1Dlg::OnBnClickedP1_8()
-{    bool flag4ofKind = false;
+{    
+    bool flag4ofKind = false;
 
     // 배열에 같은 수 4개 이상이면 해당 합계 출력
     int count[7] = { 0 };
@@ -1251,6 +1252,7 @@ void CYachtDice1Dlg::OnBnClickedP1_9()
 
 void CYachtDice1Dlg::OnBnClickedP1_10()
 {
+    BOOL flagSS = false;
 
     // 배열에 Small Straight가 되면 해당 합계 출력
     vector<int> uniqueDice(m_top_dices.begin(), m_top_dices.end());
@@ -1271,12 +1273,14 @@ void CYachtDice1Dlg::OnBnClickedP1_10()
         if (found) {
             // p1_10 버튼에 계산된 합계를 출력
             SetDlgItemText(IDC_p1_10, _T("15"));
-            UpdateScoreBoard();
-            return;
+            flagSS = true;
         }
     }
-    // 조건에 맞는 경우가 없을 때는 0 출력
-    SetDlgItemText(IDC_p1_10, _T("0"));
+    if (!flagSS)
+    {
+        // 조건에 맞는 경우가 없을 때는 0 출력
+        SetDlgItemText(IDC_p1_10, _T("0"));
+    }
 
     UpdateScoreBoard();
 }
