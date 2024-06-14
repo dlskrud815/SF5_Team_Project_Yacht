@@ -113,6 +113,9 @@ BOOL CYachtDicePrototype2Dlg::OnInitDialog()
 	SetIcon(m_hIcon, TRUE);			// Set big icon
 	SetIcon(m_hIcon, FALSE);		// Set small icon
 
+	HCURSOR hCursor1 = AfxGetApp()->LoadStandardCursor(IDC_HAND);
+	::SetClassLongPtr(m_start_bmp.GetSafeHwnd(), GCLP_HCURSOR, reinterpret_cast<LONG_PTR>(hCursor1));
+
 	main.Load(_T("main_noBT.bmp"));//이미지 로드
 
 	m_start_bmp.LoadBitmaps(IDB_BITMAP4, NULL, NULL, NULL); // 첫 번째 인자에는 추가한 비트맵 ID명
@@ -184,7 +187,6 @@ HCURSOR CYachtDicePrototype2Dlg::OnQueryDragIcon()
 {
 	return static_cast<HCURSOR>(m_hIcon);
 }
-
 
 
 void CYachtDicePrototype2Dlg::OnBnClickedButton3()

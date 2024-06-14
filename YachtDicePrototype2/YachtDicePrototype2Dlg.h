@@ -40,5 +40,4 @@ public:
 	afx_msg void OnBnClickedButton1();
 
 	CBitmapButton m_start_bmp;
-	afx_msg void OnBnClickedTestBtn();
 };

@@ -118,6 +118,11 @@ BOOL CYachtDice1Dlg::OnInitDialog()
     SetIcon(m_hIcon, FALSE);		// Set small icon
 
     // TODO: Add extra initialization here
+
+    //// 동작 완료 후 원래 커서로 복원
+    //HCURSOR hCursor2 = AfxGetApp()->LoadStandardCursor(IDC_ARROW);
+    //::SetClassLongPtr(m_dice1.GetSafeHwnd(), GCLP_HCURSOR, reinterpret_cast<LONG_PTR>(hCursor2));
+
     turn = true; //플레이어;
 
     for (int i = 0; i < 12; i++)
@@ -266,13 +271,27 @@ BOOL CYachtDice1Dlg::OnInitDialog()
 
     GetDlgItem(IDC_round_num)->SetWindowTextW(strRound);
 
-    // 툴팁컨트롤을 생성한다.
     m_tip_ctrl.Create(this);
-    m_tip_ctrl.AddTool(GetDlgItem(IDC_DICE_BUTTON2), _T("주사위 1 선택"));
     m_tip_ctrl.SetMaxTipWidth(300);
     m_tip_ctrl.SetDelayTime(TTDT_AUTOPOP, 2000);
 
+    // 각 버튼에 대한 툴팁 설정
+    for (int i = 0; i < m_DiceButtonControls.size(); i++)
+    {
+        CString tooltipText;
+        if (i <= 4)
+        {
+            tooltipText.Format(_T("Dice%d Hold"), i + 1);
+        }
+        else
+        {
+            tooltipText.Format(_T("Dice%d Release"), i - 4);
+        }
 
+        m_tip_ctrl.AddTool(m_DiceButtonControls[i], tooltipText);
+    }
+
+    
     // roll 직후, 주사위 상태(선택 여부)를 확인하는 벡터
     for (int i = 0; i < 5; i++) {
 
@@ -421,9 +440,7 @@ void CYachtDice1Dlg::OnBnClickedRoll()
                 m_score5.SetWindowText(scoreStr);
 
             }
-
         }
-
     }
 
     for (int i = 0; i < 5; i++)
@@ -660,7 +677,6 @@ void CYachtDice1Dlg::OnBnClickedDiceButton11()
 void CYachtDice1Dlg::OnBnClickedChoosecategory()
 {
     // TODO: Add your control notification handler code here
-
     //플레이어 점수판 버튼 활성/비활성
     for (int i = 0; i < m_playerEditControls.size(); i++)
     {
@@ -704,7 +720,17 @@ void CYachtDice1Dlg::OnBnClickedChoosecategory()
 
     for (int i = 0; i < 12; i++)
     {
-        m_p1[i].EnableWindow(TRUE); // 모든 p1 점수 버튼 활성화
+        CString str;
+        m_p1[i].GetWindowText(str);
+        
+        if (str == L"")
+        {
+            m_p1[i].EnableWindow(TRUE); // 모든 p1 점수 버튼 활성화
+        }
+        else
+        {
+            m_p1[i].EnableWindow(FALSE);
+        }
     }
 }
 
