@@ -1193,8 +1193,8 @@ void CYachtDice1Dlg::OnBnClickedP1_7()
 
 
 void CYachtDice1Dlg::OnBnClickedP1_8()
-{
-    bool flag4ofKind = false;
+{    bool flag4ofKind = false;
+
     // 배열에 같은 수 4개 이상이면 해당 합계 출력
     int count[7] = { 0 };
     for (int die : m_top_dices) {
