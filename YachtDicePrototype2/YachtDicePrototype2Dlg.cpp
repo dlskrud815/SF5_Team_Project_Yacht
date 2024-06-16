@@ -61,7 +61,7 @@ END_MESSAGE_MAP()
 CYachtDicePrototype2Dlg::CYachtDicePrototype2Dlg(CWnd* pParent /*=nullptr*/)
 	: CDialogEx(IDD_YACHTDICEPROTOTYPE2_DIALOG, pParent)
 {
-	m_hIcon = AfxGetApp()->LoadIcon(IDR_MAINFRAME);
+	m_hIcon = AfxGetApp()->LoadIcon(IDI_DICE_ICON);
 }
 
 void CYachtDicePrototype2Dlg::DoDataExchange(CDataExchange* pDX)

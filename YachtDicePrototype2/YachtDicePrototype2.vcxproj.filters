@@ -45,6 +45,12 @@
     <ClInclude Include="WinnerDlg.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="TUTORIAL1.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="TUTORIAL2.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="YachtDicePrototype2.cpp">
@@ -66,6 +72,12 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="WinnerDlg.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="TUTORIAL1.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="TUTORIAL2.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -180,6 +192,15 @@
       <Filter>Resource Files</Filter>
     </Image>
     <Image Include="hand_cursor.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\free-icon-dice-3425958.ico">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="NEXT.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="PREVIOUS.bmp">
       <Filter>Resource Files</Filter>
     </Image>
   </ItemGroup>

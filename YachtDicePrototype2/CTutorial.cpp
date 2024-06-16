@@ -6,7 +6,6 @@
 #include "afxdialogex.h"
 #include "CTutorial.h"
 
-
 // CTutorial dialog
 
 IMPLEMENT_DYNAMIC(CTutorial, CDialogEx)
@@ -14,7 +13,7 @@ IMPLEMENT_DYNAMIC(CTutorial, CDialogEx)
 CTutorial::CTutorial(CWnd* pParent /*=nullptr*/)
 	: CDialogEx(IDD_TUTORIAL_DIALOG, pParent)
 {
-	m_hIcon = AfxGetApp()->LoadIcon(IDR_MAINFRAME);
+	m_hIcon = AfxGetApp()->LoadIcon(IDI_DICE_ICON);
 }
 
 CTutorial::~CTutorial()
@@ -28,7 +27,6 @@ void CTutorial::DoDataExchange(CDataExchange* pDX)
 
 
 BEGIN_MESSAGE_MAP(CTutorial, CDialogEx)
-	ON_WM_PAINT()
 	ON_WM_QUERYDRAGICON()
 END_MESSAGE_MAP()
 
@@ -45,27 +43,12 @@ BOOL CTutorial::OnInitDialog()
 	SetIcon(m_hIcon, TRUE);			// Set big icon
 	SetIcon(m_hIcon, FALSE);		// Set small icon
 
-	// TODO:  Add extra initialization here
-	back.Load(_T("BACKGROUND.png"));//이미지 로드
+	AllocForm1();
+	AllocForm2();
+	ShowForm1();
 
 	return TRUE;  // return TRUE unless you set the focus to a control
 	// EXCEPTION: OCX Property Pages should return FALSE
-}
-
-
-void CTutorial::OnPaint()
-{
-	CPaintDC dc(this); // device context for painting
-	// TODO: Add your message handler code here
-	// Do not call CDialogEx::OnPaint() for painting messages
-
-	CRect rect;//픽쳐 컨트롤의 크기를 저장할 CRect 객체
-	GetClientRect(&rect);
-	//m_picture_control.GetWindowRect(rect);//GetWindowRect를 사용해서 픽쳐 컨트롤의 크기를 받는다.
-	//CDC* dc; //픽쳐 컨트롤의 DC를 가져올  CDC 포인터
-	//dc = m_picture_control.GetDC(); //픽쳐 컨트롤의 DC를 얻는다.
-
-	back.StretchBlt(dc.m_hDC, 0, 0, rect.Width(), rect.Height(), SRCCOPY);//이미지를 픽쳐 컨트롤 크기로 조정
 }
 
 
@@ -74,4 +57,57 @@ HCURSOR CTutorial::OnQueryDragIcon()
 	// TODO: Add your message handler code here and/or call default
 
 	return static_cast<HCURSOR>(m_hIcon);
+}
+
+void CTutorial::AllocForm1()
+{
+	CCreateContext context;
+	ZeroMemory(&context, sizeof(context));
+
+	CRect rectOfPanelArea;
+
+	GetDlgItem(IDC_TUTORIAL_DLG1)->GetWindowRect(&rectOfPanelArea);
+	ScreenToClient(&rectOfPanelArea);
+	m_tutorial1 = new TUTORIAL1();
+	m_tutorial1->Create(NULL, NULL, WS_CHILD | WS_VSCROLL | WS_HSCROLL, rectOfPanelArea, this, IDD_TUTORIAL1, &context);
+	m_tutorial1->OnInitialUpdate();
+	//m_tutorial1->ShowWindow(SW_SHOW);
+	//GetDlgItem(IDC_TUTORIAL_DLG1)->DestroyWindow();
+}
+
+
+void CTutorial::AllocForm2()
+{
+	CCreateContext context;
+	ZeroMemory(&context, sizeof(context));
+
+	CRect rectOfPanelArea;
+
+	GetDlgItem(IDC_TUTORIAL_DLG1)->GetWindowRect(&rectOfPanelArea);
+	ScreenToClient(&rectOfPanelArea);
+	m_tutorial2 = new TUTORIAL2();
+	m_tutorial2->Create(NULL, NULL, WS_CHILD | WS_VSCROLL | WS_HSCROLL, rectOfPanelArea, this, IDD_TUTORIAL2, &context);
+	m_tutorial2->OnInitialUpdate();
+	//m_tutorial2->ShowWindow(SW_SHOW);
+	//GetDlgItem(IDC_TUTORIAL_DLG1)->DestroyWindow();
+}
+
+void CTutorial::HideForm1()
+{
+	m_tutorial1->ShowWindow(SW_HIDE);
+}
+
+void CTutorial::HideForm2()
+{
+	m_tutorial2->ShowWindow(SW_HIDE);
+}
+
+void CTutorial::ShowForm1()
+{
+	m_tutorial1->ShowWindow(SW_SHOW);
+}
+
+void CTutorial::ShowForm2()
+{
+	m_tutorial2->ShowWindow(SW_SHOW);
 }

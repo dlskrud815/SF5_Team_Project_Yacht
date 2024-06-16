@@ -189,6 +189,8 @@
     <ClInclude Include="pch.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="targetver.h" />
+    <ClInclude Include="TUTORIAL1.h" />
+    <ClInclude Include="TUTORIAL2.h" />
     <ClInclude Include="WinnerDlg.h" />
     <ClInclude Include="YachtDice1Dlg.h" />
     <ClInclude Include="YachtDicePrototype2.h" />
@@ -203,6 +205,8 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="TUTORIAL1.cpp" />
+    <ClCompile Include="TUTORIAL2.cpp" />
     <ClCompile Include="WinnerDlg.cpp" />
     <ClCompile Include="YachtDice1Dlg.cpp" />
     <ClCompile Include="YachtDicePrototype2.cpp" />
@@ -238,13 +242,16 @@
     <Image Include="Enter your username.bmp" />
     <Image Include="hand_cursor.png" />
     <Image Include="MAIN.bmp" />
+    <Image Include="NEXT.bmp" />
     <Image Include="OK.bmp" />
     <Image Include="pepe1.bmp" />
     <Image Include="pepe2.bmp" />
     <Image Include="playBackground.bmp" />
+    <Image Include="PREVIOUS.bmp" />
     <Image Include="qMark.bmp" />
     <Image Include="Reroll.bmp" />
     <Image Include="res\bitmap5.bmp" />
+    <Image Include="res\free-icon-dice-3425958.ico" />
     <Image Include="res\YachtDicePrototype2.ico" />
     <Image Include="ROLL.bmp" />
     <Image Include="SINGLE.bmp" />
