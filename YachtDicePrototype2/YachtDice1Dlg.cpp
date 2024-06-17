@@ -1199,7 +1199,7 @@ void CYachtDice1Dlg::OnBnClickedP1_8()
 {    
     bool flag4ofKind = false;
 
-    // 배열에 같은 수 4개 이상이면 해당 합계 출력
+    // 벡터에 같은 수 4개 이상이면 해당 합계 출력
     int count[7] = { 0 };
     for (int die : m_top_dices) {
         count[die]++;
@@ -1224,7 +1224,7 @@ void CYachtDice1Dlg::OnBnClickedP1_8()
 
 void CYachtDice1Dlg::OnBnClickedP1_9()
 {
-    // 배열에 Full House가 되면 해당 합계 출력
+    // 벡터에 Full House가 되면 해당 합계 출력
     int count[7] = { 0 };
     for (int die : m_top_dices) {
         count[die]++;
@@ -1257,25 +1257,27 @@ void CYachtDice1Dlg::OnBnClickedP1_10()
 {
     BOOL flagSS = false;
 
-    // 배열에 Small Straight가 되면 해당 합계 출력
-    vector<int> uniqueDice(m_top_dices.begin(), m_top_dices.end());
-    sort(uniqueDice.begin(), uniqueDice.end());
+    // 벡터에 Small Straight가 되면 해당 합계 출력
+    vector<int> uniqueDice(m_top_dices.begin(), m_top_dices.end()); // m_top_dices 벡터를 복사하여 uniqueDice 벡터 생성
+    sort(uniqueDice.begin(), uniqueDice.end()); // uniqueDice 벡터를 오름차순으로 정렬
 
+    // Small Straight 패턴들을 정의하는 벡터
     vector<vector<int>> smallStraightPatterns = {
         {1, 2, 3, 4}, {2, 3, 4, 5}, {3, 4, 5, 6}, {1, 2, 3, 4, 5}, {2, 3, 4, 5, 6}
     };
 
     for (const auto& pattern : smallStraightPatterns) {
         bool found = true;
+        // 패턴의 각 요소가 uniqueDice에 있는지 검사
         for (int i = 0; i < 4; i++) {
             if (find(uniqueDice.begin(), uniqueDice.end(), pattern[i]) == uniqueDice.end()) {
-                found = false;
+                found = false; // 현재 패턴의 요소가 uniqueDice에 없으면 found를 false로 설정하고 루프 종료
                 break;
             }
         }
         if (found) {
             // p1_10 버튼에 계산된 합계를 출력
-            SetDlgItemText(IDC_p1_10, _T("15"));
+            SetDlgItemText(IDC_p1_10, _T("15")); // 패턴의 요소가 uniqueDice에 있으면 15 출력
             flagSS = true;
         }
     }
@@ -1292,7 +1294,7 @@ void CYachtDice1Dlg::OnBnClickedP1_10()
 void CYachtDice1Dlg::OnBnClickedP1_11()
 {
 
-    // 배열에 Large Straight가 되면 해당 합계 출력
+    // 벡터에 Large Straight가 되면 해당 합계 출력
     vector<int> uniqueDice(m_top_dices.begin(), m_top_dices.end());
     sort(uniqueDice.begin(), uniqueDice.end());
 
@@ -1311,7 +1313,7 @@ void CYachtDice1Dlg::OnBnClickedP1_11()
 
 void CYachtDice1Dlg::OnBnClickedP1_12()
 {
-    // 배열에 Yacht가 되면 해당 합계 출력
+    // 벡터에 Yacht가 되면 해당 합계 출력
     int count[7] = { 0 };
     for (int die : m_top_dices) {
         count[die]++;
@@ -1359,8 +1361,8 @@ void CYachtDice1Dlg::UpdateScoreBoard()
     sumStr.Format(_T("%d"), sub);
     m_p1Sub.SetWindowText(sumStr);
 
-    // p1_sub이 65 이상인 경우 p1_bonus에 35 출력
-    int bonus = (sub >= 65) ? 35 : 0;
+    // p1_sub이 63 이상인 경우 p1_bonus에 35 출력
+    int bonus = (sub >= 63) ? 35 : 0;
     CString bonusStr;
     bonusStr.Format(_T("%d"), bonus);
     m_p1Bonus.SetWindowText(bonusStr);
