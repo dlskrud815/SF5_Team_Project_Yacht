@@ -2,6 +2,8 @@
 Welcome ~ (❁´◡`❁)
 
 ### 요트 다이스 with MFC
+### [게임 플레이 영상] (https://www.youtube.com/watch?v=eueli0a-_to)
+
 ##### 메인 페이지
 ![image1](https://github.com/YejeongKang/SF5_Team_Project_Yacht/assets/86285863/9ff10aa4-844f-4f9f-8db6-9a2c9326bca5)
 
