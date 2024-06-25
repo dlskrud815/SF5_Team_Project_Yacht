@@ -364,7 +364,7 @@ void CYachtDice1Dlg::OnDrawItem(int nIDCtl, LPDRAWITEMSTRUCT lpDrawItemStruct)
             m_p1[i - IDC_p1_1].GetWindowText(strText);
             dc.DrawText(strText, rect, DT_CENTER | DT_VCENTER | DT_SINGLELINE);
             dc.Detach();
-            return;
+            break;
         }
     }
 
